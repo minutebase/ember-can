@@ -32,6 +32,26 @@ test('if-can helper hides content when the user is not allowed', function() {
   });
 });
 
+test('if-can helper with resource shows content when the user is allowed', function() {
+  visit('/login');
+  visit('/if-can');
+
+  andThen(function() {
+    ok(find("#edit-post").length, "shows the edit button");
+    ok(!find("#cant-edit").length, "doesn't show the can't edit message");
+  });
+});
+
+test('if-can helper with resource hides content when the user is not allowed', function() {
+  visit('/logout');
+  visit('/if-can');
+
+  andThen(function() {
+    ok(find("#cant-edit").length, "shows the can't edit message");
+    ok(!find("#edit-post").length, "doesn't show the edit button");
+  });
+});
+
 test('if-can computed property shows content when the user is allowed', function() {
   visit('/login');
   visit('/if-can');

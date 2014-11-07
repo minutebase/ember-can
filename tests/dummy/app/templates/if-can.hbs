@@ -9,3 +9,9 @@
 {{else}}
   <p id="cant-write-post-binding">Can't Write Post</p>
 {{/if}}
+
+{{#if-can "edit post" post}}
+  <button id="edit-post">Edit</button>
+{{else}}
+  <p id="cant-edit">You cannot edit this post</p>
+{{/if-can}}
