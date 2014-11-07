@@ -1,6 +1,7 @@
 {
   "name": "ember-can",
-  "version": "0.0.0",
+  "version": "0.0.1",
+  "description": "Simple authorisation addon for Ember apps",
   "directories": {
     "doc": "doc",
     "test": "tests"
@@ -10,11 +11,14 @@
     "build": "ember build",
     "test": "ember test"
   },
-  "repository": "https://github.com/stefanpenner/ember-cli",
+  "repository": "https://github.com/minutebase/ember-can",
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": "",
+  "author": {
+    "name": "Richard Livsey",
+    "email": "richard@minutebase.com"
+  },
   "license": "MIT",
   "devDependencies": {
     "body-parser": "^1.2.0",
@@ -31,7 +35,10 @@
     "glob": "^4.0.5"
   },
   "keywords": [
-    "ember-addon"
+    "ember-addon",
+    "ember",
+    "authorisation",
+    "can"
   ],
   "ember-addon": {
     "configPath": "tests/dummy/config"

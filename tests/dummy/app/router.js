@@ -6,6 +6,10 @@ var Router = Ember.Router.extend({
 });
 
 Router.map(function() {
+  this.route("if-can");
+  this.route("login");
+  this.route("logout");
+  this.route("new");
 });
 
 export default Router;
