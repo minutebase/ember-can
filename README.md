@@ -1,10 +1,21 @@
 # Ember-can
 
-Simple authorisation addon for Ember.
+Simple (work in progress) authorisation addon for Ember.
 
 ## Note
 
 This is a work in progress, some of this readme is currently a lie.
+
+The `{{if-can}}` helper approach seems a bad way to go, as it's unaware of the underlying binding rules for an authorisation.
+
+E.g. `{{if-can "write post"}}` doesn't know that depends on `user.isAdmin` etc and so can't update if that property changes.
+
+I think a better approach is "bindings all the way", and instead of a handlebars helper we can have a mixin which makes available the rules.
+
+So `{{if-can "write post"}}` would change to `{{if canWritePost}}` which will update as expected.
+
+Resource permissions are slightly trickier, but doable with item controllers & mixins etc so that `{{if canEditPost}}` knows what the current
+post is.
 
 ## Quick Example
 
