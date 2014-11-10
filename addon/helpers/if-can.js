@@ -29,12 +29,14 @@ function makeHelper(isUnless) {
     Ember.assert("No ability type found for "+names.type, ability);
 
     if (resourceName) {
-      var resource = get(context, resourceName); // TODO - this should be a binding/observer
+      // TODO - should this be a binding/observer?
+      var resource = get(context, resourceName);
       ability.set("model", resource);
     }
 
+    // sets the ability to a unique property on the context (controller)
+    // so that we can bind to it
     var id = guid();
-
     set(context, id, ability);
 
     if (isUnless) {
@@ -46,6 +48,9 @@ function makeHelper(isUnless) {
     var fn = function(result) {
       return result;
     };
+
+    // binds to _ability-xxx.canYYY
+    // where xxx is the ability instance and YYY is the property on that
     return Ember.Handlebars.bind.call(context, [id, names.ability].join("."), options, true, fn);
   };
 }
