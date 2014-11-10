@@ -1,37 +1,54 @@
 import Ember from 'ember';
-import can from '../utils/can';
+import { normalizeCombined } from '../utils/normalize';
 
-function boundIfCan(context, container, activityName, resourceName, options) {
-  var fn = function(resource) {
-    return can(container, activityName, resource);
+// TODO - find a better way of hooking up the ability to the view scope
+// currently we set a unique property on the context/controller, which feels rather nasty
+
+var get = Ember.get;
+var set = Ember.set;
+
+var id = 0;
+function guid() {
+  return "_ability-"+(++id);
+}
+
+function makeHelper(isUnless) {
+  return function ifHelper(abilityName, resourceName, options) {
+    if (arguments.length === 2) {
+      options      = resourceName;
+      resourceName = null;
+    }
+
+    var data      = options.data;
+    var container = this.container || (data && data.view && data.view.container);
+    var context   = (options.contexts && options.contexts.length) ? options.contexts[0] : this;
+
+    var names   = normalizeCombined(abilityName);
+    var ability = container.lookup("ability:"+names.type);
+
+    Ember.assert("No ability type found for "+names.type, ability);
+
+    if (resourceName) {
+      var resource = get(context, resourceName); // TODO - this should be a binding/observer
+      ability.set("model", resource);
+    }
+
+    var id = guid();
+
+    set(context, id, ability);
+
+    if (isUnless) {
+      var inverse     = options.inverse || function(){ return ''; };
+      options.render  = inverse;
+      options.inverse = fn;
+    }
+
+    var fn = function(result) {
+      return result;
+    };
+    return Ember.Handlebars.bind.call(context, [id, names.ability].join("."), options, true, fn);
   };
-  return Ember.Handlebars.bind.call(context, resourceName, options, true, fn, null, []);
 }
 
-function unboundIfCan(context, container, activityName, options) {
-  var template;
-  if (can(container, activityName)) {
-    template = options.fn;
-  } else {
-    template = options.inverse;
-  }
-
-  return template(context, { data: options.data });
-}
-
-export default function(activityName, resourceName, options) {
-  if (arguments.length === 2) {
-    options      = resourceName;
-    resourceName = null;
-  }
-
-  var data      = options.data;
-  var container = this.container || (data && data.view && data.view.container);
-  var context   = (options.contexts && options.contexts.length) ? options.contexts[0] : this;
-
-  if (resourceName) {
-    return boundIfCan(context, container, activityName, resourceName, options);
-  } else {
-    return unboundIfCan(context, container, activityName, options);
-  }
-}
+export var ifHelper     = makeHelper();
+export var unlessHelper = makeHelper(true);

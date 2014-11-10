@@ -14,7 +14,7 @@ module('Acceptance: IfCanHelper', {
 
 test('if-can helper shows content when the user is allowed', function() {
   visit('/login');
-  visit('/if-can');
+  visit('/');
 
   andThen(function() {
     ok(find("#write-post").length, "shows the write button");
@@ -24,7 +24,7 @@ test('if-can helper shows content when the user is allowed', function() {
 
 test('if-can helper hides content when the user is not allowed', function() {
   visit('/logout');
-  visit('/if-can');
+  visit('/');
 
   andThen(function() {
     ok(find("#cant-write").length, "shows the can't write message");
@@ -34,7 +34,7 @@ test('if-can helper hides content when the user is not allowed', function() {
 
 test('if-can helper with resource shows content when the user is allowed', function() {
   visit('/login');
-  visit('/if-can');
+  visit('/');
 
   andThen(function() {
     ok(find("#edit-post").length, "shows the edit button");
@@ -44,7 +44,7 @@ test('if-can helper with resource shows content when the user is allowed', funct
 
 test('if-can helper with resource hides content when the user is not allowed', function() {
   visit('/logout');
-  visit('/if-can');
+  visit('/');
 
   andThen(function() {
     ok(find("#cant-edit").length, "shows the can't edit message");
@@ -54,7 +54,7 @@ test('if-can helper with resource hides content when the user is not allowed', f
 
 test('if-can computed property shows content when the user is allowed', function() {
   visit('/login');
-  visit('/if-can');
+  visit('/');
 
   andThen(function() {
     ok(find("#write-post-binding").length, "shows the allowed content");
@@ -64,7 +64,7 @@ test('if-can computed property shows content when the user is allowed', function
 
 test('if-can computed property hides content when the user is not allowed', function() {
   visit('/logout');
-  visit('/if-can');
+  visit('/');
 
   andThen(function() {
     ok(find("#cant-write-post-binding").length, "shows the else clause");

@@ -1,2 +1,2 @@
-import ifCan from 'ember-can/helpers/if-can';
-export default ifCan;
+import { ifHelper } from 'ember-can/helpers/if-can';
+export default ifHelper;

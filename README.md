@@ -1,25 +1,10 @@
 # Ember-can
 
-Simple (work in progress) authorisation addon for Ember.
-
-## Note
-
-This is a work in progress, some of this readme is currently a lie.
-
-The `{{if-can}}` helper approach seems a bad way to go, as it's unaware of the underlying binding rules for an authorisation.
-
-E.g. `{{if-can "write post"}}` doesn't know that depends on `user.isAdmin` etc and so can't update if that property changes.
-
-I think a better approach is "bindings all the way", and instead of a handlebars helper we can have a mixin which makes available the rules.
-
-So `{{if-can "write post"}}` would change to `{{if canWritePost}}` which will update as expected.
-
-Resource permissions are slightly trickier, but doable with item controllers & mixins etc so that `{{if canEditPost}}` knows what the current
-post is.
+Simple authorisation addon for Ember.
 
 ## Quick Example
 
-You want to conditionally show/hide a button based on whether the logged in user is an admin:
+You want to conditionally allow creating a new blog post:
 
 ```handlebars
 {{#if-can "write post"}}
@@ -29,19 +14,19 @@ You want to conditionally show/hide a button based on whether the logged in user
 {{/if-can}}
 ```
 
-We define an ability for the user in `/app/abilities/default.js`:
+We define an ability for the `Post` resource in `/app/abilities/post.js`:
 
 ```javascript
-import { Ability, checks } from 'ember-can';
+import { Ability } from 'ember-can';
 
 export default Ability.extend({
-  isAdmin: function() {
-    return this.user && this.user.get("isAdmin");
-  }.checks("write post")
+  canWrite: function() {
+    return this.get("user.isAdmin");
+  }.property("user.isAdmin")
 });
 ```
 
-Alternatively if you want to restrict access to a route:
+We can also re-use the same ability to check if a user has access to a route:
 
 ```javascript
 import Ember from 'ember';
@@ -56,78 +41,82 @@ export default Ember.Route.extend(CanMixin, {
 });
 ```
 
-## Defining Abilities
+## Abilities
 
-You can have multiple checks for the same ability, they are checked in the order they are defined
-and stop at the first failure.
+An ability class protects an individual model / resource which is available in the ability as `model`.
 
-For example, if a user needs to be logged in as an admin to edit a post *and* be the author of the post, we
-can address that like so:
-
-```javascript
-import { Ability, checks } from 'ember-can';
-
-export default Ability.extend({
-  isLoggedIn: function() {
-    return !!this.user;
-  }.checks("edit post"),
-
-  isAdmin: function() {
-    return this.user.get("isAdmin");
-  }.checks("edit post"),
-
-  isOwner: function(post) {
-    return this.user.get("id") === post.get("owner");
-  }.checks("edit post")
-});
-```
-
-Note that you could also do the same thing by simply calling other utility functions,
-which can be more readable depending on your domain:
+The ability checks themselves are simply standard Ember objects with computed properties:
 
 ```javascript
 import { Ability } from 'ember-can';
 
 export default Ability.extend({
-  isLoggedIn: function() {
-    return !!this.user;
-  },
 
-  isAdmin: function() {
-    return this.user.get("isAdmin");
-  },
+  // only admins can write a post
+  canWrite: function() {
+    return this.get("user.isAdmin");
+  }.property("", "user.isAdmin"),
 
-  isOwner: function(post) {
-    return this.user.get("id") === post.get("owner");
-  },
+  // only the person who wrote a post can edit it
+  canEdit: function() {
+    return this.get("user.id") === this.get("model.author");
+  }.property("user.id", "model.author")
 
-  canEditPost: function(post) {
-    return this.isLoggedIn() && this.isAdmin() && this.isOwner(post);
-  }.checks("edit post")
 });
 ```
 
-## Role based abilities
+## Handlebars Helpers
 
-You can define different abilities based on the user's role, or any other property, by defining a resolver.
+There's a `{{if-can}}` and corresponding `{{if-unless}}` helper which behave just like their `{{if}}` and `{{unless}}` counterparts.
 
-For example, we could have different ability classes based on whether the user is logged in and if they
-are an admin etc:
+The first parameter is a string which is used to find the ability class call the appropriate property (see "Looking up abilities" below).
 
-```javascript
-import { Resolver } from 'ember-can';
-export default Resolver.extend({
-  lookup: function() {
-    if (!this.user) {
-      return "guest";
-    } else if (this.user.get("isAdmin")) {
-      return "admin";
-    } else {
-      return "member";
-    }
-  }
-});
+The second parameter is an optional model object which will be given to the ability to check permissions.
+
+As activities are standard Ember objects and computed properties if anything changes then the view will
+automatically update accordingly.
+
+### if-can
+
+```handlebars
+{{#if-can "edit post" post}}
+...
+{{else}}
+...
+{{/if-can}}
 ```
+
+### unless-can
+
+```handlebars
+{{#unless-can "write post"}}
+  You cannot write new posts.
+{{/unless-can}}
+```
+
+## Looking up abilities
+
+In the example above we said `{{#if-can "write post"}}`, how do we find the ability class & know which property to use for that?
+
+First we chop off the last word and use the singular version as the resource type.
+
+Then for the ability name we remove some basic stopwords (of, for in) at the end, prepend with "can" and camelCase it all.
+
+For example:
+
+| String                      | property           | resource                |
+|-----------------------------|--------------------|-------------------------|
+| write post                  | `canWrite`         | `/abilities/post.js`    |  
+| manage members in projects  | `canManageMembers` | `/abilities/project.js` |
+| view profile for user       | `canViewProfile`   | `/abilities/user.js`    |  
+
+Current stopwords which are ignored are:
+
+* for
+* from
+* in
+* of
+* to
 
 ## Injecting the user
 
@@ -144,33 +133,43 @@ into the ability classes:
 }
 ```
 
+The ability classes will now have access to `session` which can then be used to check if the user is logged in etc...
+
 ## Controllers, components & computed properties
 
 In a controller or component, you may want to expose abilities as computed properties
 so that you can bind to them in your templates.
 
-As this is a fairly common need, there's a computed property variant of `can` and `cannot` you can use.
+To do that there's a helper to lookup the ability for a resource, which you can
+then alias properties:
 
 ```javascript
 import { computed } from 'ember-can';
 import Ember from 'ember';
 
 export default Ember.Controller.extend({
-  canEditPost: computed.can("edit post", "post")
+  post: null, // set by the router
+
+  // looks up the "post" ability and sets the model as the controller's "post" property
+  ability: computed.ability("post"),
+
+  // alias properties to the ability for easier access
+  canEditPost: Ember.computed.alias("ability", "canEdit")
 });
 ```
 
-Which is pretty much equivalent to:
+`computed.ability` assumes that the property for the resource is the same as the ability resource.
+If that's not the case, include it as the second parameter.
+
+For example, in an `ObjectController` we probably want to use the `content`:
 
 ```javascript
-import { CanMixin } from 'ember-can';
+import { computed } from 'ember-can';
 import Ember from 'ember';
 
-export default Ember.Controller.extend(CanMixin, {
-  canEditPost: function() {
-    var post = this.get("post");
-    return this.can("edit post", this.get("post"));
-  }.property("post")
+export default Ember.ObjectController.extend({
+  // looks up the "post" ability and sets the model as the controller's "content" property
+  ability: computed.ability("post", "content")
 });
 ```
 

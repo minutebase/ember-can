@@ -1,24 +1,26 @@
 import Ember from 'ember';
-import can from './utils/can';
+
+import { normalizeType } from 'ember-can/utils/normalize';
 
 var get = Ember.get;
+var set = Ember.set;
 
 export default {
-  can: function(activityName, resourceName) {
-    var fn = function() {
-      var resource;
-      if (resourceName) {
-        resource = get(this, resourceName);
-      }
-
-      var container = this.container;
-      return can(container, activityName, resource);
-    };
-
-    if (resourceName) {
-      return Ember.computed(resourceName, fn);
-    } else {
-      return Ember.computed(fn);
+  ability: function(typeName, resourceName) {
+    if (arguments.length === 1) {
+      resourceName = typeName;
     }
+
+    return Ember.computed(resourceName, function() {
+      var container = this.container;
+      var type      = normalizeType(typeName);
+      var ability   = container.lookup("ability:"+type);
+
+      Ember.assert("No ability class found for "+type, ability);
+
+      var resource = get(this, resourceName);
+      set(ability, "model", resource);
+      return ability;
+    });
   }
 };

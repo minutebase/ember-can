@@ -1,16 +1,15 @@
 import Ember from 'ember';
-import { normalize } from '../ability';
+import { normalizeCombined } from './normalize';
 
 export default function(container, abilityName, resource) {
-  var name         = normalize(abilityName);
-  var resolver     = container.lookup("ability:resolver");
-  var abilityClass = resolver.lookup(name, resource);
+  var names   = normalizeCombined(abilityName);
+  var ability = container.lookup("ability:"+names.type);
 
-  Ember.assert("No ability handler class setup for "+abilityName, abilityClass);
+  Ember.assert("No ability type found for "+names.type, ability);
 
-  var ability = container.lookup("ability:"+abilityClass);
+  if (resource) {
+    ability.set("model", resource);
+  }
 
-  Ember.assert("Expected to find ability class for "+abilityClass+" but none was found, make sure you've added one", ability);
-
-  return ability.can(name, resource);
+  return ability.get(names.ability);
 }
