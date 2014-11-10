@@ -34,11 +34,6 @@ function makeHelper(isUnless) {
       ability.set("model", resource);
     }
 
-    // sets the ability to a unique property on the context (controller)
-    // so that we can bind to it
-    var id = guid();
-    set(context, id, ability);
-
     if (isUnless) {
       var inverse     = options.inverse || function(){ return ''; };
       options.render  = inverse;
@@ -48,6 +43,11 @@ function makeHelper(isUnless) {
     var fn = function(result) {
       return result;
     };
+
+    // sets the ability to a unique property on the context (controller)
+    // so that we can bind to it
+    var id = guid();
+    set(context, id, ability);
 
     // binds to _ability-xxx.canYYY
     // where xxx is the ability instance and YYY is the property on that
