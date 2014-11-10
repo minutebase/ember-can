@@ -7,9 +7,9 @@ import { normalizeCombined } from '../utils/normalize';
 var get = Ember.get;
 var set = Ember.set;
 
-var id = 0;
+var _guid = 0;
 function guid() {
-  return "_ability-"+(++id);
+  return "_ability-"+(++_guid);
 }
 
 function makeHelper(isUnless) {
