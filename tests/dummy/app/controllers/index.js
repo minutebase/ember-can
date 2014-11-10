@@ -3,7 +3,7 @@ import { computed } from 'ember-can';
 
 var Post = Ember.Object.extend();
 
-export default Ember.Controller.extend({
+export default Ember.ObjectController.extend({
   ability:      computed.ability("post"),
   canWritePost: Ember.computed.alias("ability.canWrite"),
   post: Post.create({
