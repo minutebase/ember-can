@@ -2,6 +2,8 @@
 
 ## Master
 
+## v0.1.1
+
 * Observe changes to the resource
 * Fix can-unless helper
 
