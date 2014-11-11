@@ -65,7 +65,7 @@ export default Ability.extend({
   // only admins can write a post
   canWrite: function() {
     return this.get("user.isAdmin");
-  }.property("", "user.isAdmin"),
+  }.property("user.isAdmin"),
 
   // only the person who wrote a post can edit it
   canEdit: function() {
