@@ -133,14 +133,16 @@ Current stopwords which are ignored are:
 How does the ability know who's logged in? This depends on how you implement it in your app!
 
 If you're using ember-simple-auth, you'll probably want to inject the `simple-auth-session:main` session
-into the ability classes:
+into the ability classes.
 
-```json
-{
-  "ember-can": {
-    "inject": { "session": "simple-auth-session:main" },
+To do this, edit your app's `/config/environment.js` like so:
+
+```javascript
+ENV["ember-can"] = {
+  "inject": {
+    "session": "simple-auth-session:main"
   }
-}
+};
 ```
 
 The ability classes will now have access to `session` which can then be used to check if the user is logged in etc...
