@@ -14,7 +14,7 @@
   <p id="cant-edit">You cannot edit this post</p>
 {{/if-can}}
 
-<h2>unless-can with resource</h2>
+<h2>unless-can</h2>
 
 {{#unless-can "write post"}}
   <p id="unless-cant-write">You cannot write a post</p>
@@ -37,3 +37,5 @@
 {{else}}
   <p id="cant-write-post-binding">Can't Write Post</p>
 {{/if}}
+
+<button {{action "selectEditable"}} id="select-editable">Editable Post</button> <button {{action "selectOther"}} id="select-non-editable">Another Post</button>

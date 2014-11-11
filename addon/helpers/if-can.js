@@ -29,9 +29,12 @@ function makeHelper(isUnless) {
     Ember.assert("No ability type found for "+names.type, ability);
 
     if (resourceName) {
-      // TODO - should this be a binding/observer?
-      var resource = get(context, resourceName);
-      ability.set("model", resource);
+      var stream = data.view.getStream(resourceName);
+      ability.set("model", stream.value());
+
+      stream.subscribe(function(str) {
+        ability.set("model", str.value());
+      });
     }
 
     var fn = function(result) {

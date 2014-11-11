@@ -89,3 +89,20 @@ test('can mixin can be used to restrict access to a route if the user is not all
     equal(currentRouteName(), "index");
   });
 });
+
+test('changing the resource should update the helper contents', function() {
+  visit('/login');
+  visit('/');
+
+  andThen(function() {
+    ok(find("#edit-post").length, "shows the edit button");
+    ok(!find("#cant-edit").length, "doesn't show the can't edit message");
+  });
+
+  click("#select-non-editable");
+
+  andThen(function() {
+    ok(!find("#edit-post").length, "doesn't show the edit button");
+    ok(find("#cant-edit").length, "shows the can't edit message");
+  });
+});
