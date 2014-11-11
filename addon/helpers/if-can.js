@@ -40,8 +40,8 @@ function makeHelper(isUnless) {
 
     if (isUnless) {
       var inverse     = options.inverse || function(){ return ''; };
-      options.render  = inverse;
-      options.inverse = fn;
+      options.inverse = options.fn;
+      options.fn      = inverse;
     }
 
     // sets the ability to a unique property on the context (controller)
