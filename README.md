@@ -43,6 +43,14 @@ export default Ember.Route.extend(CanMixin, {
 });
 ```
 
+## Installation
+
+Install this addon via npm:
+
+```
+npm install --save-dev ember-can
+```
+
 ## Abilities
 
 An ability class protects an individual model / resource which is available in the ability as `model`.
