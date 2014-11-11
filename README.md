@@ -2,6 +2,8 @@
 
 Simple authorisation addon for Ember.
 
+[![Build Status](https://travis-ci.org/MinuteBase/ember-can.svg?branch=master)](https://travis-ci.org/MinuteBase/ember-can)
+
 ## Quick Example
 
 You want to conditionally allow creating a new blog post:
