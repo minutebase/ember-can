@@ -77,7 +77,7 @@ export default Ability.extend({
 
 ## Handlebars Helpers
 
-There's a `{{if-can}}` and corresponding `{{if-unless}}` helper which behave just like their `{{if}}` and `{{unless}}` counterparts.
+There's a `{{if-can}}` and corresponding `{{unless-can}}` helper which behave just like their `{{if}}` and `{{unless}}` counterparts.
 
 The first parameter is a string which is used to find the ability class call the appropriate property (see "Looking up abilities" below).
 
