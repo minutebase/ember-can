@@ -52,6 +52,24 @@ test('if-can helper with resource hides content when the user is not allowed', f
   });
 });
 
+test('if-can helper can have additional properties', function() {
+  visit("/logout");
+  visit("/");
+
+  andThen(function() {
+    ok(find("#can-with-additional").length, "shows the can message");
+    ok(!find("#cant-with-additional").length, "doesn't show can't message");
+  });
+
+  fillIn("#author-id-input", 42);
+
+  andThen(function() {
+    ok(!find("#can-with-additional").length, "doesn't show the can message");
+    ok(find("#cant-with-additional").length, "shows the can't message");
+  });
+});
+
+
 test('if-can computed property shows content when the user is allowed', function() {
   visit('/login');
   visit('/');

@@ -30,6 +30,16 @@
   <button id="unless-edit-post">Edit</button>
 {{/unless-can}}
 
+<h2>helper with additional attributes</h2>
+
+{{#if-can "change author for post" post author=bob}}
+  <p id="can-with-additional">Can change author</p>
+{{else}}
+  <p id="cant-with-additional">Can't change author</p>
+{{/if-can}}
+
+{{input value=bob.id id="author-id-input"}} (post author is {{post.author}})
+
 <h2>bound ability</h2>
 
 {{#if canWritePost}}

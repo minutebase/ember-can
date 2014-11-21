@@ -104,6 +104,16 @@ automatically update accordingly.
 {{/unless-can}}
 ```
 
+### Additional attributes
+
+If you need more than a single resource in an ability, you can pass them additional attributes like so:
+
+```handlebars
+{{#if-can "remove member from project" project member=member}}
+...
+{{/if-can}}
+```
+
 ## Looking up abilities
 
 In the example above we said `{{#if-can "write post"}}`, how do we find the ability class & know which property to use for that?

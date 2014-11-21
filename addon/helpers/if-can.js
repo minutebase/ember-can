@@ -12,6 +12,15 @@ function guid() {
   return "_ability-"+(++_guid);
 }
 
+function bindViewProperty(ability, view, from, to) {
+  var stream = view.getStream(from);
+  ability.set(to, stream.value());
+
+  stream.subscribe(function(str) {
+    ability.set(to, str.value());
+  });
+}
+
 function makeHelper(isUnless) {
   return function ifHelper(abilityName, resourceName, options) {
     if (arguments.length === 2) {
@@ -20,7 +29,8 @@ function makeHelper(isUnless) {
     }
 
     var data      = options.data;
-    var container = this.container || (data && data.view && data.view.container);
+    var view      = data.view;
+    var container = this.container || (view && data.view.container);
     var context   = (options.contexts && options.contexts.length) ? options.contexts[0] : this;
 
     var names   = normalizeCombined(abilityName);
@@ -29,12 +39,21 @@ function makeHelper(isUnless) {
     Ember.assert("No ability type found for "+names.type, ability);
 
     if (resourceName) {
-      var stream = data.view.getStream(resourceName);
-      ability.set("model", stream.value());
+      bindViewProperty(ability, view, resourceName, "model");
+    }
 
-      stream.subscribe(function(str) {
-        ability.set("model", str.value());
-      });
+    // bind additional properties
+    if (options.hash) {
+      var key, prop;
+      for (key in options.hash) {
+        prop = options.hash[key];
+
+        if (options.hashTypes[key] === "ID") {
+          bindViewProperty(ability, view, prop, key);
+        } else {
+          ability.set(key, prop);
+        }
+      }
     }
 
     var fn = function(result) {
