@@ -104,15 +104,27 @@ automatically update accordingly.
 {{/unless-can}}
 ```
 
-### Additional attributes
+## Additional attributes
 
-If you need more than a single resource in an ability, you can pass them additional attributes like so:
+If you need more than a single resource in an ability, you can pass them additional attributes.
+
+You can do this in the helpers, for example this will set the `model` to `project` as usual,
+but also `member` as a bound property.
 
 ```handlebars
 {{#if-can "remove member from project" project member=member}}
 ...
 {{/if-can}}
 ```
+
+Similarly in routes you can pass additional attributes after or instead of the resource:
+
+```javascript
+  this.can("edit post", post, { author: bob });
+  this.can("write post", { project: project });
+```
+
+These will set `author` and `project` on the ability respectively so you can use them in the checks.
 
 ## Looking up abilities
 
