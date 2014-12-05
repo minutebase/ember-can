@@ -1,7 +1,11 @@
 import Ember from 'ember';
 
 var classify    = Ember.String.classify;
-var singularize = Ember.String.singularize;
+
+// singularize comes with Ember Inflector / Ember Data
+var singularize = Ember.String.singularize || function(str) {
+  return str.replace(/s$/, '');
+};
 
 var stopwords = [
   "of", "in", "for", "to", "from"
