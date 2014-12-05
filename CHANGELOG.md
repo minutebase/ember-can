@@ -2,6 +2,12 @@
 
 ## Master
 
+## v0.1.3
+
+* HTMLBars support
+
+## v0.1.2
+
 * Pass additional properties to ability via helpers
 * Pass additional properties to ability via CanMixin#can
 
