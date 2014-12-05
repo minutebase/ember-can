@@ -21,7 +21,6 @@ script:
 
 env:
   matrix:
-    - EMBER_CHANNEL=release
     - EMBER_CHANNEL=beta
     - EMBER_CHANNEL=canary
     - EMBER_CHANNEL=canary HTMLBARS=true
