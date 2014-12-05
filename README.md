@@ -51,6 +51,10 @@ Install this addon via npm:
 npm install --save-dev ember-can
 ```
 
+## Compatibility
+
+ember-can has been developed against beta/canary, so isn't compatible with the current 1.8 release.
+
 ## Abilities
 
 An ability class protects an individual model / resource which is available in the ability as `model`.
