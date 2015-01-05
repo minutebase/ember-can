@@ -123,7 +123,7 @@ function makeHelper(isUnless) {
     var propName = ["_abilities", id, names.ability].join(".");
 
     if (isHTMLBars) {
-      env.helpers.boundIf.helperFunction.call(this, [propName], hash, options, env);
+      env.helpers.if.helperFunction.call(this, [view.getStream(propName)], hash, options, env);
     } else {
       var fn = function(result) { return result; };
       return Ember.Handlebars.bind.call(this, propName, options, true, fn);
