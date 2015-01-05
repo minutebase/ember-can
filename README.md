@@ -23,8 +23,8 @@ import { Ability } from 'ember-can';
 
 export default Ability.extend({
   canWrite: function() {
-    return this.get("user.isAdmin");
-  }.property("user.isAdmin")
+    return this.get('user.isAdmin');
+  }.property('user.isAdmin')
 });
 ```
 
@@ -36,8 +36,8 @@ import { CanMixin } from 'ember-can';
 
 export default Ember.Route.extend(CanMixin, {
   beforeModel: function() {
-    if (!this.can("write post")) {
-      this.transitionTo("index");
+    if (!this.can('write post')) {
+      this.transitionTo('index');
     }
   }
 });
@@ -65,17 +65,15 @@ The ability checks themselves are simply standard Ember objects with computed pr
 import { Ability } from 'ember-can';
 
 export default Ability.extend({
-
   // only admins can write a post
   canWrite: function() {
-    return this.get("user.isAdmin");
-  }.property("user.isAdmin"),
+    return this.get('user.isAdmin');
+  }.property('user.isAdmin'),
 
   // only the person who wrote a post can edit it
   canEdit: function() {
-    return this.get("user.id") === this.get("model.author");
-  }.property("user.id", "model.author")
-
+    return this.get('user.id') === this.get('model.author');
+  }.property('user.id', 'model.author')
 });
 ```
 
@@ -94,9 +92,9 @@ automatically update accordingly.
 
 ```handlebars
 {{#if-can "edit post" post}}
-...
+  ...
 {{else}}
-...
+  ...
 {{/if-can}}
 ```
 
@@ -117,15 +115,15 @@ but also `member` as a bound property.
 
 ```handlebars
 {{#if-can "remove member from project" project member=member}}
-...
+  ...
 {{/if-can}}
 ```
 
 Similarly in routes you can pass additional attributes after or instead of the resource:
 
 ```javascript
-  this.can("edit post", post, { author: bob });
-  this.can("write post", { project: project });
+this.can('edit post', post, { author: bob });
+this.can('write post', { project: project });
 ```
 
 These will set `author` and `project` on the ability respectively so you can use them in the checks.
@@ -164,9 +162,9 @@ into the ability classes.
 To do this, edit your app's `/config/environment.js` like so:
 
 ```javascript
-ENV["ember-can"] = {
-  "inject": {
-    "session": "simple-auth-session:main"
+ENV['ember-can'] = {
+  inject: {
+    session: 'simple-auth-session:main'
   }
 };
 ```
@@ -189,10 +187,10 @@ export default Ember.Controller.extend({
   post: null, // set by the router
 
   // looks up the "post" ability and sets the model as the controller's "post" property
-  ability: computed.ability("post"),
+  ability: computed.ability('post'),
 
   // alias properties to the ability for easier access
-  canEditPost: Ember.computed.alias("ability", "canEdit")
+  canEditPost: Ember.computed.alias('ability', 'canEdit')
 });
 ```
 
@@ -207,7 +205,7 @@ import Ember from 'ember';
 
 export default Ember.ObjectController.extend({
   // looks up the "post" ability and sets the model as the controller's "content" property
-  ability: computed.ability("post", "content")
+  ability: computed.ability('post', 'content')
 });
 ```
 
