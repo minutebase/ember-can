@@ -1,14 +1,14 @@
 import Ember from 'ember';
 import startApp from '../helpers/start-app';
 
-var App;
+var application;
 
 module('Acceptance: IfCanHelper', {
   setup: function() {
-    App = startApp();
+    application = startApp();
   },
   teardown: function() {
-    Ember.run(App, 'destroy');
+    Ember.run(application, 'destroy');
   }
 });
 
