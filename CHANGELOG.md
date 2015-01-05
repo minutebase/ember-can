@@ -2,6 +2,10 @@
 
 ## Master
 
+## v0.2.0
+
+* Fix for latest Canary, ifBound helper has been removed
+
 ## v0.1.3
 
 * HTMLBars support
