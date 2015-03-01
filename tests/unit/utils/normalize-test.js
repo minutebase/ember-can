@@ -1,4 +1,8 @@
 import {
+  test, module
+} from 'qunit';
+
+import {
   normalizeCombined,
   normalizeAbility,
   normalizeType

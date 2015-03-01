@@ -1,3 +1,7 @@
+import {
+  test, module
+} from 'qunit';
+
 import Ember from 'ember';
 import can from 'ember-can/utils/can';
 
