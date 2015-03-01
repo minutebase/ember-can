@@ -2,7 +2,7 @@
 
 Simple authorisation addon for Ember.
 
-[![Build Status](https://travis-ci.org/minutebase/ember-can.svg?branch=master)](https://travis-ci.org/MinuteBase/ember-can)
+[![Build Status](https://travis-ci.org/minutebase/ember-can.svg?branch=master)](https://travis-ci.org/minutebase/ember-can)
 
 ## Quick Example
 
