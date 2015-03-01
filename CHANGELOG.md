@@ -2,6 +2,10 @@
 
 ## Master
 
+## v0.2.1
+
+* Fixes for latest Canary, this in helper is no longer the view
+
 ## v0.2.0
 
 * Fix for latest Canary, ifBound helper has been removed
