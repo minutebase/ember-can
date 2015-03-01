@@ -4,6 +4,33 @@ Simple authorisation addon for Ember.
 
 [![Build Status](https://travis-ci.org/minutebase/ember-can.svg?branch=master)](https://travis-ci.org/minutebase/ember-can)
 
+## Upgrading from v0.2.x
+
+Version 0.3.x moves from using custom block helpers (`if-can` and `unless-can`)
+to a single `can` helper which instead can be used with `{{if}}` and `{{unless}}`.
+
+Updating from v0.2.x is a simple matter of replacing `{{if-can ...}}` and `{{unless-can ...}}` with `{{if (can ...)}}`
+
+For example becomes:
+
+```handlebars
+{{#if-can "write post"}}
+  ...
+{{else}}
+  ...
+{{/if-can}}
+```
+
+with
+
+```handlebars
+{{#if (can "write post")}}
+  ...
+{{else}}
+  ...
+{{/if}}
+```
+
 ## Quick Example
 
 You want to conditionally allow creating a new blog post:
@@ -95,6 +122,15 @@ automatically update accordingly.
 {{else}}
   ...
 {{/if}}
+```
+
+As it's a sub-expression, you can use it anywhere a helper can be used.
+For example to give a div a class based on an ability you can use an inline if:
+
+```handlebars
+<div class="{{if (can 'edit post' post) 'is-editable'}}">
+
+</div>
 ```
 
 ## Additional attributes

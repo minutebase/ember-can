@@ -2,6 +2,8 @@
 
 ## Master
 
+## v0.3.0
+
 * Drop support for < 1.10.0
 * Use sub-expression `can` helper instead of `if-can` / `unless-can`
 
