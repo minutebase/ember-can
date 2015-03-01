@@ -54,8 +54,8 @@ function makeHelper(isUnless) {
       hash         = arguments[1];
       options      = arguments[2];
       env          = arguments[3];
-      container    = this.container;
       view         = env.data.view;
+      container    = view.container;
       controller   = get(view, "controller");
     } else {
       if (arguments.length === 2) {
