@@ -80,8 +80,13 @@ npm install --save-dev ember-can
 
 ## Compatibility
 
-ember-can has been developed against beta/canary, so isn't compatible with the current 1.8 release,
-so the minimum version is 1.9.x.
+The minimum supported Ember version is 1.10.x due to the use of sub-expressions.
+
+For v1.9.x support, use v0.2.1:
+
+```
+npm install --save-dev ember-can@0.2.1
+```
 
 ## Abilities
 
