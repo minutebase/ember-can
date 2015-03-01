@@ -9,11 +9,11 @@ Simple authorisation addon for Ember.
 You want to conditionally allow creating a new blog post:
 
 ```handlebars
-{{#if-can "write post"}}
+{{#if (can "write post")}}
   <button {{action "new"}}>Write Post</button>
 {{else}}
   You can't write a new post
-{{/if-can}}
+{{/if}}
 ```
 
 We define an ability for the `Post` resource in `/app/abilities/post.js`:
@@ -80,7 +80,7 @@ export default Ability.extend({
 
 ## Handlebars Helpers
 
-There's a `{{if-can}}` and corresponding `{{unless-can}}` helper which behave just like their `{{if}}` and `{{unless}}` counterparts.
+The `can` helper is meant to be used with `{{if}}` and `{{unless}}` to protect a block.
 
 The first parameter is a string which is used to find the ability class call the appropriate property (see "Looking up abilities" below).
 
@@ -89,22 +89,12 @@ The second parameter is an optional model object which will be given to the abil
 As activities are standard Ember objects and computed properties if anything changes then the view will
 automatically update accordingly.
 
-### if-can
-
 ```handlebars
-{{#if-can "edit post" post}}
+{{#if (can "edit post" post)}}
   ...
 {{else}}
   ...
-{{/if-can}}
-```
-
-### unless-can
-
-```handlebars
-{{#unless-can "write post"}}
-  You cannot write new posts.
-{{/unless-can}}
+{{/if}}
 ```
 
 ## Additional attributes
@@ -115,9 +105,9 @@ You can do this in the helpers, for example this will set the `model` to `projec
 but also `member` as a bound property.
 
 ```handlebars
-{{#if-can "remove member from project" project member=member}}
+{{#if (can "remove member from project" project member=member)}}
   ...
-{{/if-can}}
+{{/if}}
 ```
 
 Similarly in routes you can pass additional attributes after or instead of the resource:

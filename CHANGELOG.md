@@ -2,6 +2,9 @@
 
 ## Master
 
+* Drop support for < 1.10.0
+* Use sub-expression `can` helper instead of `if-can` / `unless-can`
+
 ## v0.2.1
 
 * Fixes for latest Canary, this in helper is no longer the view

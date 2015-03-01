@@ -1,8 +1,6 @@
 import config from '../config/environment';
 
-// TODO - hack, remove this when we find a better way of managing context in the if-can helper
-// so that it doesn't try and proxy to null in if-can helper when setting activities for binding
-// it's in here so we set it before any other controllers extend Em.ObjectController
+// TODO - ObjectControllers are deprecated, remove this when they go away
 Ember.ObjectController.reopen({
   _abilities: null
 });

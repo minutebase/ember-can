@@ -1,42 +1,42 @@
-<h2>if-can helper</h2>
+<h2>if can helper</h2>
 
-{{#if-can "write post"}}
+{{#if (can "write post")}}
   <button id="write-post">Write</button>
 {{else}}
   <p id="cant-write">You cannot write a post</p>
-{{/if-can}}
+{{/if}}
 
-<h2>if-can with resource</h2>
+<h2>if with resource</h2>
 
-{{#if-can "edit post" post}}
+{{#if (can "edit post" post)}}
   <button id="edit-post">Edit</button>
 {{else}}
   <p id="cant-edit">You cannot edit this post</p>
-{{/if-can}}
+{{/if}}
 
-<h2>unless-can</h2>
+<h2>unless can</h2>
 
-{{#unless-can "write post"}}
+{{#unless (can "write post")}}
   <p id="unless-cant-write">You cannot write a post</p>
 {{else}}
   <button id="unless-write-post">Write</button>
-{{/unless-can}}
+{{/unless}}
 
 <h2>unless-can with resource</h2>
 
-{{#unless-can "edit post" post}}
+{{#unless (can "edit post" post)}}
   <p id="unless-cant-edit">You cannot edit this post</p>
 {{else}}
   <button id="unless-edit-post">Edit</button>
-{{/unless-can}}
+{{/unless}}
 
 <h2>helper with additional attributes</h2>
 
-{{#if-can "change author for post" post author=bob}}
+{{#if (can "change author for post" post author=bob)}}
   <p id="can-with-additional">Can change author</p>
 {{else}}
   <p id="cant-with-additional">Can't change author</p>
-{{/if-can}}
+{{/if}}
 
 {{input value=bob.id id="author-id-input"}} (post author is {{post.author}})
 

@@ -25,6 +25,7 @@ export default Ember.ObjectController.extend({
   post: editablePost,
 
   bob: bob,
+  foo: false,
 
   actions: {
     selectEditable: function() {
