@@ -5,7 +5,6 @@ import {
 import {
   normalizeCombined,
   normalizeAbility,
-  normalizeType
 } from 'ember-can/utils/normalize';
 
 module('normalize');
@@ -42,8 +41,4 @@ test('removes stopwords from combined string', function() {
 
 test('normalizes abilities', function() {
   equal(normalizeAbility("manage members"), "canManageMembers", "prepends can and camelizes");
-});
-
-test('normalizes types', function() {
-  equal(normalizeType("posts"), "post", "singularizes the type");
 });
