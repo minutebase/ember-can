@@ -14,8 +14,7 @@ var stopwords = [
 export function normalizeCombined(abilityName) {
   var parts   = abilityName.split(' ');
 
-  var typeStr = parts.pop();
-  var type    = normalizeType(typeStr);
+  var type = parts.pop();
 
   var last = parts[parts.length-1];
   if (stopwords.indexOf(last) !== -1) {
@@ -32,8 +31,4 @@ export function normalizeCombined(abilityName) {
 
 export function normalizeAbility(ability) {
   return 'can'+classify(ability);
-}
-
-export function normalizeType(type) {
-  return singularize(type);
 }
