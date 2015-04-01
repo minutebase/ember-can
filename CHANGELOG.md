@@ -2,6 +2,10 @@
 
 ## Master
 
+## v0.4.0
+
+* Don't singularize ability name (thanks @cibernox)
+
 ## v0.3.0
 
 * Drop support for < 1.10.0

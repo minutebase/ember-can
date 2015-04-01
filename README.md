@@ -4,32 +4,14 @@ Simple authorisation addon for Ember.
 
 [![Build Status](https://travis-ci.org/minutebase/ember-can.svg?branch=master)](https://travis-ci.org/minutebase/ember-can)
 
-## Upgrading from v0.2.x
+## Upgrading from v0.3.x and earlier
 
-Version 0.3.x moves from using custom block helpers (`if-can` and `unless-can`)
-to a single `can` helper which instead can be used with `{{if}}` and `{{unless}}`.
+v0.4.0 and v0.3.0 introduced backwards incompatible changes.
 
-Updating from v0.2.x is a simple matter of replacing `{{if-can ...}}` and `{{unless-can ...}}` with `{{if (can ...)}}`
+* v0.4.0 - stopped singularizing ability names to work with pods
+* v0.3.0 - removed `if-can` helper, uses sub-expression instead
 
-For example becomes:
-
-```handlebars
-{{#if-can "write post"}}
-  ...
-{{else}}
-  ...
-{{/if-can}}
-```
-
-with
-
-```handlebars
-{{#if (can "write post")}}
-  ...
-{{else}}
-  ...
-{{/if}}
-```
+See [UPGRADING](UPGRADING.md) for more details.
 
 ## Quick Example
 
@@ -164,17 +146,19 @@ These will set `author` and `project` on the ability respectively so you can use
 
 In the example above we said `{{#if-can "write post"}}`, how do we find the ability class & know which property to use for that?
 
-First we chop off the last word and use the singular version as the resource type.
+First we chop off the last word as the resource type which is looked up via the container.
+
+The ability file can either be looked up in the top level `/app/abilities` directory, or via pod structure.
 
 Then for the ability name we remove some basic stopwords (of, for in) at the end, prepend with "can" and camelCase it all.
 
 For example:
 
-| String                      | property           | resource                |
-|-----------------------------|--------------------|-------------------------|
-| write post                  | `canWrite`         | `/abilities/post.js`    |  
-| manage members in projects  | `canManageMembers` | `/abilities/project.js` |
-| view profile for user       | `canViewProfile`   | `/abilities/user.js`    |  
+| String                      | property           | resource                | pod                            |
+|-----------------------------|--------------------|-------------------------|--------------------------------|
+| write post                  | `canWrite`         | `/abilities/post.js`    | `app/pods/post/ability.js`     |
+| manage members in projects  | `canManageMembers` | `/abilities/projects.js`| `app/pods/projects/ability.js` |
+| view profile for user       | `canViewProfile`   | `/abilities/user.js`    | `app/pods/user/ability.js`     |
 
 Current stopwords which are ignored are:
 
