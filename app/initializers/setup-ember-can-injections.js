@@ -1,10 +1,5 @@
 import config from '../config/environment';
 
-// TODO - ObjectControllers are deprecated, remove this when they go away
-Ember.ObjectController.reopen({
-  _abilities: null
-});
-
 export default {
   name: 'setup-ember-can-injections',
   initialize: function(container, application) {
