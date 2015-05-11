@@ -1,27 +1,22 @@
 ---
 language: node_js
+node_js:
+  - "0.12"
 
 sudo: false
-
-before_install:
-  - "npm config set spin false"
-  - "npm install -g npm@^2"
 
 cache:
   directories:
     - node_modules
 
+before_install:
+  - "npm config set spin false"
+  - "npm install -g npm@^2"
+
 install:
   - npm install -g bower
   - npm install
-  - ./packaging/select-ember-version.js
+  - bower install
 
 script:
   - npm test
-
-env:
-  matrix:
-    - EMBER_CHANNEL=release
-    - EMBER_CHANNEL=beta
-    - EMBER_CHANNEL=canary
-    - EMBER_CHANNEL=canary HTMLBARS=true
