@@ -2,31 +2,25 @@
 
 {{#if-can "write post"}}
   <button id="write-post">Write</button>
-{{/if-can}}
-
-{{#unless-can "write post"}}
+{{else}}
   <p id="cant-write">You cannot write a post</p>
-{{/unless-can}}
+{{/if-can}}
 
 <h2>if with resource</h2>
 
 {{#if-can "edit post" post}}
   <button id="edit-post">Edit</button>
-{{/if-can}}
-
-{{#unless-can "edit post" post}}
+{{else}}
   <p id="cant-edit">You cannot edit this post</p>
-{{/unless-can}}
+{{/if-can}}
 
 <h2>helper with additional attributes</h2>
 
 {{#if-can "change author for post" post author=bob}}
   <p id="can-with-additional">Can change author</p>
-{{/if-can}}
-
-{{#unless-can "change author for post" post author=bob}}
+{{else}}
   <p id="cant-with-additional">Can't change author</p>
-{{/unless-can}}
+{{/if-can}}
 
 {{input value=bob.id id="author-id-input"}} (post author is {{post.author}})
 
@@ -39,3 +33,5 @@
 {{/if}}
 
 <button {{action "selectEditable"}} id="select-editable">Editable Post</button> <button {{action "selectOther"}} id="select-non-editable">Another Post</button>
+
+{{session}} {{session.user}}

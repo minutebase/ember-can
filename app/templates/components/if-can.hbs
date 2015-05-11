@@ -1,3 +1,5 @@
 {{#if isAble}}
   {{yield}}
+{{else}}
+  {{yield to="inverse"}}
 {{/if}}
