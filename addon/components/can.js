@@ -72,6 +72,6 @@ export default Ember.Component.extend({
       return;
     }
 
-    removeObserver(ability, this.get("predecateName"), this, this, this.abilityPredecateChanged);
+    removeObserver(ability, this.get("predecateName"), this, this.abilityPredecateChanged);
   })
 });
