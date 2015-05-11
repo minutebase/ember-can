@@ -19,7 +19,7 @@ var bob = Person.create({
   name: "Bob"
 });
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
   ability:      computed.ability("post"),
   canWritePost: Ember.computed.alias("ability.canWrite"),
   post: editablePost,
@@ -28,11 +28,14 @@ export default Ember.ObjectController.extend({
   foo: false,
 
   actions: {
-    selectEditable: function() {
+    selectEditable() {
       this.set("post", editablePost);
     },
-    selectOther:    function() {
+    selectOther() {
       this.set("post", otherPost);
+    },
+    toggleFoo() {
+      this.toggleProperty("foo");
     }
   }
 });
