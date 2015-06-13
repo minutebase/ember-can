@@ -2,6 +2,11 @@
 
 ## Master
 
+## v0.5.0
+
+* Ember 1.13.x support
+* Removed injection configuration
+
 ## v0.4.0
 
 * Don't singularize ability name (thanks @cibernox)

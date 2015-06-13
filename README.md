@@ -4,10 +4,9 @@ Simple authorisation addon for Ember.
 
 [![Build Status](https://travis-ci.org/minutebase/ember-can.svg?branch=master)](https://travis-ci.org/minutebase/ember-can)
 
-## Upgrading from v0.3.x and earlier
+## Breaking Changes
 
-v0.4.0 and v0.3.0 introduced backwards incompatible changes.
-
+* v0.5.0 - support for Ember 1.13+ using new Ember.Helper, removed injections
 * v0.4.0 - stopped singularizing ability names to work with pods
 * v0.3.0 - removed `if-can` helper, uses sub-expression instead
 
@@ -62,13 +61,11 @@ npm install --save-dev ember-can
 
 ## Compatibility
 
-The minimum supported Ember version is 1.10.x due to the use of sub-expressions.
-
-For v1.9.x support, use v0.2.1:
-
-```
-npm install --save-dev ember-can@0.2.1
-```
+| Ember Version     | Ember Can Release     |
+| ----------------- | --------------------- |
+| 1.9.x             | 0.2                   |
+| 1.10 through 1.12 | 0.4                   |
+| 1.13 and beyond   | 0.5                   |
 
 ## Abilities
 
@@ -172,15 +169,29 @@ Current stopwords which are ignored are:
 
 How does the ability know who's logged in? This depends on how you implement it in your app!
 
+If you're using an `Ember.Service` as your session, you can just inject it into the ability:
+
+```javascript
+// app/abilities/foo.js
+import Ember from 'ember';
+import { Ability } from 'ember-can';
+
+export default Ability.extend({
+  session: Ember.inject.service()
+});
+```
+
 If you're using ember-simple-auth, you'll probably want to inject the `simple-auth-session:main` session
 into the ability classes.
 
-To do this, edit your app's `/config/environment.js` like so:
+To do this, add an initializer like so:
 
 ```javascript
-ENV['ember-can'] = {
-  inject: {
-    session: 'simple-auth-session:main'
+// app/initializers/inject-session-into-abilities.js
+export default {
+  name: 'inject-session-into-abilities',
+  initialize(app) {
+    app.inject('ability', 'session', 'simple-auth-session:main');
   }
 };
 ```
@@ -213,13 +224,11 @@ export default Ember.Controller.extend({
 `computed.ability` assumes that the property for the resource is the same as the ability resource.
 If that's not the case, include it as the second parameter.
 
-For example, in an `ObjectController` we probably want to use the `content`:
-
 ```javascript
 import { computed } from 'ember-can';
 import Ember from 'ember';
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
   // looks up the "post" ability and sets the model as the controller's "content" property
   ability: computed.ability('post', 'content')
 });
