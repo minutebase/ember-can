@@ -8,7 +8,7 @@ import can from 'ember-can/utils/can';
 var ability, post, container;
 
 module('can', {
-  setup: function() {
+  beforeEach: function() {
     ability = Ember.Object.create();
     post    = Ember.Object.create({ title: "A Post" });
 
@@ -22,17 +22,17 @@ module('can', {
 });
 
 
-test("sets the model if supplied", function() {
+test("sets the model if supplied", function(assert) {
   can(container, "edit post", post);
-  equal(ability.get("model"), post, "sets the model");
+  assert.equal(ability.get("model"), post, "sets the model");
 });
 
-test("sets additional properties with the model", function() {
+test("sets additional properties with the model", function(assert) {
   can(container, "edit post", post, { foo: "bar" });
-  equal(ability.get("foo"), "bar", "sets the additional properties");
+  assert.equal(ability.get("foo"), "bar", "sets the additional properties");
 });
 
-test("sets additional properties with no model", function() {
+test("sets additional properties with no model", function(assert) {
   can(container, "edit post", { foo: "bar" });
-  equal(ability.get("foo"), "bar", "sets the additional properties");
+  assert.equal(ability.get("foo"), "bar", "sets the additional properties");
 });

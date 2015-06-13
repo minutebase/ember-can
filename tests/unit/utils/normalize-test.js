@@ -9,36 +9,36 @@ import {
 
 module('normalize');
 
-test('normalizes basic combined string', function() {
+test('normalizes basic combined string', function(assert) {
   var norm = normalizeCombined("edit post");
-  equal("canEdit", norm.ability);
-  equal("post", norm.type);
+  assert.equal("canEdit", norm.ability);
+  assert.equal("post", norm.type);
 });
 
-test('removes stopwords from combined string', function() {
+test('removes stopwords from combined string', function(assert) {
   var norm;
 
   norm = normalizeCombined("manage members in project");
-  equal("canManageMembers", norm.ability);
-  equal("project", norm.type);
+  assert.equal("canManageMembers", norm.ability);
+  assert.equal("project", norm.type);
 
   norm = normalizeCombined("add tags to post");
-  equal("canAddTags", norm.ability);
-  equal("post", norm.type);
+  assert.equal("canAddTags", norm.ability);
+  assert.equal("post", norm.type);
 
   norm = normalizeCombined("remove tags from post");
-  equal("canRemoveTags", norm.ability);
-  equal("post", norm.type);
+  assert.equal("canRemoveTags", norm.ability);
+  assert.equal("post", norm.type);
 
   norm = normalizeCombined("change colour of door");
-  equal("canChangeColour", norm.ability);
-  equal("door", norm.type);
+  assert.equal("canChangeColour", norm.ability);
+  assert.equal("door", norm.type);
 
   norm = normalizeCombined("set timezone for account");
-  equal("canSetTimezone", norm.ability);
-  equal("account", norm.type);
+  assert.equal("canSetTimezone", norm.ability);
+  assert.equal("account", norm.type);
 });
 
-test('normalizes abilities', function() {
-  equal(normalizeAbility("manage members"), "canManageMembers", "prepends can and camelizes");
+test('normalizes abilities', function(assert) {
+  assert.equal(normalizeAbility("manage members"), "canManageMembers", "prepends can and camelizes");
 });
