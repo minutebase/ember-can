@@ -9,15 +9,21 @@ export default Ability.extend({
 
   author: null,
 
-  canWrite: function() {
-    return this.get("session.isAuthenticated");
-  }.property("session.isAuthenticated"),
+  canWrite: Ember.computed("session.isAuthenticated", {
+    get() {
+      return this.get("session.isAuthenticated");
+    }
+  }),
 
-  canEdit: function() {
-    return this.get("session.isAuthenticated") && this.get("model.author") === this.get("session.user");
-  }.property("model.title", "session.isAuthenticated"),
+  canEdit: Ember.computed("model.title", "session.isAuthenticated", {
+    get() {
+      return this.get("session.isAuthenticated") && this.get("model.author") === this.get("session.user");
+    }
+  }),
 
-  canChangeAuthor: function() {
-    return this.get("author") && this.get("model") && parseInt(this.get("author.id"), null) !== this.get("model.author");
-  }.property("model.author", "author.id")
+  canChangeAuthor: Ember.computed("model.author", "author.id", {
+    get() {
+      return this.get("author") && this.get("model") && parseInt(this.get("author.id"), null) !== this.get("model.author");
+    }
+  })
 });
