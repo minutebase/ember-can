@@ -19,12 +19,6 @@ module.exports = function(environment) {
     }
   };
 
-  ENV['ember-can'] = {
-    inject: {
-      session: "session:main"
-    }
-  };
-
   if (environment === 'development') {
     // ENV.APP.LOG_RESOLVER = true;
     // ENV.APP.LOG_ACTIVE_GENERATION = true;

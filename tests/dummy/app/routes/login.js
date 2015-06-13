@@ -1,8 +1,10 @@
 import Ember from 'ember';
 
 export default Ember.Route.extend({
+  session: Ember.inject.service(),
+
   setupController: function() {
-    this.session.set("isAuthenticated", true);
-    this.session.set("user", 42);
+    this.get("session").set("isAuthenticated", true);
+    this.get("session").set("user", 42);
   }
 });

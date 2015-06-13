@@ -1,6 +1,10 @@
+import Ember from 'ember';
+
 import { Ability } from 'ember-can';
 
 export default Ability.extend({
+  session: Ember.inject.service(),
+
   model: null,
 
   author: null,
