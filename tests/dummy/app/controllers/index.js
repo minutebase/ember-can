@@ -19,7 +19,7 @@ var bob = Person.create({
   name: "Bob"
 });
 
-export default Ember.ObjectController.extend({
+export default Ember.Controller.extend({
   ability:      computed.ability("post"),
   canWritePost: Ember.computed.alias("ability.canWrite"),
   post: editablePost,
