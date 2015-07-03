@@ -2,6 +2,9 @@
 
 ## Master
 
+## v0.6.0
+* Generate unit tests when creating an ability (thanks @blimmer)
+
 ## v0.5.0
 
 * Ember 1.13.x support

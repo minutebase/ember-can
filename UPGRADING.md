@@ -4,6 +4,15 @@ Whilst experimenting with the API & benefiting from changes in Ember, we've had 
 
 Here are the details on updating from previous versions.
 
+## From v0.5.x
+We now automatically generate an abilities test file when generating an ability.
+This required a modification to the test resolver that runs when you `ember install`
+this addon for the first time. When upgrading to v0.6.0+ you'll need to run the
+addon's generator like this:
+```
+ember g ember-can
+```
+
 ## From v0.4.x
 
 Prior to v0.5 we supported defining injections in `/config/environment.js`, this has been removed in preference

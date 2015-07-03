@@ -6,6 +6,7 @@ Simple authorisation addon for Ember.
 
 ## Breaking Changes
 
+* v0.6.0 - support for unit testing abilities added - run `ember g ember-can`
 * v0.5.0 - support for Ember 1.13+ using new Ember.Helper, removed injections
 * v0.4.0 - stopped singularizing ability names to work with pods
 * v0.3.0 - removed `if-can` helper, uses sub-expression instead
@@ -27,12 +28,13 @@ You want to conditionally allow creating a new blog post:
 We define an ability for the `Post` resource in `/app/abilities/post.js`:
 
 ```javascript
+import Ember from 'ember';
 import { Ability } from 'ember-can';
 
 export default Ability.extend({
-  canWrite: function() {
+  canWrite: Ember.computed('user.isAdmin', function() {
     return this.get('user.isAdmin');
-  }.property('user.isAdmin')
+  })
 });
 ```
 
@@ -53,10 +55,10 @@ export default Ember.Route.extend(CanMixin, {
 
 ## Installation
 
-Install this addon via npm:
+Install this addon via ember-cli:
 
 ```
-npm install --save-dev ember-can
+ember install ember-can
 ```
 
 ## Compatibility
@@ -65,7 +67,7 @@ npm install --save-dev ember-can
 | ----------------- | --------------------- |
 | 1.9.x             | 0.2                   |
 | 1.10 through 1.12 | 0.4                   |
-| 1.13 and beyond   | 0.5                   |
+| 1.13 and beyond   | 0.5+                  |
 
 ## Abilities
 
@@ -74,18 +76,19 @@ An ability class protects an individual model / resource which is available in t
 The ability checks themselves are simply standard Ember objects with computed properties:
 
 ```javascript
+import Ember from 'ember';
 import { Ability } from 'ember-can';
 
 export default Ability.extend({
   // only admins can write a post
-  canWrite: function() {
+  canWrite: Ember.computed('user.isAdmin', function() {
     return this.get('user.isAdmin');
-  }.property('user.isAdmin'),
+  }),
 
   // only the person who wrote a post can edit it
-  canEdit: function() {
+  canEdit: Ember.computed('user.id', 'model.author', function() {
     return this.get('user.id') === this.get('model.author');
-  }.property('user.id', 'model.author')
+  })
 });
 ```
 
@@ -93,7 +96,7 @@ export default Ability.extend({
 
 The `can` helper is meant to be used with `{{if}}` and `{{unless}}` to protect a block.
 
-The first parameter is a string which is used to find the ability class call the appropriate property (see "Looking up abilities" below).
+The first parameter is a string which is used to find the ability class call the appropriate property (see [Looking up abilities](#looking-up-abilities)).
 
 The second parameter is an optional model object which will be given to the ability to check permissions.
 
@@ -233,6 +236,19 @@ export default Ember.Controller.extend({
   ability: computed.ability('post', 'content')
 });
 ```
+
+## Testing
+Make sure that you've either `ember install`-ed this addon, or run the addon
+blueprint via `ember g ember-can`. This is an important step that teaches the
+test resolver how to resolve abilities from the file structure.  
+
+An ability unit test will be created each time you generate a new ability via
+`ember g ability <name>`. The package currently supports generating QUnit and
+Mocha style tests.  
+
+To unit test components that use the `can` helper, you'll need to `needs` the
+ability and helper file like this:  
+``` needs: ['helper:can', 'ability:foo'] ```
 
 ## Development
 
