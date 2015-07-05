@@ -2,6 +2,8 @@
 
 Simple authorisation addon for Ember.
 
+[![npm version](https://badge.fury.io/js/ember-can.svg)](http://badge.fury.io/js/ember-can)
+[![Ember Observer Score](http://emberobserver.com/badges/ember-can.svg)](http://emberobserver.com/addons/ember-can)
 [![Build Status](https://travis-ci.org/minutebase/ember-can.svg?branch=master)](https://travis-ci.org/minutebase/ember-can)
 
 ## Breaking Changes

@@ -3,7 +3,6 @@
   "version": "0.6.0",
   "description": "Simple authorisation addon for Ember apps",
   "directories": {
-    "doc": "doc",
     "test": "tests"
   },
   "scripts": {
@@ -11,14 +10,17 @@
     "build": "ember build",
     "test": "ember try:testall"
   },
-  "repository": "https://github.com/minutebase/ember-can",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/minutebase/ember-can.git"
+  },
   "engines": {
     "node": ">= 0.10.0"
   },
-  "author": {
-    "name": "Richard Livsey",
-    "email": "richard@minutebase.com"
-  },
+  "author": "Richard Livsey <richard@minutebase.com>",
+  "contributors": [
+    "Ben Limmer <hello@benlimmer.com>"
+  ],
   "license": "MIT",
   "devDependencies": {
     "broccoli-asset-rev": "^2.0.2",
@@ -39,12 +41,18 @@
     "ember-addon",
     "ember",
     "authorisation",
-    "can"
+    "can",
+    "authorization",
+    "abilities"
   ],
   "dependencies": {
     "ember-cli-babel": "^5.0.0"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/minutebase/ember-can/issues"
+  },
+  "homepage": "https://github.com/minutebase/ember-can#readme"
 }
