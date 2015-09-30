@@ -8,9 +8,12 @@ Resolver.reopen({
 
 export default {
   name: 'setup-ember-can',
-  initialize: function(container) {
-
+  initialize: function(application) {
     // make sure we create new ability instances each time, otherwise we stomp on each other's models
-    container.optionsForType('ability', { singleton: false });
+    if (application.optionsForType) { // it's a container / registry in 1.13.x
+      application.optionsForType('ability', { singleton: false });
+    } else { // Ember 2.0.x
+      application.registerOptionsForType('ability', { singleton: false });
+    }
   }
 };
