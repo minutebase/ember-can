@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="UTF-8">
+    <title>Ember-can by minutebase</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+  </head>
+  <body>
+    <section class="page-header">
+      <h1 class="project-name">Ember-can</h1>
+      <h2 class="project-tagline">Simple authorisation addon for Ember apps</h2>
+      <a href="https://github.com/minutebase/ember-can" class="btn">View on GitHub</a>
+      <a href="https://github.com/minutebase/ember-can/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/minutebase/ember-can/tarball/master" class="btn">Download .tar.gz</a>
+    </section>
+
+    <section class="main-content">
+      <h1>
+<a id="ember-can" class="anchor" href="#ember-can" aria-hidden="true"><span class="octicon octicon-link"></span></a>Ember-can</h1>
+
+<p>Simple authorisation addon for Ember.</p>
+
+<p><a href="http://badge.fury.io/js/ember-can"><img src="https://badge.fury.io/js/ember-can.svg" alt="npm version"></a>
+<a href="http://emberobserver.com/addons/ember-can"><img src="http://emberobserver.com/badges/ember-can.svg" alt="Ember Observer Score"></a>
+<a href="https://travis-ci.org/minutebase/ember-can"><img src="https://travis-ci.org/minutebase/ember-can.svg?branch=master" alt="Build Status"></a></p>
+
+<h2>
+<a id="breaking-changes" class="anchor" href="#breaking-changes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Breaking Changes</h2>
+
+<ul>
+<li>v0.6.0 - support for unit testing abilities added - run <code>ember g ember-can</code>
+</li>
+<li>v0.5.0 - support for Ember 1.13+ using new Ember.Helper, removed injections</li>
+<li>v0.4.0 - stopped singularizing ability names to work with pods</li>
+<li>v0.3.0 - removed <code>if-can</code> helper, uses sub-expression instead</li>
+</ul>
+
+<p>See <a href="UPGRADING.md">UPGRADING</a> for more details.</p>
+
+<h2>
+<a id="quick-example" class="anchor" href="#quick-example" aria-hidden="true"><span class="octicon octicon-link"></span></a>Quick Example</h2>
+
+<p>You want to conditionally allow creating a new blog post:</p>
+
+<div class="highlight highlight-text-html-handlebars"><pre><span class="pl-c1">{{#if</span> (can <span class="pl-s"><span class="pl-pds">"</span>write post<span class="pl-pds">"</span></span>)<span class="pl-c1">}}</span>
+  &lt;<span class="pl-ent">button</span> <span class="pl-c1">{{</span><span class="pl-v">action</span> <span class="pl-s"><span class="pl-pds">"</span>new<span class="pl-pds">"</span></span><span class="pl-c1">}}</span>&gt;Write Post&lt;/<span class="pl-ent">button</span>&gt;
+<span class="pl-c1">{{else}}</span>
+  You can't write a new post
+<span class="pl-c1">{{/if}}</span></pre></div>
+
+<p>We define an ability for the <code>Post</code> resource in <code>/app/abilities/post.js</code>:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> Ember <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>ember<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> { Ability } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>ember-can<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">default</span> Ability.extend({
+  canWrite<span class="pl-k">:</span> Ember.computed(<span class="pl-s"><span class="pl-pds">'</span>user.isAdmin<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>() {
+    <span class="pl-k">return</span> <span class="pl-v">this</span>.get(<span class="pl-s"><span class="pl-pds">'</span>user.isAdmin<span class="pl-pds">'</span></span>);
+  })
+});</pre></div>
+
+<p>We can also re-use the same ability to check if a user has access to a route:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> Ember <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>ember<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> { CanMixin } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>ember-can<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">default</span> Ember.Route.extend(CanMixin, {
+  <span class="pl-en">beforeModel</span><span class="pl-k">:</span> <span class="pl-k">function</span>() {
+    <span class="pl-k">if</span> (<span class="pl-k">!</span><span class="pl-v">this</span>.can(<span class="pl-s"><span class="pl-pds">'</span>write post<span class="pl-pds">'</span></span>)) {
+      <span class="pl-v">this</span>.transitionTo(<span class="pl-s"><span class="pl-pds">'</span>index<span class="pl-pds">'</span></span>);
+    }
+  }
+});</pre></div>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>Install this addon via ember-cli:</p>
+
+<pre><code>ember install ember-can
+</code></pre>
+
+<h2>
+<a id="compatibility" class="anchor" href="#compatibility" aria-hidden="true"><span class="octicon octicon-link"></span></a>Compatibility</h2>
+
+<table>
+<thead>
+<tr>
+<th>Ember Version</th>
+<th>Ember Can Release</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1.9.x</td>
+<td>0.2</td>
+</tr>
+<tr>
+<td>1.10 through 1.12</td>
+<td>0.4</td>
+</tr>
+<tr>
+<td>1.13 and beyond</td>
+<td>0.5+</td>
+</tr>
+</tbody>
+</table>
+
+<h2>
+<a id="abilities" class="anchor" href="#abilities" aria-hidden="true"><span class="octicon octicon-link"></span></a>Abilities</h2>
+
+<p>An ability class protects an individual model / resource which is available in the ability as <code>model</code>.</p>
+
+<p>The ability checks themselves are simply standard Ember objects with computed properties:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> Ember <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>ember<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> { Ability } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>ember-can<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">default</span> Ability.extend({
+  <span class="pl-c">// only admins can write a post</span>
+  canWrite<span class="pl-k">:</span> Ember.computed(<span class="pl-s"><span class="pl-pds">'</span>user.isAdmin<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>() {
+    <span class="pl-k">return</span> <span class="pl-v">this</span>.get(<span class="pl-s"><span class="pl-pds">'</span>user.isAdmin<span class="pl-pds">'</span></span>);
+  }),
+
+  <span class="pl-c">// only the person who wrote a post can edit it</span>
+  canEdit<span class="pl-k">:</span> Ember.computed(<span class="pl-s"><span class="pl-pds">'</span>user.id<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>model.author<span class="pl-pds">'</span></span>, <span class="pl-k">function</span>() {
+    <span class="pl-k">return</span> <span class="pl-v">this</span>.get(<span class="pl-s"><span class="pl-pds">'</span>user.id<span class="pl-pds">'</span></span>) <span class="pl-k">===</span> <span class="pl-v">this</span>.get(<span class="pl-s"><span class="pl-pds">'</span>model.author<span class="pl-pds">'</span></span>);
+  })
+});</pre></div>
+
+<h2>
+<a id="handlebars-helpers" class="anchor" href="#handlebars-helpers" aria-hidden="true"><span class="octicon octicon-link"></span></a>Handlebars Helpers</h2>
+
+<p>The <code>can</code> helper is meant to be used with <code>{{if}}</code> and <code>{{unless}}</code> to protect a block.</p>
+
+<p>The first parameter is a string which is used to find the ability class call the appropriate property (see <a href="#looking-up-abilities">Looking up abilities</a>).</p>
+
+<p>The second parameter is an optional model object which will be given to the ability to check permissions.</p>
+
+<p>As activities are standard Ember objects and computed properties if anything changes then the view will
+automatically update accordingly.</p>
+
+<div class="highlight highlight-text-html-handlebars"><pre><span class="pl-c1">{{#if</span> (can <span class="pl-s"><span class="pl-pds">"</span>edit post<span class="pl-pds">"</span></span> post)<span class="pl-c1">}}</span>
+  ...
+<span class="pl-c1">{{else}}</span>
+  ...
+<span class="pl-c1">{{/if}}</span></pre></div>
+
+<p>As it's a sub-expression, you can use it anywhere a helper can be used.
+For example to give a div a class based on an ability you can use an inline if:</p>
+
+<div class="highlight highlight-text-html-handlebars"><pre>&lt;<span class="pl-ent">div</span> <span class="pl-e"><span class="pl-e">class</span>=</span><span class="pl-s"><span class="pl-pds">"</span><span class="pl-c1">{{</span><span class="pl-v">if</span> (can <span class="pl-s"><span class="pl-pds">'</span>edit post<span class="pl-pds">'</span></span> post) <span class="pl-s"><span class="pl-pds">'</span>is-editable<span class="pl-pds">'</span></span><span class="pl-c1">}}</span><span class="pl-pds">"</span></span>&gt;
+
+&lt;/<span class="pl-ent">div</span>&gt;</pre></div>
+
+<h2>
+<a id="additional-attributes" class="anchor" href="#additional-attributes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Additional attributes</h2>
+
+<p>If you need more than a single resource in an ability, you can pass them additional attributes.</p>
+
+<p>You can do this in the helpers, for example this will set the <code>model</code> to <code>project</code> as usual,
+but also <code>member</code> as a bound property.</p>
+
+<div class="highlight highlight-text-html-handlebars"><pre><span class="pl-c1">{{#if</span> (can <span class="pl-s"><span class="pl-pds">"</span>remove member from project<span class="pl-pds">"</span></span> project member=member)<span class="pl-c1">}}</span>
+  ...
+<span class="pl-c1">{{/if}}</span></pre></div>
+
+<p>Similarly in routes you can pass additional attributes after or instead of the resource:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-v">this</span>.can(<span class="pl-s"><span class="pl-pds">'</span>edit post<span class="pl-pds">'</span></span>, post, { author<span class="pl-k">:</span> bob });
+<span class="pl-v">this</span>.can(<span class="pl-s"><span class="pl-pds">'</span>write post<span class="pl-pds">'</span></span>, { project<span class="pl-k">:</span> project });</pre></div>
+
+<p>These will set <code>author</code> and <code>project</code> on the ability respectively so you can use them in the checks.</p>
+
+<h2>
+<a id="looking-up-abilities" class="anchor" href="#looking-up-abilities" aria-hidden="true"><span class="octicon octicon-link"></span></a>Looking up abilities</h2>
+
+<p>In the example above we said <code>{{#if-can "write post"}}</code>, how do we find the ability class &amp; know which property to use for that?</p>
+
+<p>First we chop off the last word as the resource type which is looked up via the container.</p>
+
+<p>The ability file can either be looked up in the top level <code>/app/abilities</code> directory, or via pod structure.</p>
+
+<p>Then for the ability name we remove some basic stopwords (of, for in) at the end, prepend with "can" and camelCase it all.</p>
+
+<p>For example:</p>
+
+<table>
+<thead>
+<tr>
+<th>String</th>
+<th>property</th>
+<th>resource</th>
+<th>pod</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>write post</td>
+<td><code>canWrite</code></td>
+<td><code>/abilities/post.js</code></td>
+<td><code>app/pods/post/ability.js</code></td>
+</tr>
+<tr>
+<td>manage members in projects</td>
+<td><code>canManageMembers</code></td>
+<td><code>/abilities/projects.js</code></td>
+<td><code>app/pods/projects/ability.js</code></td>
+</tr>
+<tr>
+<td>view profile for user</td>
+<td><code>canViewProfile</code></td>
+<td><code>/abilities/user.js</code></td>
+<td><code>app/pods/user/ability.js</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>Current stopwords which are ignored are:</p>
+
+<ul>
+<li>for</li>
+<li>from</li>
+<li>in</li>
+<li>of</li>
+<li>to</li>
+</ul>
+
+<h2>
+<a id="custom-ability-lookup" class="anchor" href="#custom-ability-lookup" aria-hidden="true"><span class="octicon octicon-link"></span></a>Custom Ability Lookup</h2>
+
+<p>The default lookup is a bit "clever"/"cute" for some people's tastes, so you can override this if you choose.</p>
+
+<p>Simply extend the default <code>CanService</code> in <code>app/services/can.js</code> and override <code>parse</code>.</p>
+
+<p><code>parse</code> takes the ability string eg "manage members in projects" and should return an object with <code>propertyName</code> and <code>abilityName</code>.</p>
+
+<p>For example, to use the format "person.canEdit" instead of the default "edit person" you could do the following:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// app/services/can.js</span>
+<span class="pl-k">import</span> { CanService } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>ember-can<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">default</span> CanService.extend({
+  <span class="pl-en">parse</span>(<span class="pl-smi">str</span>) {
+    <span class="pl-k">const</span> [<span class="pl-c1">abilityName</span>, <span class="pl-c1">propertyName</span>] <span class="pl-k">=</span> str.<span class="pl-c1">split</span>(<span class="pl-s"><span class="pl-pds">'</span>.<span class="pl-pds">'</span></span>);
+    <span class="pl-k">return</span> {
+      propertyName,
+      abilityName
+    }
+  }
+});</pre></div>
+
+<h2>
+<a id="injecting-the-user" class="anchor" href="#injecting-the-user" aria-hidden="true"><span class="octicon octicon-link"></span></a>Injecting the user</h2>
+
+<p>How does the ability know who's logged in? This depends on how you implement it in your app!</p>
+
+<p>If you're using an <code>Ember.Service</code> as your session, you can just inject it into the ability:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// app/abilities/foo.js</span>
+<span class="pl-k">import</span> Ember <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>ember<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> { Ability } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>ember-can<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">default</span> Ability.extend({
+  session<span class="pl-k">:</span> Ember.inject.service()
+});</pre></div>
+
+<p>If you're using ember-simple-auth, you'll probably want to inject the <code>simple-auth-session:main</code> session
+into the ability classes.</p>
+
+<p>To do this, add an initializer like so:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-c">// app/initializers/inject-session-into-abilities.js</span>
+<span class="pl-k">export</span> <span class="pl-k">default</span> {
+  name<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>inject-session-into-abilities<span class="pl-pds">'</span></span>,
+  <span class="pl-en">initialize</span>(<span class="pl-smi">app</span>) {
+    app.inject(<span class="pl-s"><span class="pl-pds">'</span>ability<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>session<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>simple-auth-session:main<span class="pl-pds">'</span></span>);
+  }
+};</pre></div>
+
+<p>The ability classes will now have access to <code>session</code> which can then be used to check if the user is logged in etc...</p>
+
+<h2>
+<a id="controllers-components--computed-properties" class="anchor" href="#controllers-components--computed-properties" aria-hidden="true"><span class="octicon octicon-link"></span></a>Controllers, components &amp; computed properties</h2>
+
+<p>In a controller or component, you may want to expose abilities as computed properties
+so that you can bind to them in your templates.</p>
+
+<p>To do that there's a helper to lookup the ability for a resource, which you can
+then alias properties:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { computed } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>ember-can<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> Ember <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>ember<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">default</span> Ember.Controller.extend({
+  post<span class="pl-k">:</span> <span class="pl-c1">null</span>, <span class="pl-c">// set by the router</span>
+
+  <span class="pl-c">// looks up the "post" ability and sets the model as the controller's "post" property</span>
+  ability<span class="pl-k">:</span> computed.ability(<span class="pl-s"><span class="pl-pds">'</span>post<span class="pl-pds">'</span></span>),
+
+  <span class="pl-c">// alias properties to the ability for easier access</span>
+  canEditPost<span class="pl-k">:</span> Ember.computed.reads(<span class="pl-s"><span class="pl-pds">'</span>ability<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>canEdit<span class="pl-pds">'</span></span>)
+});</pre></div>
+
+<p><code>computed.ability</code> assumes that the property for the resource is the same as the ability resource.
+If that's not the case, include it as the second parameter.</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">import</span> { computed } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>ember-can<span class="pl-pds">'</span></span>;
+<span class="pl-k">import</span> Ember <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>ember<span class="pl-pds">'</span></span>;
+
+<span class="pl-k">export</span> <span class="pl-k">default</span> Ember.Controller.extend({
+  <span class="pl-c">// looks up the "post" ability and sets the model as the controller's "content" property</span>
+  ability<span class="pl-k">:</span> computed.ability(<span class="pl-s"><span class="pl-pds">'</span>post<span class="pl-pds">'</span></span>, <span class="pl-s"><span class="pl-pds">'</span>content<span class="pl-pds">'</span></span>)
+});</pre></div>
+
+<h2>
+<a id="testing" class="anchor" href="#testing" aria-hidden="true"><span class="octicon octicon-link"></span></a>Testing</h2>
+
+<p>Make sure that you've either <code>ember install</code>-ed this addon, or run the addon
+blueprint via <code>ember g ember-can</code>. This is an important step that teaches the
+test resolver how to resolve abilities from the file structure.  </p>
+
+<p>An ability unit test will be created each time you generate a new ability via
+<code>ember g ability &lt;name&gt;</code>. The package currently supports generating QUnit and
+Mocha style tests.  </p>
+
+<p>To unit test components that use the <code>can</code> helper, you'll need to <code>needs</code> the
+ability and helper file like this:<br>
+<code>needs: ['helper:can', 'ability:foo']</code></p>
+
+<h2>
+<a id="development" class="anchor" href="#development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development</h2>
+
+<h3>
+<a id="installation-1" class="anchor" href="#installation-1" aria-hidden="true"><span class="octicon octicon-link"></span></a>Installation</h3>
+
+<ul>
+<li>
+<code>git clone</code> this repository</li>
+<li><code>npm install</code></li>
+<li><code>bower install</code></li>
+</ul>
+
+<h3>
+<a id="running" class="anchor" href="#running" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running</h3>
+
+<ul>
+<li><code>ember server</code></li>
+<li>Visit your app at http://localhost:4200.</li>
+</ul>
+
+<h3>
+<a id="running-tests" class="anchor" href="#running-tests" aria-hidden="true"><span class="octicon octicon-link"></span></a>Running Tests</h3>
+
+<ul>
+<li><code>ember test</code></li>
+<li><code>ember test --server</code></li>
+</ul>
+
+<h3>
+<a id="building" class="anchor" href="#building" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building</h3>
+
+<ul>
+<li><code>ember build</code></li>
+</ul>
+
+<p>For more information on using ember-cli, visit <a href="http://www.ember-cli.com/">http://www.ember-cli.com/</a>.</p>
+
+      <footer class="site-footer">
+        <span class="site-footer-owner"><a href="https://github.com/minutebase/ember-can">Ember-can</a> is maintained by <a href="https://github.com/minutebase">minutebase</a>.</span>
+
+        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+      </footer>
+
+    </section>
+
+  
+  </body>
+</html>
