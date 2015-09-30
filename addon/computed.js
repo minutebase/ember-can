@@ -1,7 +1,7 @@
 import Ember from 'ember';
 
-var get = Ember.get;
-var set = Ember.set;
+const get = Ember.get;
+const set = Ember.set;
 
 export default {
   ability: function(type, resourceName) {
@@ -10,12 +10,12 @@ export default {
     }
 
     return Ember.computed(resourceName, function() {
-      var container = this.container;
-      var ability   = container.lookup("ability:"+type);
+      const container = this.container;
+      const ability   = container.lookup("ability:"+type);
 
       Ember.assert("No ability class found for "+type, ability);
 
-      var resource = get(this, resourceName);
+      const resource = get(this, resourceName);
       set(ability, "model", resource);
       return ability;
     });

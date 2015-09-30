@@ -1,9 +1,12 @@
+// TODO - get rid of the can util & this weird test setup
+
 import {
   test, module
 } from 'qunit';
 
 import Ember from 'ember';
 import can from 'ember-can/utils/can';
+import Service from 'ember-can/services/can';
 
 var ability, post, container;
 
@@ -12,12 +15,20 @@ module('can', {
     ability = Ember.Object.create();
     post    = Ember.Object.create({ title: "A Post" });
 
+    var service = Service.create();
+
     // mock out the container, we know it works
     container = {
-      lookup: function() {
-        return ability;
+      lookup: function(what) {
+        if (what === "service:can") {
+          return service;
+        } else {
+          return ability;
+        }
       }
     };
+
+    service.set("container", container);
   }
 });
 

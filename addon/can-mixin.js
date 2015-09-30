@@ -1,8 +1,9 @@
 import Ember from 'ember';
-import can from './utils/can';
 
 export default Ember.Mixin.create({
+  canService: Ember.inject.service("can"),
+
   can: function(abilityName, resource, aditionalProperties) {
-    return can(this.container, abilityName, resource, aditionalProperties);
+    return this.get("canService").can(abilityName, resource, aditionalProperties);
   }
 });

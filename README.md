@@ -170,6 +170,31 @@ Current stopwords which are ignored are:
 * of
 * to
 
+## Custom Ability Lookup
+
+The default lookup is a bit "clever"/"cute" for some people's tastes, so you can override this if you choose.
+
+Simply extend the default `CanService` in `app/services/can.js` and override `parse`.
+
+`parse` takes the ability string eg "manage members in projects" and should return an object with `propertyName` and `abilityName`.
+
+For example, to use the format "person.canEdit" instead of the default "edit person" you could do the following:
+
+```javascript
+// app/services/can.js
+import { CanService } from 'ember-can';
+
+export default CanService.extend({
+  parse(str) {
+    const [abilityName, propertyName] = str.split('.');
+    return {
+      propertyName,
+      abilityName
+    }
+  }
+});
+```
+
 ## Injecting the user
 
 How does the ability know who's logged in? This depends on how you implement it in your app!
