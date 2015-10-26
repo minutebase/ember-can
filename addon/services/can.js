@@ -33,5 +33,9 @@ export default Ember.Service.extend({
     const names   = this.parse(abilityString);
     const ability = this.build(abilityString, resource, properties);
     return ability.get(names.propertyName);
+  },
+
+  cannot(abilityString, resource, properties) {
+    return !this.can(abilityString, resource, properties);
   }
 });
