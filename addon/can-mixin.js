@@ -5,5 +5,9 @@ export default Ember.Mixin.create({
 
   can: function(abilityName, resource, aditionalProperties) {
     return this.get("canService").can(abilityName, resource, aditionalProperties);
+  },
+
+  cannot: function(abilityName, resource, aditionalProperties) {
+    return !this.can(abilityName, resource, aditionalProperties);
   }
 });

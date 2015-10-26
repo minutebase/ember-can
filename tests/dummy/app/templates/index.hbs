@@ -6,6 +6,14 @@
   <p id="cant-write">You cannot write a post</p>
 {{/if}}
 
+<h2>if cannot helper</h2>
+
+{{#if (cannot "write post")}}
+  <p id="cannot-write">You cannot write a post</p>
+{{else}}
+  <button id="cannot-can-write-post">Write</button>
+{{/if}}
+
 <h2>if with resource</h2>
 
 {{#if (can "edit post" post)}}

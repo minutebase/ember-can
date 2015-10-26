@@ -26,6 +26,16 @@ test('if-can helper shows content when the user is allowed', function(assert) {
   });
 });
 
+test('if-cannot helper shows content when the user is allowed', function(assert) {
+  visit('/login');
+  visit('/');
+
+  andThen(function() {
+    assert.ok(!find("#cannot-write").length, "doesn't show the can't write message");
+    assert.ok(find("#cannot-can-write-post").length, "shows the write button");
+  });
+});
+
 test('if-can helper hides content when the user is not allowed', function(assert) {
   visit('/logout');
   visit('/');
