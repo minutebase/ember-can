@@ -247,7 +247,7 @@ export default Ember.Controller.extend({
   ability: computed.ability('post'),
 
   // alias properties to the ability for easier access
-  canEditPost: Ember.computed.reads('ability', 'canEdit')
+  canEditPost: Ember.computed.reads('ability.canEdit')
 });
 ```
 
