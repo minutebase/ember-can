@@ -4,7 +4,7 @@ var Resolver;
 
 // This is a bit of a hack, but there is no way to detect
 // which module is needed via normal `import` statements
-if (requirejs.entries['ember-resolver']) {
+if (requirejs.entries['ember-resolver'] || requirejs.entries['ember-resolver/index']) {
   // ember-resolver is provided when the consuming
   // application uses ember-resolver@^2.0.0 from NPM
   Resolver = require('ember-resolver')['default'];
