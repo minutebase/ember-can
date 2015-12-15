@@ -1,4 +1,18 @@
-import Resolver from 'ember-resolver';
+/* globals requirejs, require */
+
+var Resolver;
+
+// This is a bit of a hack, but there is no way to detect
+// which module is needed via normal `import` statements
+if (requirejs.entries['ember-resolver']) {
+  // ember-resolver is provided when the consuming
+  // application uses ember-resolver@^2.0.0 from NPM
+  Resolver = require('ember-resolver')['default'];
+} else {
+  // ember/resolver is provided when the consuming
+  // application uses ember-resolver@^0.1.x from Bower
+  Resolver = require('ember/resolver')['default'];
+}
 
 Resolver.reopen({
   pluralizedTypes: {
