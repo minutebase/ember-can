@@ -1,7 +1,7 @@
 import Ember from 'ember';
+import getOwner from 'ember-getowner-polyfill';
 
-const get = Ember.get;
-const set = Ember.set;
+const { get, set } = Ember;
 
 export default {
   ability: function(type, resourceName) {
@@ -10,7 +10,7 @@ export default {
     }
 
     return Ember.computed(resourceName, function() {
-      const container = this.container;
+      const container = getOwner(this);
       const ability   = container.lookup("ability:"+type);
 
       Ember.assert("No ability class found for "+type, ability);
