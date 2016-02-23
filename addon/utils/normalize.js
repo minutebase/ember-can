@@ -11,7 +11,7 @@ export function normalizeCombined(str) {
 
   const abilityName = parts.pop();
 
-  const last = parts[parts.length-1];
+  const last = parts[parts.length - 1];
   if (stopwords.indexOf(last) !== -1) {
     parts.pop();
   }
@@ -24,5 +24,5 @@ export function normalizeCombined(str) {
 }
 
 function normalizeAbilityMethod(str) {
-  return 'can'+classify(str);
+  return 'can' + classify(str);
 }
