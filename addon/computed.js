@@ -1,5 +1,7 @@
 import Ember from 'ember';
 
+const { get, set } = Ember;
+
 export default {
   ability: function(type, resourceName) {
     if (arguments.length === 1) {
@@ -11,8 +13,8 @@ export default {
 
       Ember.assert("No ability class found for " + type, ability);
 
-      const resource = Ember.get(this, resourceName);
-      Ember.set(ability, "model", resource);
+      const resource = get(this, resourceName);
+      set(ability, "model", resource);
       return ability;
     });
   }
