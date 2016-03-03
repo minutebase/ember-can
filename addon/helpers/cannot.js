@@ -1,10 +1,8 @@
 import Ember from 'ember';
-import canHelper from 'ember-can/helpers/can';
 
 export default Ember.Helper.extend({
   helper: Ember.computed(function() {
-    let container = this.container;
-    return canHelper.create({container});
+    return Ember.getOwner(this).lookup('helper:can');
   }),
 
   compute(params, hash) {

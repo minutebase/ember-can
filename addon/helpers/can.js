@@ -1,11 +1,11 @@
 import Ember from 'ember';
 
 export default Ember.Helper.extend({
-  can: Ember.inject.service(),
+  can: Ember.inject.service("can"),
 
   compute([name, resource], hash) {
-    const service      = this.get("can");
-    const ability      = service.build(name, resource, hash);
+    const service = this.get("can");
+    const ability = service.build(name, resource, hash);
 
     const { propertyName } = service.parse(name);
 
