@@ -1,8 +1,9 @@
 import Ember from 'ember';
+import getOwner from 'ember-getowner-polyfill';
 
 export default Ember.Helper.extend({
   helper: Ember.computed(function() {
-    return Ember.getOwner(this).lookup('helper:can');
+    return getOwner(this).lookup('helper:can');
   }),
 
   compute(params, hash) {
