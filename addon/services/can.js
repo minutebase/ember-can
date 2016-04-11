@@ -1,4 +1,5 @@
 import Ember from 'ember';
+import getOwner from 'ember-getowner-polyfill';
 import { normalizeCombined } from '../utils/normalize';
 
 export default Ember.Service.extend({
@@ -8,9 +9,9 @@ export default Ember.Service.extend({
 
   build(abilityString, resource, properties) {
     const names   = this.parse(abilityString);
-    const ability = Ember.getOwner(this).lookup("ability:" + names.abilityName);
+    const ability = getOwner(this).lookup(`ability:${names.abilityName}`);
 
-    Ember.assert("No ability type found for " + names.abilityName, ability);
+    Ember.assert(`No ability type found for ${names.abilityName}`, ability);
 
     // see if we've been given properties instead of resource
     if (!properties && resource && !(resource instanceof Ember.Object)) {
