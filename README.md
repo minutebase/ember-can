@@ -267,15 +267,24 @@ export default Ember.Controller.extend({
 ## Testing
 Make sure that you've either `ember install`-ed this addon, or run the addon
 blueprint via `ember g ember-can`. This is an important step that teaches the
-test resolver how to resolve abilities from the file structure.  
+test resolver how to resolve abilities from the file structure.
+
+### Unit testing abilities
 
 An ability unit test will be created each time you generate a new ability via
 `ember g ability <name>`. The package currently supports generating QUnit and
 Mocha style tests.  
 
-To unit test components that use the `can` helper, you'll need to `needs` the
+### Unit testing in your app
+
+To unit test modules that use the `can` helper, you'll need to explicitly add `needs` for the
 ability and helper file like this:  
 ``` needs: ['helper:can', 'ability:foo'] ```
+
+### Integration testing in your app
+
+For integration testing components, you should not need to specify anything explicitly. The
+helper and your abilities should be available to your components automatically.
 
 ## Development
 
