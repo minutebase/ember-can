@@ -146,7 +146,7 @@ These will set `author` and `project` on the ability respectively so you can use
 
 ## Looking up abilities
 
-In the example above we said `{{#if-can "write post"}}`, how do we find the ability class & know which property to use for that?
+In the example above we said `{{#if (can "write post")}}`, how do we find the ability class & know which property to use for that?
 
 First we chop off the last word as the resource type which is looked up via the container.
 
