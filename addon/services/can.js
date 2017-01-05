@@ -1,6 +1,7 @@
 import Ember from 'ember';
-import getOwner from 'ember-getowner-polyfill';
 import { normalizeCombined } from '../utils/normalize';
+
+const { getOwner } = Ember;
 
 export default Ember.Service.extend({
   parse(name) {
