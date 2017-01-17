@@ -1,7 +1,6 @@
 import Ember from 'ember';
-import getOwner from 'ember-getowner-polyfill';
 
-const { get, set } = Ember;
+const { get, getOwner, set } = Ember;
 
 export default {
   ability: function(type, resourceName) {
