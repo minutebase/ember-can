@@ -4,7 +4,7 @@ const { getOwner } = Ember;
 
 export default Ember.Helper.extend({
   helper: Ember.computed(function() {
-    return getOwner(this).lookup('helper:can');
+    return getOwner(this).lookup('helper:can').create();
   }),
 
   compute(params, hash) {
