@@ -1,7 +1,14 @@
 # Change Log
 
-## [0.8.2](https://github.com/minutebase/ember-can/tree/0.8.2) (2017-01-25)
-[Full Changelog](https://github.com/minutebase/ember-can/compare/v0.8.0...0.8.2)
+## [0.8.3](https://github.com/minutebase/ember-can/tree/0.8.3) (2017-01-30)
+[Full Changelog](https://github.com/minutebase/ember-can/compare/v0.8.2...0.8.3)
+
+**Merged pull requests:**
+
+- Ember 2.11 [\#52](https://github.com/minutebase/ember-can/pull/52) ([vluoto](https://github.com/vluoto))
+
+## [v0.8.2](https://github.com/minutebase/ember-can/tree/v0.8.2) (2017-01-25)
+[Full Changelog](https://github.com/minutebase/ember-can/compare/v0.8.0...v0.8.2)
 
 **Closed issues:**
 
