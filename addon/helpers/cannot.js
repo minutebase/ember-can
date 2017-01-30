@@ -1,10 +1,12 @@
 import Ember from 'ember';
 
-const { getOwner } = Ember;
+const { getOwner, typeOf } = Ember;
 
 export default Ember.Helper.extend({
   helper: Ember.computed(function() {
-    return getOwner(this).lookup('helper:can').create();
+    var helper = getOwner(this).lookup('helper:can');
+
+    return typeOf(helper) === 'instance' ? helper : helper.create();
   }),
 
   compute(params, hash) {
