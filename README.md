@@ -169,6 +169,7 @@ Current stopwords which are ignored are:
 * in
 * of
 * to
+* on
 
 ## Custom Ability Lookup
 

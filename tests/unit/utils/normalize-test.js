@@ -36,4 +36,8 @@ test('removes stopwords from combined string', function(assert) {
   norm = normalizeCombined("set timezone for account");
   assert.equal("canSetTimezone", norm.propertyName);
   assert.equal("account", norm.abilityName);
+
+  norm = normalizeCombined("comment on issues");
+  assert.equal("canComment", norm.propertyName);
+  assert.equal("issues", norm.abilityName);
 });

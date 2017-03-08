@@ -3,7 +3,7 @@ import Ember from 'ember';
 const classify = Ember.String.classify;
 
 const stopwords = [
-  "of", "in", "for", "to", "from"
+  "of", "in", "for", "to", "from", "on"
 ];
 
 export function normalizeCombined(str) {
