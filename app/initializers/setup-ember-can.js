@@ -1,5 +1,5 @@
-/* globals requirejs, require */
-
+/* globals requirejs */
+import require from 'require';
 var Resolver;
 
 // This is a bit of a hack, but there is no way to detect
