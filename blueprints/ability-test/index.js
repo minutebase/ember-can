@@ -32,7 +32,7 @@ module.exports = {
         "});" + EOL + EOL +
         "// Replace this with your real tests." + EOL +
         "test('it exists', function(assert) {" + EOL +
-        "  var ability = this.subject();" + EOL +
+        "  const ability = this.subject();" + EOL +
         "  assert.ok(ability);" + EOL +
         "});";
     } else if (testStyle === 'mocha') {
@@ -54,7 +54,7 @@ module.exports = {
         "  function() {" + EOL +
         "    // Replace this with your real tests." + EOL +
         "    it('exists', function() {" + EOL +
-        "      var ability = this.subject();" + EOL +
+        "      const ability = this.subject();" + EOL +
         "      expect(ability).to.be.ok;" + EOL +
         "    });" + EOL +
         "  }" + EOL +
