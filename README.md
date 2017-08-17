@@ -21,7 +21,7 @@ You want to conditionally allow creating a new blog post:
 
 ```handlebars
 {{#if (can "write post")}}
-  <button {{action "new"}}>Write Post</button>
+  <button type="button" onclick={{action "new"}}>Write Post</button>
 {{else}}
   You can't write a new post
 {{/if}}
@@ -47,10 +47,14 @@ import Ember from 'ember';
 import { CanMixin } from 'ember-can';
 
 export default Ember.Route.extend(CanMixin, {
-  beforeModel: function() {
+  beforeModel() {
+    let result = this._super(...arguments);
+
     if (!this.can('write post')) {
-      this.transitionTo('index');
+      return this.transitionTo('index');
     }
+
+    return result;
   }
 });
 ```
