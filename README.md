@@ -48,11 +48,13 @@ import { CanMixin } from 'ember-can';
 
 export default Ember.Route.extend(CanMixin, {
   beforeModel() {
+    let result = this._super(...arguments);
+
     if (!this.can('write post')) {
       return this.transitionTo('index');
     }
 
-    return this._super(...arguments);
+    return result;
   }
 });
 ```
