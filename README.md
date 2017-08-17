@@ -51,6 +51,8 @@ export default Ember.Route.extend(CanMixin, {
     if (!this.can('write post')) {
       return this.transitionTo('index');
     }
+
+    return this._super(...arguments);
   }
 });
 ```
