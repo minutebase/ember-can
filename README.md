@@ -269,6 +269,15 @@ export default Ember.Controller.extend({
 });
 ```
 
+## Accessing abilities within an egine
+
+If you're using [engines](http://ember-engines.com/) and you want to access an *ability* within it, you will it need to be present in your Engine’s namespace. This is accomplished by doing what is called a "re-export":
+
+```javascript
+//my-engine/addon/abilities/foo-bar.js
+export { default } from 'my-app/abilities/foo-bar';
+```
+
 ## Testing
 Make sure that you've either `ember install`-ed this addon, or run the addon
 blueprint via `ember g ember-can`. This is an important step that teaches the
@@ -278,12 +287,12 @@ test resolver how to resolve abilities from the file structure.
 
 An ability unit test will be created each time you generate a new ability via
 `ember g ability <name>`. The package currently supports generating QUnit and
-Mocha style tests.  
+Mocha style tests.
 
 ### Unit testing in your app
 
 To unit test modules that use the `can` helper, you'll need to explicitly add `needs` for the
-ability and helper file like this:  
+ability and helper file like this:
 ``` needs: ['helper:can', 'ability:foo'] ```
 
 ### Integration testing in your app
