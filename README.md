@@ -285,13 +285,11 @@ test resolver how to resolve abilities from the file structure.
 
 ### Unit testing abilities
 
-An ability unit test will be created each time you generate a new ability via
-`ember g ability <name>`. The package currently supports generating QUnit and Mocha style tests.
+An ability unit test will be created each time you generate a new ability via `ember g ability <name>`. The package currently supports generating QUnit and Mocha style tests.
 
 ### Unit testing in your app
 
-To unit test modules that use the `can` helper, you'll need to explicitly add `needs` for the ability and helper file like this:
-``` needs: ['helper:can', 'ability:foo'] ```
+To unit test modules that use the `can` helper, you'll need to explicitly add `needs` for the ability and helper file like this: ``` needs: ['helper:can', 'ability:foo'] ```
 
 ### Integration testing in your app
 
