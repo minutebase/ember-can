@@ -21,7 +21,9 @@ export default Ember.Helper.extend({
   },
 
   destroy() {
-    this._ability.removeObserver(this._abilityProp, this, 'recompute');
+    if (this._ability) {
+      this._ability.removeObserver(this._abilityProp, this, 'recompute');
+    }
     return this._super();
   }
 });
