@@ -1,14 +1,34 @@
 # Change Log
 
-## [0.8.3](https://github.com/minutebase/ember-can/tree/0.8.3) (2017-01-30)
-[Full Changelog](https://github.com/minutebase/ember-can/compare/v0.8.2...0.8.3)
+## [0.8.5](https://github.com/minutebase/ember-can/tree/0.8.5) (2017-10-21)
+[Full Changelog](https://github.com/minutebase/ember-can/compare/v0.8.4...0.8.5)
+
+**Closed issues:**
+
+- Update blueprints to ES6 [\#58](https://github.com/minutebase/ember-can/issues/58)
 
 **Merged pull requests:**
 
+- Guard against undefined ability during destroy [\#69](https://github.com/minutebase/ember-can/pull/69) ([FilmKnurd](https://github.com/FilmKnurd))
+- docs: tweak some examples for consistency and correctness [\#65](https://github.com/minutebase/ember-can/pull/65) ([knownasilya](https://github.com/knownasilya))
+- Update blueprints to es6 [\#59](https://github.com/minutebase/ember-can/pull/59) ([jbandura](https://github.com/jbandura))
+
+## [v0.8.4](https://github.com/minutebase/ember-can/tree/v0.8.4) (2017-03-28)
+[Full Changelog](https://github.com/minutebase/ember-can/compare/v0.8.2...v0.8.4)
+
+**Closed issues:**
+
+- Question about mutable models [\#54](https://github.com/minutebase/ember-can/issues/54)
+- Tests fail on Ember 2.10++ [\#50](https://github.com/minutebase/ember-can/issues/50)
+
+**Merged pull requests:**
+
+- Avoid errors when being transpiled by Babel 6. [\#55](https://github.com/minutebase/ember-can/pull/55) ([rwjblue](https://github.com/rwjblue))
+- Add "on" as a stop word [\#53](https://github.com/minutebase/ember-can/pull/53) ([sukima](https://github.com/sukima))
 - Ember 2.11 [\#52](https://github.com/minutebase/ember-can/pull/52) ([vluoto](https://github.com/vluoto))
 
 ## [v0.8.2](https://github.com/minutebase/ember-can/tree/v0.8.2) (2017-01-25)
-[Full Changelog](https://github.com/minutebase/ember-can/compare/v0.8.0...v0.8.2)
+[Full Changelog](https://github.com/minutebase/ember-can/compare/v0.8.1...v0.8.2)
 
 **Closed issues:**
 
@@ -22,6 +42,12 @@
 - Typo in spelling of `additionalProperties` [\#43](https://github.com/minutebase/ember-can/pull/43) ([minichate](https://github.com/minichate))
 - Update README.md [\#42](https://github.com/minutebase/ember-can/pull/42) ([kategengler](https://github.com/kategengler))
 - Update README to break out unit/integration testing [\#41](https://github.com/minutebase/ember-can/pull/41) ([JoshSmith](https://github.com/JoshSmith))
+
+## [v0.8.1](https://github.com/minutebase/ember-can/tree/v0.8.1) (2016-04-11)
+[Full Changelog](https://github.com/minutebase/ember-can/compare/v0.8.0...v0.8.1)
+
+**Merged pull requests:**
+
 - Rely on getOwner polyfill [\#39](https://github.com/minutebase/ember-can/pull/39) ([xomaczar](https://github.com/xomaczar))
 
 ## [v0.8.0](https://github.com/minutebase/ember-can/tree/v0.8.0) (2016-03-03)
