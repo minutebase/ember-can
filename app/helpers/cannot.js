@@ -1,2 +1,1 @@
-import cannotHelper from 'ember-can/helpers/cannot';
-export default cannotHelper;
+export { default } from 'ember-can/helpers/cannot';

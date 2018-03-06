@@ -1,28 +1,20 @@
 import Ember from 'ember';
 
-const classify = Ember.String.classify;
+const { String: { classify } } = Ember;
 
-const stopwords = [
-  "of", "in", "for", "to", "from", "on"
-];
+const stopWords = ['of', 'in', 'for', 'to', 'from', 'on'];
 
-export function normalizeCombined(str) {
-  const parts = str.split(' ');
+export default function(string) {
+  let parts = string.split(' ');
+  let abilityName = parts.pop();
+  let last = parts[parts.length - 1];
 
-  const abilityName = parts.pop();
-
-  const last = parts[parts.length - 1];
-  if (stopwords.indexOf(last) !== -1) {
+  if (stopWords.indexOf(last) !== -1) {
     parts.pop();
   }
 
-  const propertyName = normalizeAbilityMethod(parts.join(" "));
+  let ability = classify(parts.join(' '));
+  let propertyName = `can${ability}`;
 
-  return {
-    propertyName, abilityName
-  };
-}
-
-function normalizeAbilityMethod(str) {
-  return 'can' + classify(str);
+  return { propertyName, abilityName };
 }
