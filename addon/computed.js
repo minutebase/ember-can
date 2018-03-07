@@ -9,12 +9,13 @@ export default {
     }
 
     return Ember.computed(resourceName, function() {
-      const ability = getOwner(this).lookup(`ability:${type}`);
+      let ability = getOwner(this).lookup(`ability:${type}`);
 
       Ember.assert(`No ability class found for ${type}`, ability);
 
-      const resource = get(this, resourceName);
+      let resource = get(this, resourceName);
       set(ability, 'model', resource);
+
       return ability;
     });
   }

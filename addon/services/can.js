@@ -1,5 +1,5 @@
 import Ember from 'ember';
-import { normalizeCombined } from '../utils/normalize';
+import normalizeCombined from 'ember-can/utils/normalize';
 
 const { getOwner } = Ember;
 
@@ -9,10 +9,10 @@ export default Ember.Service.extend({
   },
 
   build(abilityString, resource, properties) {
-    const names   = this.parse(abilityString);
-    const ability = getOwner(this).lookup(`ability:${names.abilityName}`);
+    let { abilityName } = this.parse(abilityString);
+    let ability = getOwner(this).lookup(`ability:${abilityName}`);
 
-    Ember.assert(`No ability type found for ${names.abilityName}`, ability);
+    Ember.assert(`No ability type found for ${abilityName}`, ability);
 
     // see if we've been given properties instead of resource
     if (!properties && resource && !(resource instanceof Ember.Object)) {
@@ -32,8 +32,9 @@ export default Ember.Service.extend({
   },
 
   can(abilityString, resource, properties) {
-    const names   = this.parse(abilityString);
-    const ability = this.build(abilityString, resource, properties);
+    let names = this.parse(abilityString);
+    let ability = this.build(abilityString, resource, properties);
+
     return ability.get(names.propertyName);
   },
 

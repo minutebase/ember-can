@@ -1,21 +1,17 @@
-import {
-  test, module
-} from 'qunit';
-
-import {
-  normalizeCombined
-} from 'ember-can/utils/normalize';
+import { test, module } from 'qunit';
+import normalizeCombined from 'ember-can/utils/normalize';
 
 module('normalize');
 
 test('normalizes basic combined string', function(assert) {
-  var norm = normalizeCombined("edit post");
+  let norm = normalizeCombined("edit post");
+
   assert.equal("canEdit", norm.propertyName);
   assert.equal("post", norm.abilityName);
 });
 
 test('removes stopwords from combined string', function(assert) {
-  var norm;
+  let norm;
 
   norm = normalizeCombined("manage members in project");
   assert.equal("canManageMembers", norm.propertyName);
