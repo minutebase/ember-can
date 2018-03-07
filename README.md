@@ -278,12 +278,12 @@ test resolver how to resolve abilities from the file structure.
 
 An ability unit test will be created each time you generate a new ability via
 `ember g ability <name>`. The package currently supports generating QUnit and
-Mocha style tests.  
+Mocha style tests.
 
 ### Unit testing in your app
 
 To unit test modules that use the `can` helper, you'll need to explicitly add `needs` for the
-ability and helper file like this:  
+ability and helper file like this:
 ``` needs: ['helper:can', 'ability:foo'] ```
 
 ### Integration testing in your app
@@ -291,26 +291,28 @@ ability and helper file like this:
 For integration testing components, you should not need to specify anything explicitly. The
 helper and your abilities should be available to your components automatically.
 
-## Development
+## Contributing
 
 ### Installation
 
-* `git clone` this repository
+* `git clone <repository-url>`
+* `cd my-addon`
 * `npm install`
-* `bower install`
 
-### Running
+### Linting
 
-* `ember server`
-* Visit your app at http://localhost:4200.
+* `npm run lint:js`
+* `npm run lint:js -- --fix`
 
-### Running Tests
+### Running tests
 
-* `ember test`
-* `ember test --server`
+* `ember test` – Runs the test suite on the current Ember version
+* `ember test --server` – Runs the test suite in "watch mode"
+* `npm test` – Runs `ember try:each` to test your addon against multiple Ember versions
 
-### Building
+### Running the dummy application
 
-* `ember build`
+* `ember serve`
+* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
 
-For more information on using ember-cli, visit [http://www.ember-cli.com/](http://www.ember-cli.com/).
+For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
