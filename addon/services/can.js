@@ -9,20 +9,18 @@ export default Service.extend({
     return normalizeCombined(name);
   },
 
-  build(abilityString, resource, properties) {
-    let { abilityName } = this.parse(abilityString);
+  build(abilityName, model, properties) {
     let ability = getOwner(this).lookup(`ability:${abilityName}`);
-
     assert(`No ability type found for ${abilityName}`, ability);
 
-    // see if we've been given properties instead of resource
-    if (!properties && resource && !(resource instanceof EmberObject)) {
-      properties = resource;
-      resource   = null;
+    // see if we've been given properties instead of model
+    if (!properties && model && !(model instanceof EmberObject)) {
+      properties = model;
+      model = null;
     }
 
-    if (resource) {
-      ability.set("model", resource);
+    if (model) {
+      ability.set("model", model);
     }
 
     if (properties) {
@@ -32,14 +30,14 @@ export default Service.extend({
     return ability;
   },
 
-  can(abilityString, resource, properties) {
-    let names = this.parse(abilityString);
-    let ability = this.build(abilityString, resource, properties);
+  can(abilityString, model, properties) {
+    let { abilityName, propertyName } = this.parse(abilityString);
+    let ability = this.build(abilityName, model, properties);
 
-    return ability.get(names.propertyName);
+    return ability.get(propertyName);
   },
 
-  cannot(abilityString, resource, properties) {
-    return !this.can(abilityString, resource, properties);
+  cannot(abilityString, model, properties) {
+    return !this.can(abilityString, model, properties);
   }
 });

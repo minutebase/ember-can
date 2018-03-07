@@ -7,7 +7,7 @@ export default function(string) {
   let abilityName = parts.pop();
   let last = parts[parts.length - 1];
 
-  if (stopWords.indexOf(last) !== -1) {
+  if (stopWords.includes(last)) {
     parts.pop();
   }
 

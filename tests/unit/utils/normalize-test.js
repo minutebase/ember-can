@@ -1,9 +1,9 @@
 import { test, module } from 'qunit';
-import normalizeCombined from 'ember-can/utils/normalize';
+import normalize from 'ember-can/utils/normalize';
 
 module('normalize', function() {
   test('normalizes basic combined string', function(assert) {
-    let norm = normalizeCombined("edit post");
+    let norm = normalize("edit post");
 
     assert.equal("canEdit", norm.propertyName);
     assert.equal("post", norm.abilityName);
@@ -12,27 +12,27 @@ module('normalize', function() {
   test('removes stopwords from combined string', function(assert) {
     let norm;
 
-    norm = normalizeCombined("manage members in project");
+    norm = normalize("manage members in project");
     assert.equal("canManageMembers", norm.propertyName);
     assert.equal("project", norm.abilityName);
 
-    norm = normalizeCombined("add tags to post");
+    norm = normalize("add tags to post");
     assert.equal("canAddTags", norm.propertyName);
     assert.equal("post", norm.abilityName);
 
-    norm = normalizeCombined("remove tags from post");
+    norm = normalize("remove tags from post");
     assert.equal("canRemoveTags", norm.propertyName);
     assert.equal("post", norm.abilityName);
 
-    norm = normalizeCombined("change colour of door");
+    norm = normalize("change colour of door");
     assert.equal("canChangeColour", norm.propertyName);
     assert.equal("door", norm.abilityName);
 
-    norm = normalizeCombined("set timezone for account");
+    norm = normalize("set timezone for account");
     assert.equal("canSetTimezone", norm.propertyName);
     assert.equal("account", norm.abilityName);
 
-    norm = normalizeCombined("comment on issues");
+    norm = normalize("comment on issues");
     assert.equal("canComment", norm.propertyName);
     assert.equal("issues", norm.abilityName);
   });
