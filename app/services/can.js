@@ -1,2 +1,1 @@
-import { CanService } from 'ember-can';
-export default CanService;
+export { default } from 'ember-can/services/can';

@@ -4,15 +4,15 @@ export default Ember.Helper.extend({
   can: Ember.inject.service(),
 
   compute([name, resource], hash) {
-    const service = this.get('can');
-    const ability = service.build(name, resource, hash);
-    const { propertyName } = service.parse(name);
+    let service = this.get('can');
+    let ability = service.build(name, resource, hash);
+    let { propertyName } = service.parse(name);
 
     if (this._ability) {
       this._ability.removeObserver(this._abilityProp, this, 'recompute');
     }
 
-    this._ability     = ability;
+    this._ability = ability;
     this._abilityProp = propertyName;
 
     ability.addObserver(propertyName, this, 'recompute');
@@ -24,6 +24,7 @@ export default Ember.Helper.extend({
     if (this._ability) {
       this._ability.removeObserver(this._abilityProp, this, 'recompute');
     }
+
     return this._super();
   }
 });
