@@ -1,5 +1,3 @@
-/* jshint node: true */
-
 var RSVP = require('rsvp');
 var spawn = require('child_process').spawn;
 
