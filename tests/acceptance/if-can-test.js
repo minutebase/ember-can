@@ -1,6 +1,7 @@
-import { click, fillIn, findAll, currentRouteName, visit } from '@ember/test-helpers';
 import { module, test } from 'qunit';
 import { setupApplicationTest } from 'ember-qunit';
+
+import { click, fillIn, findAll, currentRouteName, visit } from '@ember/test-helpers';
 
 module('Acceptance | IfCanTest', function(hooks) {
   setupApplicationTest(hooks);

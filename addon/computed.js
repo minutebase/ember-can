@@ -1,6 +1,6 @@
-import Ember from 'ember';
-
-const { get, set, getOwner } = Ember;
+import { assert } from '@ember/debug';
+import { set, get, computed } from '@ember/object';
+import { getOwner } from '@ember/application';
 
 export default {
   ability: function(type, resourceName) {
@@ -8,10 +8,10 @@ export default {
       resourceName = type;
     }
 
-    return Ember.computed(resourceName, function() {
+    return computed(resourceName, function() {
       let ability = getOwner(this).lookup(`ability:${type}`);
 
-      Ember.assert(`No ability class found for ${type}`, ability);
+      assert(`No ability class found for ${type}`, ability);
 
       let resource = get(this, resourceName);
       set(ability, 'model', resource);

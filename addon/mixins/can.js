@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Mixin from '@ember/object/mixin';
 
-export default Ember.Mixin.create({
-  canService: Ember.inject.service('can'),
+export default Mixin.create({
+  canService: service('can'),
 
   can(abilityName, resource, properties) {
     return this.get('canService').can(abilityName, resource, properties);

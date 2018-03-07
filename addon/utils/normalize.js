@@ -1,6 +1,4 @@
-import Ember from 'ember';
-
-const { String: { classify } } = Ember;
+import { classify } from '@ember/string';
 
 const stopWords = ['of', 'in', 'for', 'to', 'from', 'on'];
 

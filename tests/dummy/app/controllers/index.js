@@ -1,27 +1,29 @@
-import Ember from 'ember';
+import { alias } from '@ember/object/computed';
+import Controller from '@ember/controller';
+import EmberObject from '@ember/object';
 import { computed } from 'ember-can';
 
-var Post = Ember.Object.extend();
-var Person = Ember.Object.extend();
+let Post = EmberObject.extend();
+let Person = EmberObject.extend();
 
-var editablePost = Post.create({
+let editablePost = Post.create({
   author: 42,
   title: "Something"
 });
 
-var otherPost = Post.create({
+let otherPost = Post.create({
   author: 99,
   title: "Something Else"
 });
 
-var bob = Person.create({
+let bob = Person.create({
   id: 69,
   name: "Bob"
 });
 
-export default Ember.Controller.extend({
+export default Controller.extend({
   ability:      computed.ability("post"),
-  canWritePost: Ember.computed.alias("ability.canWrite"),
+  canWritePost: alias("ability.canWrite"),
   post: editablePost,
 
   bob: bob,
