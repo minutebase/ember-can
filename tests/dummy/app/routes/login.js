@@ -1,7 +1,8 @@
-import Ember from 'ember';
+import { inject as service } from '@ember/service';
+import Route from '@ember/routing/route';
 
-export default Ember.Route.extend({
-  session: Ember.inject.service('session'),
+export default Route.extend({
+  session: service('session'),
 
   setupController: function() {
     this.get("session").set("isAuthenticated", true);

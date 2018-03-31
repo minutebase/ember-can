@@ -1,43 +1,39 @@
-import {
-  test, module
-} from 'qunit';
+import { test, module } from 'qunit';
+import normalize from 'ember-can/utils/normalize';
 
-import {
-  normalizeCombined
-} from 'ember-can/utils/normalize';
+module('normalize', function() {
+  test('normalizes basic combined string', function(assert) {
+    let norm = normalize("edit post");
 
-module('normalize');
+    assert.equal("canEdit", norm.propertyName);
+    assert.equal("post", norm.abilityName);
+  });
 
-test('normalizes basic combined string', function(assert) {
-  var norm = normalizeCombined("edit post");
-  assert.equal("canEdit", norm.propertyName);
-  assert.equal("post", norm.abilityName);
-});
+  test('removes stopwords from combined string', function(assert) {
+    let norm;
 
-test('removes stopwords from combined string', function(assert) {
-  var norm;
+    norm = normalize("manage members in project");
+    assert.equal("canManageMembers", norm.propertyName);
+    assert.equal("project", norm.abilityName);
 
-  norm = normalizeCombined("manage members in project");
-  assert.equal("canManageMembers", norm.propertyName);
-  assert.equal("project", norm.abilityName);
+    norm = normalize("add tags to post");
+    assert.equal("canAddTags", norm.propertyName);
+    assert.equal("post", norm.abilityName);
 
-  norm = normalizeCombined("add tags to post");
-  assert.equal("canAddTags", norm.propertyName);
-  assert.equal("post", norm.abilityName);
+    norm = normalize("remove tags from post");
+    assert.equal("canRemoveTags", norm.propertyName);
+    assert.equal("post", norm.abilityName);
 
-  norm = normalizeCombined("remove tags from post");
-  assert.equal("canRemoveTags", norm.propertyName);
-  assert.equal("post", norm.abilityName);
+    norm = normalize("change colour of door");
+    assert.equal("canChangeColour", norm.propertyName);
+    assert.equal("door", norm.abilityName);
 
-  norm = normalizeCombined("change colour of door");
-  assert.equal("canChangeColour", norm.propertyName);
-  assert.equal("door", norm.abilityName);
+    norm = normalize("set timezone for account");
+    assert.equal("canSetTimezone", norm.propertyName);
+    assert.equal("account", norm.abilityName);
 
-  norm = normalizeCombined("set timezone for account");
-  assert.equal("canSetTimezone", norm.propertyName);
-  assert.equal("account", norm.abilityName);
-
-  norm = normalizeCombined("comment on issues");
-  assert.equal("canComment", norm.propertyName);
-  assert.equal("issues", norm.abilityName);
+    norm = normalize("comment on issues");
+    assert.equal("canComment", norm.propertyName);
+    assert.equal("issues", norm.abilityName);
+  });
 });

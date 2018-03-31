@@ -1,27 +1,26 @@
-import Ember from 'ember';
-import { normalizeCombined } from '../utils/normalize';
+import EmberObject from '@ember/object';
+import { assert } from '@ember/debug';
+import Service from '@ember/service';
+import { getOwner } from '@ember/application';
+import normalizeCombined from 'ember-can/utils/normalize';
 
-const { getOwner } = Ember;
-
-export default Ember.Service.extend({
+export default Service.extend({
   parse(name) {
     return normalizeCombined(name);
   },
 
-  build(abilityString, resource, properties) {
-    const names   = this.parse(abilityString);
-    const ability = getOwner(this).lookup(`ability:${names.abilityName}`);
+  build(abilityName, model, properties) {
+    let ability = getOwner(this).lookup(`ability:${abilityName}`);
+    assert(`No ability type found for ${abilityName}`, ability);
 
-    Ember.assert(`No ability type found for ${names.abilityName}`, ability);
-
-    // see if we've been given properties instead of resource
-    if (!properties && resource && !(resource instanceof Ember.Object)) {
-      properties = resource;
-      resource   = null;
+    // see if we've been given properties instead of model
+    if (!properties && model && !(model instanceof EmberObject)) {
+      properties = model;
+      model = null;
     }
 
-    if (resource) {
-      ability.set("model", resource);
+    if (model) {
+      ability.set("model", model);
     }
 
     if (properties) {
@@ -31,13 +30,14 @@ export default Ember.Service.extend({
     return ability;
   },
 
-  can(abilityString, resource, properties) {
-    const names   = this.parse(abilityString);
-    const ability = this.build(abilityString, resource, properties);
-    return ability.get(names.propertyName);
+  can(abilityString, model, properties) {
+    let { abilityName, propertyName } = this.parse(abilityString);
+    let ability = this.build(abilityName, model, properties);
+
+    return ability.get(propertyName);
   },
 
-  cannot(abilityString, resource, properties) {
-    return !this.can(abilityString, resource, properties);
+  cannot(abilityString, model, properties) {
+    return !this.can(abilityString, model, properties);
   }
 });

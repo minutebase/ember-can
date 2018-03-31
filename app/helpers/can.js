@@ -1,2 +1,1 @@
-import canHelper from 'ember-can/helpers/can';
-export default canHelper;
+export { default } from 'ember-can/helpers/can';

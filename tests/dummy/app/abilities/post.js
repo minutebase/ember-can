@@ -1,22 +1,23 @@
-import Ember from 'ember';
+import { computed } from '@ember/object';
+import { inject as service } from '@ember/service';
 import { Ability } from 'ember-can';
 
 export default Ability.extend({
-  session: Ember.inject.service('session'),
+  session: service('session'),
 
   model: null,
 
   author: null,
 
-  canWrite: Ember.computed("session.isAuthenticated", function() {
+  canWrite: computed("session.isAuthenticated", function() {
     return this.get("session.isAuthenticated");
   }),
 
-  canEdit: Ember.computed("model.author", "session.isAuthenticated", function() {
+  canEdit: computed("model.author", "session.isAuthenticated", function() {
     return this.get("session.isAuthenticated") && this.get("model.author") === this.get("session.user");
   }),
 
-  canChangeAuthor: Ember.computed("model.author", "author.id", function() {
+  canChangeAuthor: computed("model.author", "author.id", function() {
     return this.get("author") && this.get("model") && parseInt(this.get("author.id"), null) !== this.get("model.author");
   })
 });

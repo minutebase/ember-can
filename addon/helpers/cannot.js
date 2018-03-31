@@ -1,15 +1,7 @@
-import Ember from 'ember';
+import CanHelper from 'ember-can/helpers/can';
 
-const { getOwner, typeOf } = Ember;
-
-export default Ember.Helper.extend({
-  helper: Ember.computed(function() {
-    var helper = getOwner(this).lookup('helper:can');
-
-    return typeOf(helper) === 'instance' ? helper : helper.create();
-  }),
-
-  compute(params, hash) {
-    return !this.get('helper').compute(params, hash);
+export default CanHelper.extend({
+  compute() {
+    return !this._super(...arguments);
   }
 });
