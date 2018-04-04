@@ -1,13 +1,7 @@
 # Change Log
 
-## [v1.0.0](https://github.com/minutebase/ember-can/tree/v1.0.0) (2018-04-04)
+## [v1.0.0](https://github.com/minutebase/ember-can/tree/v1.0.0) (2018-03-31)
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.8.5...v1.0.0)
-
-**Closed issues:**
-
-- Can you please resolve the deprecation ember-cli-version-checker ? [\#75](https://github.com/minutebase/ember-can/issues/75)
-- Cannot helper issue [\#67](https://github.com/minutebase/ember-can/issues/67)
-- Upgrade to ember-cli-babel@^6.0.0 [\#62](https://github.com/minutebase/ember-can/issues/62)
 
 **Merged pull requests:**
 
