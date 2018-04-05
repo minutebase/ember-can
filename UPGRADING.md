@@ -4,6 +4,11 @@ Whilst experimenting with the API & benefiting from changes in Ember, we've had 
 
 Here are the details on updating from previous versions.
 
+## From v2.0.0
+1. You will not longer be able to import `CanMixin` and `computed` as they will be removed. You can reproduce theirs behaviours using `can` service and its methods.
+2. `import { CanService } from 'ember-can'` -> `import CanService from 'ember-can/services/can'`
+3. `build` method of `can` service will be replaced by `abilityFor`
+
 ## From v0.5.x
 We now automatically generate an abilities test file when generating an ability.
 This required a modification to the test resolver that runs when you `ember install`

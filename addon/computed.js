@@ -1,22 +1,20 @@
-import { assert } from '@ember/debug';
-import { set, get, computed } from '@ember/object';
+import { computed } from '@ember/object';
 import { getOwner } from '@ember/application';
+import { deprecate } from '@ember/application/deprecations';
 
 export default {
-  ability: function(type, resourceName) {
-    if (arguments.length === 1) {
-      resourceName = type;
-    }
+  ability(abilityName, resourceName) {
+    deprecate('Usage of "ability" computed property is deprecated, create your own Ember.computed and use service "can#abilityFor".', false, {
+      id: 'ember-can.deprecate-computed-ability',
+      until: '2.0.0',
+      url: 'https://github.com/minutebase/ember-can#looking-up-abilities'
+    });
+
+    resourceName = resourceName || abilityName;
 
     return computed(resourceName, function() {
-      let ability = getOwner(this).lookup(`ability:${type}`);
-
-      assert(`No ability class found for ${type}`, ability);
-
-      let resource = get(this, resourceName);
-      set(ability, 'model', resource);
-
-      return ability;
+      let canService = getOwner(this).lookup('service:can');
+      return canService.abilityFor(abilityName, this.get(resourceName));
     });
   }
 };

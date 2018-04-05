@@ -1,63 +1,26 @@
 # Ember-can
 
+<p align="center">
+  <a href="http://badge.fury.io/js/ember-can" title="Package version">
+    <img src="https://badge.fury.io/js/ember-can.svg"/>
+  </a>
+
+  <a href="https://travis-ci.org/minutebase/ember-can" title="Ember Observer">
+    <img src="http://emberobserver.com/badges/ember-can.svg" alt="Ember Observer"/>
+  </a>
+
+  <a href="https://travis-ci.org/minutebase/ember-can" title="Travis CI status">
+    <img src="https://travis-ci.org/minutebase/ember-can.svg?branch=master" alt="Travis CI Status"/>
+  </a>
+
+  <a href="https://david-dm.org/minutebase/ember-can" title="dependencies status">
+    <img src="https://david-dm.org/minutebase/ember-can/status.svg"/>
+  </a>
+</p>
+
+___
+
 Simple authorisation addon for Ember.
-
-[![npm version](https://badge.fury.io/js/ember-can.svg)](http://badge.fury.io/js/ember-can)
-[![Ember Observer Score](http://emberobserver.com/badges/ember-can.svg)](http://emberobserver.com/addons/ember-can)
-[![Build Status](https://travis-ci.org/minutebase/ember-can.svg?branch=master)](https://travis-ci.org/minutebase/ember-can)
-
-## Breaking Changes
-
-* v0.6.0 - support for unit testing abilities added - run `ember g ember-can`
-* v0.5.0 - support for Ember 1.13+ using new Ember.Helper, removed injections
-* v0.4.0 - stopped singularizing ability names to work with pods
-* v0.3.0 - removed `if-can` helper, uses sub-expression instead
-
-See [UPGRADING](UPGRADING.md) for more details.
-
-## Quick Example
-
-You want to conditionally allow creating a new blog post:
-
-```handlebars
-{{#if (can "write post")}}
-  <button type="button" onclick={{action "new"}}>Write Post</button>
-{{else}}
-  You can't write a new post
-{{/if}}
-```
-
-We define an ability for the `Post` resource in `/app/abilities/post.js`:
-
-```javascript
-import Ember from 'ember';
-import { Ability } from 'ember-can';
-
-export default Ability.extend({
-  canWrite: Ember.computed('user.isAdmin', function() {
-    return this.get('user.isAdmin');
-  })
-});
-```
-
-We can also re-use the same ability to check if a user has access to a route:
-
-```javascript
-import Ember from 'ember';
-import { CanMixin } from 'ember-can';
-
-export default Ember.Route.extend(CanMixin, {
-  beforeModel() {
-    let result = this._super(...arguments);
-
-    if (!this.can('write post')) {
-      return this.transitionTo('index');
-    }
-
-    return result;
-  }
-});
-```
 
 ## Installation
 
@@ -67,49 +30,98 @@ Install this addon via ember-cli:
 ember install ember-can
 ```
 
-## Compatibility
+**Compatible with Ember.js `>=2.12.0`**
 
-| Ember Version     | Ember Can Release     |
-| ----------------- | --------------------- |
-| 1.9.x             | 0.2                   |
-| 1.10 through 1.12 | 0.4                   |
-| 1.13 and beyond   | 0.5+                  |
+## Quick Example
 
-## Abilities
+You want to conditionally allow creating a new blog post:
 
-An ability class protects an individual model / resource which is available in the ability as `model`.
+```hbs
+{{#if (can "write post")}}
+  Type post content here...
+{{else}}
+  You can't write a new post!
+{{/if}}
+```
 
-The ability checks themselves are simply standard Ember objects with computed properties:
+We define an ability for the `Post` model in `/app/abilities/post.js`:
 
-```javascript
-import Ember from 'ember';
+```js
+// app/abilities/post.js
+
+import { computed } from '@ember/object';
 import { Ability } from 'ember-can';
 
 export default Ability.extend({
-  // only admins can write a post
-  canWrite: Ember.computed('user.isAdmin', function() {
+  canWrite: computed('user.isAdmin', function() {
     return this.get('user.isAdmin');
-  }),
-
-  // only the person who wrote a post can edit it
-  canEdit: Ember.computed('user.id', 'model.author', function() {
-    return this.get('user.id') === this.get('model.author');
   })
 });
 ```
 
-## Handlebars Helpers
+We can also re-use the same ability to check if a user has access to a route:
 
-The `can` helper is meant to be used with `{{if}}` and `{{unless}}` to protect a block.
+```js
+// app/routes/posts/new.js
 
-The first parameter is a string which is used to find the ability class call the appropriate property (see [Looking up abilities](#looking-up-abilities)).
+import Route from '@ember/routing/route';
+import { inject as service } from '@ember/service';
 
-The second parameter is an optional model object which will be given to the ability to check permissions.
+export default Route.extend({
+  can: service(),
 
-As activities are standard Ember objects and computed properties if anything changes then the view will
-automatically update accordingly.
+  beforeModel() {
+    let result = this._super(...arguments);
 
-```handlebars
+    if (!this.get('can').can('write post')) {
+      return this.transitionTo('index');
+    }
+
+    return result;
+  }
+});
+```
+
+And we can also check the permission before firing action:
+
+```js
+import Component from '@ember/component';
+
+export default Component.extend({
+  can: service(),
+
+  actions: {
+    createPost() {
+      let canWrite = this.get('can').can('write post' this.get('post'), { user: this.get('author') });
+
+      if (canWrite) {
+        // create post!
+      }
+    }
+  }
+});
+```
+
+## Helpers
+
+### `can`
+
+The `can` helper is meant to be used with `{{if}}` and `{{unless}}` to protect a block (but can be used anywhere in the template).
+
+```hbs
+{{can "doSth in myModel" model extraProperties}}
+```
+- `"doSth in myModel" ` - The first parameter is a string which is used to find the ability class call the appropriate property (see [Looking up abilities](#looking-up-abilities)).
+
+- `model` - The second parameter is an optional model object which will be given to the ability to check permissions.
+
+- `extraProperties` - The third parameter are extra properties which will be assigned to the ability
+
+**As activities are standard Ember objects and computed properties if anything changes then the view will
+automatically update accordingly.**
+
+#### Example
+```hbs
 {{#if (can "edit post" post)}}
   ...
 {{else}}
@@ -120,10 +132,48 @@ automatically update accordingly.
 As it's a sub-expression, you can use it anywhere a helper can be used.
 For example to give a div a class based on an ability you can use an inline if:
 
-```handlebars
+```hbs
 <div class="{{if (can 'edit post' post) 'is-editable'}}">
 
 </div>
+```
+
+### `cannot`
+
+Cannot helper is a negation of `can` helper with the same API.
+
+```hbs
+{{cannot "doSth in myModel" model extraProperties}}
+```
+
+
+## Abilities
+
+An ability class protects an individual model which is available in the ability as `model`.
+
+The ability checks themselves are simply standard Ember objects with computed properties:
+
+```js
+// app/abilities/post.js
+
+import { computed } from '@ember/object';
+import { Ability } from 'ember-can';
+
+export default Ability.extend({
+  // only admins can write a post
+  canWrite: computed('user.isAdmin', function() {
+    return this.get('user.isAdmin');
+  }),
+
+  // only the person who wrote a post can edit it
+  canEdit: computed('user.id', 'model.author', function() {
+    return this.get('user.id') === this.get('model.author');
+  })
+});
+
+// Usage:
+// {{if (can "write post" post) "true" "false"}}
+// {{if (can "edit post" post user=author) "true" "false"}}
 ```
 
 ## Additional attributes
@@ -133,17 +183,17 @@ If you need more than a single resource in an ability, you can pass them additio
 You can do this in the helpers, for example this will set the `model` to `project` as usual,
 but also `member` as a bound property.
 
-```handlebars
+```hbs
 {{#if (can "remove member from project" project member=member)}}
   ...
 {{/if}}
 ```
 
-Similarly in routes you can pass additional attributes after or instead of the resource:
+Similarly using `can` service you can pass additional attributes after or instead of the resource:
 
-```javascript
-this.can('edit post', post, { author: bob });
-this.can('write post', { project: project });
+```js
+this.get('can').can('edit post', post, { author: bob });
+this.get('can').cannot('write post', null, { project: project });
 ```
 
 These will set `author` and `project` on the ability respectively so you can use them in the checks.
@@ -185,9 +235,9 @@ Simply extend the default `CanService` in `app/services/can.js` and override `pa
 
 For example, to use the format "person.canEdit" instead of the default "edit person" you could do the following:
 
-```javascript
+```js
 // app/services/can.js
-import { CanService } from 'ember-can';
+import Service from 'ember-can/services/can';
 
 export default CanService.extend({
   parse(str) {
@@ -206,70 +256,46 @@ How does the ability know who's logged in? This depends on how you implement it 
 
 If you're using an `Ember.Service` as your session, you can just inject it into the ability:
 
-```javascript
+```js
 // app/abilities/foo.js
-import Ember from 'ember';
 import { Ability } from 'ember-can';
+import { inject as service } from '@ember/service';
 
 export default Ability.extend({
-  session: Ember.inject.service()
+  session: service()
 });
-```
-
-If you're using ember-simple-auth, you'll probably want to inject the `simple-auth-session:main` session
-into the ability classes.
-
-To do this, add an initializer like so:
-
-```javascript
-// app/initializers/inject-session-into-abilities.js
-export default {
-  name: 'inject-session-into-abilities',
-  initialize(app) {
-    app.inject('ability', 'session', 'simple-auth-session:main');
-  }
-};
 ```
 
 The ability classes will now have access to `session` which can then be used to check if the user is logged in etc...
 
-## Controllers, components & computed properties
+## Components & computed properties
 
-In a controller or component, you may want to expose abilities as computed properties
+In a  component, you may want to expose abilities as computed properties
 so that you can bind to them in your templates.
 
-To do that there's a helper to lookup the ability for a resource, which you can
-then alias properties:
+```js
+import Component from '@ember/component';
+import { computed } from '@ember/object';
 
-```javascript
-import { computed } from 'ember-can';
-import Ember from 'ember';
+export default Component.extend({
+  can: service(), // inject can service
 
-export default Ember.Controller.extend({
-  post: null, // set by the router
+  post: null, // received in higher template
 
-  // looks up the "post" ability and sets the model as the controller's "post" property
-  ability: computed.ability('post'),
-
-  // alias properties to the ability for easier access
-  canEditPost: Ember.computed.reads('ability.canEdit')
+  ability: computed('post', function() {
+    return this.get('can').abilityFor('post', this.get('post'));
+  }),
 });
+
+// {{if ability.canWrite "true" "false"}}
 ```
 
-`computed.ability` assumes that the property for the resource is the same as the ability resource.
-If that's not the case, include it as the second parameter.
+## Upgrade guide
 
-```javascript
-import { computed } from 'ember-can';
-import Ember from 'ember';
-
-export default Ember.Controller.extend({
-  // looks up the "post" ability and sets the model as the controller's "content" property
-  ability: computed.ability('post', 'content')
-});
-```
+See [UPGRADING.md](https://github.com/minutebase/ember-can/blob/master/UPGRADING.md) for more details.
 
 ## Testing
+
 Make sure that you've either `ember install`-ed this addon, or run the addon
 blueprint via `ember g ember-can`. This is an important step that teaches the
 test resolver how to resolve abilities from the file structure.
@@ -291,12 +317,12 @@ ability and helper file like this:
 For integration testing components, you should not need to specify anything explicitly. The
 helper and your abilities should be available to your components automatically.
 
-## Contributing
+## Development
 
 ### Installation
 
-* `git clone <repository-url>`
-* `cd my-addon`
+* `git clone https://github.com/minutebase/ember-can.git`
+* `cd ember-can`
 * `npm install`
 
 ### Linting
@@ -316,3 +342,11 @@ helper and your abilities should be available to your components automatically.
 * Visit the dummy application at [http://localhost:4200](http://localhost:4200).
 
 For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+
+## Contributing
+
+Bug reports and pull requests are welcome on GitHub at https://github.com/minutebase/ember-can. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant code of conduct.
+
+## License
+
+This version of the package is available as open source under the terms of the [MIT License](http://opensource.org/licenses/MIT).
