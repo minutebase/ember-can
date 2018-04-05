@@ -1,15 +1,13 @@
 # Change Log
 
-## [1.0.0](https://github.com/minutebase/ember-can/tree/1.0.0) (2018-03-31)
-
-[Full Changelog](https://github.com/minutebase/ember-can/compare/v0.8.5...1.0.0)
+## [v1.0.0](https://github.com/minutebase/ember-can/tree/v1.0.0) (2018-03-31)
+[Full Changelog](https://github.com/minutebase/ember-can/compare/v0.8.5...v1.0.0)
 
 **Merged pull requests:**
 
 - Revive the project \[v1.0\] [\#74](https://github.com/minutebase/ember-can/pull/74) ([Exelord](https://github.com/Exelord))
 
 ## [v0.8.5](https://github.com/minutebase/ember-can/tree/v0.8.5) (2017-10-21)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.8.4...v0.8.5)
 
 **Closed issues:**
@@ -23,7 +21,6 @@
 - Update blueprints to es6 [\#59](https://github.com/minutebase/ember-can/pull/59) ([jbandura](https://github.com/jbandura))
 
 ## [v0.8.4](https://github.com/minutebase/ember-can/tree/v0.8.4) (2017-03-28)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.8.2...v0.8.4)
 
 **Closed issues:**
@@ -38,7 +35,6 @@
 - Ember 2.11 [\#52](https://github.com/minutebase/ember-can/pull/52) ([vluoto](https://github.com/vluoto))
 
 ## [v0.8.2](https://github.com/minutebase/ember-can/tree/v0.8.2) (2017-01-25)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.8.1...v0.8.2)
 
 **Closed issues:**
@@ -55,7 +51,6 @@
 - Update README to break out unit/integration testing [\#41](https://github.com/minutebase/ember-can/pull/41) ([joshsmith](https://github.com/joshsmith))
 
 ## [v0.8.1](https://github.com/minutebase/ember-can/tree/v0.8.1) (2016-04-11)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.8.0...v0.8.1)
 
 **Merged pull requests:**
@@ -63,7 +58,6 @@
 - Rely on getOwner polyfill [\#39](https://github.com/minutebase/ember-can/pull/39) ([xomaczar](https://github.com/xomaczar))
 
 ## [v0.8.0](https://github.com/minutebase/ember-can/tree/v0.8.0) (2016-03-03)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.7.3...v0.8.0)
 
 **Closed issues:**
@@ -75,11 +69,9 @@
 - Updating to Ember 2.3; Removed utils/can [\#36](https://github.com/minutebase/ember-can/pull/36) ([mileszim](https://github.com/mileszim))
 
 ## [v0.7.3](https://github.com/minutebase/ember-can/tree/v0.7.3) (2015-12-15)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.7.2...v0.7.3)
 
 ## [v0.7.2](https://github.com/minutebase/ember-can/tree/v0.7.2) (2015-12-15)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.7.1...v0.7.2)
 
 **Closed issues:**
@@ -91,7 +83,6 @@
 - Make resolver import work for 1.13 and 2.2 ember-cli apps. [\#33](https://github.com/minutebase/ember-can/pull/33) ([rwjblue](https://github.com/rwjblue))
 
 ## [v0.7.1](https://github.com/minutebase/ember-can/tree/v0.7.1) (2015-12-14)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.7.0...v0.7.1)
 
 **Closed issues:**
@@ -105,7 +96,6 @@
 - Add cannot Handlebars helper [\#29](https://github.com/minutebase/ember-can/pull/29) ([remiprev](https://github.com/remiprev))
 
 ## [v0.7.0](https://github.com/minutebase/ember-can/tree/v0.7.0) (2015-09-30)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.6.0...v0.7.0)
 
 **Closed issues:**
@@ -124,7 +114,6 @@
 - Reopen the resolver to add abilities. [\#19](https://github.com/minutebase/ember-can/pull/19) ([blimmer](https://github.com/blimmer))
 
 ## [v0.6.0](https://github.com/minutebase/ember-can/tree/v0.6.0) (2015-07-03)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.5.0...v0.6.0)
 
 **Closed issues:**
@@ -136,7 +125,6 @@
 - Autogenerate a test when generating an ability [\#18](https://github.com/minutebase/ember-can/pull/18) ([blimmer](https://github.com/blimmer))
 
 ## [v0.5.0](https://github.com/minutebase/ember-can/tree/v0.5.0) (2015-06-13)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.4.0...v0.5.0)
 
 **Closed issues:**
@@ -148,7 +136,6 @@
 - Add ability blueprints [\#14](https://github.com/minutebase/ember-can/pull/14) ([knownasilya](https://github.com/knownasilya))
 
 ## [v0.4.0](https://github.com/minutebase/ember-can/tree/v0.4.0) (2015-04-01)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.3.0...v0.4.0)
 
 **Closed issues:**
@@ -160,11 +147,9 @@
 - Don't singularize the type [\#12](https://github.com/minutebase/ember-can/pull/12) ([cibernox](https://github.com/cibernox))
 
 ## [v0.3.0](https://github.com/minutebase/ember-can/tree/v0.3.0) (2015-03-01)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.2.1...v0.3.0)
 
 ## [v0.2.1](https://github.com/minutebase/ember-can/tree/v0.2.1) (2015-03-01)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.2.0...v0.2.1)
 
 **Closed issues:**
@@ -179,19 +164,16 @@
 - Normalize readme examples \(quotes, spaces\) [\#4](https://github.com/minutebase/ember-can/pull/4) ([knownasilya](https://github.com/knownasilya))
 
 ## [v0.2.0](https://github.com/minutebase/ember-can/tree/v0.2.0) (2015-01-05)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.1.3...v0.2.0)
+
+## [v0.1.3](https://github.com/minutebase/ember-can/tree/v0.1.3) (2014-12-05)
+[Full Changelog](https://github.com/minutebase/ember-can/compare/v0.1.2...v0.1.3)
 
 **Merged pull requests:**
 
 - HTMLBars support [\#3](https://github.com/minutebase/ember-can/pull/3) ([rlivsey](https://github.com/rlivsey))
 
-## [v0.1.3](https://github.com/minutebase/ember-can/tree/v0.1.3) (2014-12-05)
-
-[Full Changelog](https://github.com/minutebase/ember-can/compare/v0.1.2...v0.1.3)
-
 ## [v0.1.2](https://github.com/minutebase/ember-can/tree/v0.1.2) (2014-11-21)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.1.1...v0.1.2)
 
 **Merged pull requests:**
@@ -199,11 +181,9 @@
 - Update README.md [\#2](https://github.com/minutebase/ember-can/pull/2) ([karlguillotte](https://github.com/karlguillotte))
 
 ## [v0.1.1](https://github.com/minutebase/ember-can/tree/v0.1.1) (2014-11-11)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.1.0...v0.1.1)
 
 ## [v0.1.0](https://github.com/minutebase/ember-can/tree/v0.1.0) (2014-11-11)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.0.2...v0.1.0)
 
 **Closed issues:**
@@ -211,13 +191,9 @@
 - if-can helper failing [\#1](https://github.com/minutebase/ember-can/issues/1)
 
 ## [v0.0.2](https://github.com/minutebase/ember-can/tree/v0.0.2) (2014-11-07)
-
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.0.1...v0.0.2)
 
 ## [v0.0.1](https://github.com/minutebase/ember-can/tree/v0.0.1) (2014-11-07)
-
-[Full Changelog](https://github.com/minutebase/ember-can/compare/51a52dc1db3efe67387901a2877bee0f2c4c630d...v0.0.1)
-
 
 
 \* *This Change Log was automatically generated by [github_changelog_generator](https://github.com/skywinder/Github-Changelog-Generator)*
