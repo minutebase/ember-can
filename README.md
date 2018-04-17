@@ -5,7 +5,7 @@
     <img src="https://badge.fury.io/js/ember-can.svg"/>
   </a>
 
-  <a href="https://travis-ci.org/minutebase/ember-can" title="Ember Observer">
+  <a href="https://emberobserver.com/addons/ember-can" title="Ember Observer">
     <img src="http://emberobserver.com/badges/ember-can.svg" alt="Ember Observer"/>
   </a>
 
@@ -53,7 +53,13 @@ import { computed } from '@ember/object';
 import { Ability } from 'ember-can';
 
 export default Ability.extend({
-  canWrite: computed('user.isAdmin', function() {
+  session: service(),
+
+  user: computed('session.currentUser', function() {
+    return this.get('session.currentUser');
+  }),
+
+  canCreate: computed('user.isAdmin', function() {
     return this.get('user.isAdmin');
   })
 });
@@ -73,7 +79,7 @@ export default Route.extend({
   beforeModel() {
     let result = this._super(...arguments);
 
-    if (!this.get('can').can('write post')) {
+    if (this.get('can').cannot('create post')) {
       return this.transitionTo('index');
     }
 
@@ -92,7 +98,7 @@ export default Component.extend({
 
   actions: {
     createPost() {
-      let canWrite = this.get('can').can('write post' this.get('post'), { user: this.get('author') });
+      let canWrite = this.get('can').can('create post' this.get('post'), { user: this.get('author') });
 
       if (canWrite) {
         // create post!
@@ -241,11 +247,8 @@ import Service from 'ember-can/services/can';
 
 export default CanService.extend({
   parse(str) {
-    const [abilityName, propertyName] = str.split('.');
-    return {
-      propertyName,
-      abilityName
-    }
+    let [abilityName, propertyName] = str.split('.');
+    return { propertyName, abilityName };
   }
 });
 ```
@@ -280,14 +283,31 @@ import { computed } from '@ember/object';
 export default Component.extend({
   can: service(), // inject can service
 
-  post: null, // received in higher template
+  post: null, // received from higher template
 
   ability: computed('post', function() {
-    return this.get('can').abilityFor('post', this.get('post'));
+    return this.get('can').abilityFor('post', this.get('post') /*, customProperties */);
   }),
 });
 
+// Template:
 // {{if ability.canWrite "true" "false"}}
+```
+
+#### Optional way
+
+Optionally you can use `ability` computed to simplify the syntax:
+```js
+import Component from '@ember/component';
+import { ability } from 'ember-can/computed';
+
+export default Component.extend({
+  can: service(), // inject can service
+
+  post: null, // received from higher template
+
+  ability: ability('post')
+});
 ```
 
 ## Upgrade guide
