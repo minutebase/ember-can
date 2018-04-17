@@ -310,6 +310,15 @@ export default Component.extend({
 });
 ```
 
+## Accessing abilities within an Ember engine
+
+If you're using [engines](http://ember-engines.com/) and you want to access an *ability* within it, you will need it to be present in your Engine’s namespace. This is accomplished by doing what is called a "re-export":
+
+```javascript
+//my-engine/addon/abilities/foo-bar.js
+export { default } from 'my-app/abilities/foo-bar';
+```
+
 ## Upgrade guide
 
 See [UPGRADING.md](https://github.com/minutebase/ember-can/blob/master/UPGRADING.md) for more details.
