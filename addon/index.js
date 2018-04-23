@@ -16,7 +16,7 @@ function computed() {
     url: 'https://github.com/minutebase/ember-can#looking-up-abilities'
   });
 
-  ability(...arguments);
+  return ability(...arguments);
 }
 
 // Deprecated import of 'CanService' service
