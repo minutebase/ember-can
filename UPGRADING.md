@@ -5,9 +5,16 @@ Whilst experimenting with the API & benefiting from changes in Ember, we've had 
 Here are the details on updating from previous versions.
 
 ## From v2.0.0
-1. You will not longer be able to import `CanMixin` and `computed` as they will be removed. You can reproduce theirs behaviours using `can` service and its methods.
+
+### Deprecations
+1. You will not longer be able to import `CanMixin` as it will be removed. You can reproduce its behavior using `can` service and its methods.
 2. `import { CanService } from 'ember-can'` -> `import CanService from 'ember-can/services/can'`
-3. `build` method of `can` service will be replaced by `abilityFor`
+3. `import { ability } from 'ember-can'` -> `import { ability } from 'ember-can/computed'`
+4. `build` method of `can` service will be replaced by `abilityFor`
+
+### Notable changes
+1. You have to pass a `null` model if you want to pass only parameters to `can` or `cannot` methods of `can` service. Eg: `this.get('canService').can('post', null, { test: true})`
+2. The `model` passed to helpers or `can` service methods, as from now on, can be anything.
 
 ## From v0.5.x
 We now automatically generate an abilities test file when generating an ability.

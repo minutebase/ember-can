@@ -55,13 +55,8 @@ import { Ability } from 'ember-can';
 export default Ability.extend({
   session: service(),
 
-  user: computed('session.currentUser', function() {
-    return this.get('session.currentUser');
-  }),
-
-  canCreate: computed('user.isAdmin', function() {
-    return this.get('user.isAdmin');
-  })
+  user: reads('session.currentUser').readOnly(),
+  canCreate: reads('user.isAdmin').readOnly()
 });
 ```
 
@@ -308,6 +303,11 @@ export default Component.extend({
 
   ability: ability('post')
 });
+```
+
+If the model property is not the same as ability name you can pass a second argument:
+```js
+ability: ability('post', 'myModelProperty')
 ```
 
 ## Accessing abilities within an Ember engine
