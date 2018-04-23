@@ -13,8 +13,8 @@ Here are the details on updating from previous versions.
 4. `build` method of `can` service will be replaced by `abilityFor`
 
 ### Notable changes
-1. You have to pass a `null` model if you want to pass only parameters to `can` or `cannot` methods of `can` service. Eg: `this.get('canService').can('post', null, { test: true})`
-2. The `model` passed to helpers or `can` service methods, as from now on, can be anything.
+1. You have to pass a `null` model if you want to pass only parameters to `can` or `cannot` methods of `can` service. Eg: `this.get('canService').can('post', null, { test: true })`
+2. The `model` passed to helpers or `can` service methods, as from now on, can be anything instead of an Ember.Object instance.
 
 ## From v0.5.x
 We now automatically generate an abilities test file when generating an ability.
