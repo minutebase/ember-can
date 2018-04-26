@@ -1,11 +1,11 @@
 import Resolver from 'ember-resolver';
 
 Resolver.reopen({
-  // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
-  pluralizedTypes: {
-    ability: 'abilities'
+  init() {
+    this._super(...arguments);
+    this.set('pluralizedTypes.ability', 'abilities');
   }
 });
 
-export function initialize(/* application */) {}
+export function initialize() {}
 export default { initialize };

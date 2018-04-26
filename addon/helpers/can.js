@@ -8,10 +8,10 @@ export default Helper.extend({
   ability: null,
   propertyName: null,
 
-  compute([name, resource], properties) {
+  compute([abilityString, model], properties) {
     let service = this.get('can');
-    let { abilityName, propertyName } = service.parse(name);
-    let ability = service.build(abilityName, resource, properties);
+    let { abilityName, propertyName } = service.parse(abilityString);
+    let ability = service.abilityFor(abilityName, model, properties);
 
     this._removeAbilityObserver();
     this._addAbilityObserver(ability, propertyName);

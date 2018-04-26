@@ -1,38 +1,36 @@
-import EmberObject from '@ember/object';
-import { assert } from '@ember/debug';
 import Service from '@ember/service';
+import { assert } from '@ember/debug';
 import { getOwner } from '@ember/application';
-import normalizeCombined from 'ember-can/utils/normalize';
+import { deprecate } from '@ember/application/deprecations';
+
+import normalizeAbilityString from 'ember-can/utils/normalize';
 
 export default Service.extend({
-  parse(name) {
-    return normalizeCombined(name);
+  parse(abilityString) {
+    return normalizeAbilityString(abilityString);
   },
 
-  build(abilityName, model, properties) {
+  build() {
+    deprecate('Usage of "build" is deprecated, use "abilityFor" instead.', false, {
+      id: 'ember-can.deprecate-service-build',
+      until: '2.0.0',
+      url: 'https://github.com/minutebase/ember-can#looking-up-abilities'
+    });
+
+    return this.abilityFor(...arguments);
+  },
+
+  abilityFor(abilityName, model, properties = {}) {
     let ability = getOwner(this).lookup(`ability:${abilityName}`);
     assert(`No ability type found for ${abilityName}`, ability);
 
-    // see if we've been given properties instead of model
-    if (!properties && model && !(model instanceof EmberObject)) {
-      properties = model;
-      model = null;
-    }
-
-    if (model) {
-      ability.set("model", model);
-    }
-
-    if (properties) {
-      ability.setProperties(properties);
-    }
-
+    ability.setProperties(Object.assign({}, { model }, properties));
     return ability;
   },
 
   can(abilityString, model, properties) {
     let { abilityName, propertyName } = this.parse(abilityString);
-    let ability = this.build(abilityName, model, properties);
+    let ability = this.abilityFor(abilityName, model, properties);
 
     return ability.get(propertyName);
   },

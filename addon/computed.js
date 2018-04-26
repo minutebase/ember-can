@@ -1,22 +1,11 @@
-import { assert } from '@ember/debug';
-import { set, get, computed } from '@ember/object';
+import { computed } from '@ember/object';
 import { getOwner } from '@ember/application';
 
-export default {
-  ability: function(type, resourceName) {
-    if (arguments.length === 1) {
-      resourceName = type;
-    }
+export function ability(abilityName, resourceName) {
+  resourceName = resourceName || abilityName;
 
-    return computed(resourceName, function() {
-      let ability = getOwner(this).lookup(`ability:${type}`);
-
-      assert(`No ability class found for ${type}`, ability);
-
-      let resource = get(this, resourceName);
-      set(ability, 'model', resource);
-
-      return ability;
-    });
-  }
-};
+  return computed(resourceName, function() {
+    let canService = getOwner(this).lookup('service:can');
+    return canService.abilityFor(abilityName, this.get(resourceName));
+  });
+}
