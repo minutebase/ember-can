@@ -1,5 +1,37 @@
 # Change Log
 
+## [v1.1.0](https://github.com/minutebase/ember-can/tree/v1.1.0) (2018-05-01)
+[Full Changelog](https://github.com/minutebase/ember-can/compare/v1.0.0...v1.1.0)
+
+**Implemented enhancements:**
+
+- Deprecate old API [\#79](https://github.com/minutebase/ember-can/pull/79) ([Exelord](https://github.com/Exelord))
+- Improve tests [\#78](https://github.com/minutebase/ember-can/pull/78) ([Exelord](https://github.com/Exelord))
+- Feature setup release flow [\#77](https://github.com/minutebase/ember-can/pull/77) ([Exelord](https://github.com/Exelord))
+- Fix editorconfig [\#76](https://github.com/minutebase/ember-can/pull/76) ([Exelord](https://github.com/Exelord))
+
+**Closed issues:**
+
+- How is this different from computed properties?  [\#80](https://github.com/minutebase/ember-can/issues/80)
+- Can you please resolve the deprecation ember-cli-version-checker ? [\#75](https://github.com/minutebase/ember-can/issues/75)
+- provide `ability` computed macro as a named export [\#70](https://github.com/minutebase/ember-can/issues/70)
+- Cannot helper issue [\#67](https://github.com/minutebase/ember-can/issues/67)
+- ember-can v0.8.4 build displays failing [\#64](https://github.com/minutebase/ember-can/issues/64)
+- Upgrade to ember-cli-babel@^6.0.0 [\#62](https://github.com/minutebase/ember-can/issues/62)
+- Parent component is destroyed: Cannot read property 'removeObserver' of undefined [\#61](https://github.com/minutebase/ember-can/issues/61)
+- Computed properties + additional attributes [\#60](https://github.com/minutebase/ember-can/issues/60)
+- Question about the necessity of having an Ember.Object as a resource [\#57](https://github.com/minutebase/ember-can/issues/57)
+- Introduction to ember-can on Global Ember Meetup [\#40](https://github.com/minutebase/ember-can/issues/40)
+- Redirect in route on reload [\#38](https://github.com/minutebase/ember-can/issues/38)
+- no example app [\#34](https://github.com/minutebase/ember-can/issues/34)
+- How to use in a Controller [\#28](https://github.com/minutebase/ember-can/issues/28)
+-  Add more examples [\#25](https://github.com/minutebase/ember-can/issues/25)
+
+**Merged pull requests:**
+
+- Upgrades to Ember 3.1 [\#81](https://github.com/minutebase/ember-can/pull/81) ([Exelord](https://github.com/Exelord))
+- Add instructions for using abilities within an Engine [\#66](https://github.com/minutebase/ember-can/pull/66) ([esbanarango](https://github.com/esbanarango))
+
 ## [v1.0.0](https://github.com/minutebase/ember-can/tree/v1.0.0) (2018-03-31)
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v0.8.5...v1.0.0)
 
@@ -12,6 +44,7 @@
 
 **Closed issues:**
 
+- Add readme instructions for using it on an Engine [\#63](https://github.com/minutebase/ember-can/issues/63)
 - Update blueprints to ES6 [\#58](https://github.com/minutebase/ember-can/issues/58)
 
 **Merged pull requests:**
