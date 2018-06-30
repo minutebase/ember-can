@@ -49,7 +49,7 @@ We define an ability for the `Post` model in `/app/abilities/post.js`:
 ```js
 // app/abilities/post.js
 
-import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
 import { Ability } from 'ember-can';
 
 export default Ability.extend({
