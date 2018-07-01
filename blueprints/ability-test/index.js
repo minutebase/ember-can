@@ -23,46 +23,51 @@ module.exports = {
     var imports, test;
     if (testStyle === 'qunit') {
       imports =
-        "import { moduleFor, test } from 'ember-qunit';";
+`import { moduleFor, test } from 'ember-qunit';`
+      ;
       test =
-        "moduleFor('ability:" + name + "', 'Unit | Ability | " + name + "', {" + EOL +
-        "  // Specify the other units that are required for this test." + EOL +
-        "  // needs: ['service:foo']" + EOL +
-        "});" + EOL + EOL +
-        "// Replace this with your real tests." + EOL +
-        "test('it exists', function(assert) {" + EOL +
-        "  const ability = this.subject();" + EOL +
-        "  assert.ok(ability);" + EOL +
-        "});";
+`moduleFor('ability:${name}', 'Unit | Ability | ${name}', {
+  // Specify the other units that are required for this test.
+  // needs: ['service:foo']
+});
+
+// Replace this with your real tests.
+test('it exists', function(assert) {
+  const ability = this.subject();
+  assert.ok(ability);
+});`
+      ;
     } else if (testStyle === 'mocha') {
       imports =
-        "/* jshint expr:true */" + EOL +
-        "import { expect } from 'chai';" + EOL +
-        "import {" + EOL +
-        "  describeModule," + EOL +
-        "  it" + EOL +
-        "} from 'ember-mocha';";
+`/* jshint expr:true */
+import { expect } from 'chai';
+import {
+  describeModule,
+  it
+} from 'ember-mocha';`
+      ;
       test =
-        "describeModule(" + EOL +
-        "  'ability:" + name + "'," + EOL +
-        "  '" + name + " Ability'," + EOL +
-        "  {" + EOL +
-        "    // Specify the other units that are required for this test." + EOL +
-        "    // needs: ['service:foo']" + EOL +
-        "  }," + EOL +
-        "  function() {" + EOL +
-        "    // Replace this with your real tests." + EOL +
-        "    it('exists', function() {" + EOL +
-        "      const ability = this.subject();" + EOL +
-        "      expect(ability).to.be.ok;" + EOL +
-        "    });" + EOL +
-        "  }" + EOL +
-        ");";
+`describeModule(
+  'ability:${name}',
+  '${name} Ability',
+  {
+    // Specify the other units that are required for this test.
+    // needs: ['service:foo']
+  },
+  function() {
+    // Replace this with your real tests.
+    it('exists', function() {
+      const ability = this.subject();
+      expect(ability).to.be.ok;
+    });
+  }
+);`
+      ;
     }
 
     return {
-      imports: imports,
-      test: test
+      imports: imports.replace(/\n/g, EOL),
+      test: test.replace(/\n/g, EOL)
     };
   }
 };
