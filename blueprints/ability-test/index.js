@@ -6,6 +6,8 @@ module.exports = {
   _getTestStyle: function() {
     if ('ember-cli-mocha' in this.project.addonPackages) {
       return 'mocha';
+    } else if (false) {
+      return 'rfc-232-style';
     } else if ('ember-cli-qunit' in this.project.addonPackages) {
       return 'qunit';
     }
@@ -62,6 +64,22 @@ import {
     });
   }
 );`
+      ;
+    } else if (testStyle === 'rfc-232-style') {
+      imports =
+`import { module, test } from 'qunit';
+import { setupTest } from 'ember-qunit';`
+      ;
+      test =
+`module('Unit | Ability | ${name}', function(hooks) {
+  setupTest(hooks);
+
+  // Replace this with your real tests.
+  test('it exists', function(assert) {
+    const ability = this.owner.lookup('ability:${name}');
+    assert.ok(ability);
+  });
+});`
       ;
     }
 
