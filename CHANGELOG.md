@@ -1,5 +1,13 @@
 # Change Log
 
+## [v1.1.1](https://github.com/minutebase/ember-can/tree/v1.1.1) (2018-07-18)
+[Full Changelog](https://github.com/minutebase/ember-can/compare/v1.1.0...v1.1.1)
+
+**Merged pull requests:**
+
+- Fix Object assign function [\#88](https://github.com/minutebase/ember-can/pull/88) ([Exelord](https://github.com/Exelord))
+- fix missed import change in example [\#84](https://github.com/minutebase/ember-can/pull/84) ([happycollision](https://github.com/happycollision))
+
 ## [v1.1.0](https://github.com/minutebase/ember-can/tree/v1.1.0) (2018-05-01)
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v1.0.0...v1.1.0)
 
