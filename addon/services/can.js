@@ -2,6 +2,7 @@ import Service from '@ember/service';
 import { assert } from '@ember/debug';
 import { getOwner } from '@ember/application';
 import { deprecate } from '@ember/application/deprecations';
+import { assign } from '@ember/polyfills';
 
 import normalizeAbilityString from 'ember-can/utils/normalize';
 
@@ -24,7 +25,7 @@ export default Service.extend({
     let ability = getOwner(this).lookup(`ability:${abilityName}`);
     assert(`No ability type found for ${abilityName}`, ability);
 
-    ability.setProperties(Object.assign({}, { model }, properties));
+    ability.setProperties(assign({}, { model }, properties));
     return ability;
   },
 
