@@ -93,7 +93,7 @@ export default Component.extend({
 
   actions: {
     createPost() {
-      let canWrite = this.get('can').can('create post' this.get('post'), { user: this.get('author') });
+      let canWrite = this.get('can').can('create post', this.get('post'), { user: this.get('author') });
 
       if (canWrite) {
         // create post!
