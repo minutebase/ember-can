@@ -2,6 +2,7 @@ import Service from '@ember/service';
 import { assert } from '@ember/debug';
 import { getOwner } from '@ember/application';
 import { assign } from '@ember/polyfills';
+import { run } from '@ember/runloop';
 
 import normalizeAbilityString from 'ember-can/utils/normalize';
 
@@ -10,16 +11,16 @@ export default Service.extend({
     return normalizeAbilityString(abilityString);
   },
 
-
-    return this.abilityFor(...arguments);
-  },
-
   abilityFor(abilityName, model, properties = {}) {
-    let ability = getOwner(this).lookup(`ability:${abilityName}`);
-    assert(`No ability type found for ${abilityName}`, ability);
+    let Ability = getOwner(this).factoryFor(`ability:${abilityName}`);
 
-    ability.setProperties(assign({}, { model }, properties));
-    return ability;
+    assert(`No ability type found for '${abilityName}'`, Ability);
+
+    if (typeof model != 'undefined') {
+      properties = assign({}, { model }, properties);
+    }
+
+    return Ability.create(properties);
   },
 
   can(abilityString, model, properties) {

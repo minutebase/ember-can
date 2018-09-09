@@ -23,7 +23,7 @@ module('Integration | Helper | can', function(hooks) {
   });
 
   test('it can receives model', async function(assert) {
-    assert.expect(2);
+    assert.expect(4);
 
     this.owner.register('ability:post', Ability.extend({
       canWrite: computed('model.write', function() {
@@ -31,12 +31,43 @@ module('Integration | Helper | can', function(hooks) {
       }),
     }));
 
-    this.set('model', { write: false });
     await render(hbs`{{if (can "write post" model) "true" "false"}}`);
+    assert.equal(this.element.textContent.trim(), 'false');
+
+    this.set('model', { write: false });
     assert.equal(this.element.textContent.trim(), 'false');
 
     this.set('model', { write: true });
     assert.equal(this.element.textContent.trim(), 'true');
+
+    this.set('model', null);
+    assert.equal(this.element.textContent.trim(), 'false');
+  });
+
+  test('it works with default model', async function(assert) {
+    assert.expect(4);
+
+    this.owner.register('ability:post', Ability.extend({
+      model: computed(function() {
+        return { write: true }
+      }),
+
+      canWrite: computed('model.write', function() {
+        return this.get('model.write');
+      }),
+    }));
+
+    await render(hbs`{{if (can "write post" model) "true" "false"}}`);
+    assert.equal(this.element.textContent.trim(), 'true');
+
+    this.set('model', undefined);
+    assert.equal(this.element.textContent.trim(), 'true');
+
+    this.set('model', null);
+    assert.equal(this.element.textContent.trim(), 'false');
+
+    this.set('model', { write: false });
+    assert.equal(this.element.textContent.trim(), 'false');
   });
 
   test('it can receives properties', async function(assert) {

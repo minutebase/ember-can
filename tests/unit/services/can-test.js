@@ -49,7 +49,7 @@ module('Unit | Service | can', function(hooks) {
       }),
     }));
 
-    assert.ok(service.can('touchThis in superModel', { yeah: true }));
+    assert.equal(service.can('touchThis in superModel', { yeah: true }), true);
   });
 
   test('cannot', function(assert) {
@@ -63,6 +63,6 @@ module('Unit | Service | can', function(hooks) {
       }),
     }));
 
-    assert.notOk(service.can('touchThis in superModel', { yeah: false }));
+    assert.equal(service.can('touchThis in superModel', { yeah: false }), false);
   });
 });
