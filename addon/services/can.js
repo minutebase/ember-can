@@ -23,11 +23,18 @@ export default Service.extend({
     return Ability.create(properties);
   },
 
-  can(abilityString, model, properties) {
-    let { abilityName, propertyName } = this.parse(abilityString);
+  valueFor(propertyName, abilityName, model, properties) {
     let ability = this.abilityFor(abilityName, model, properties);
+    let result = ability.getAbility(propertyName);
 
-    return ability.get(propertyName);
+    run(() => ability.destroy());
+
+    return result;
+  },
+
+  can(abilityString, model, properties) {
+    let { propertyName, abilityName } = this.parse(abilityString);
+    return !!this.valueFor(propertyName, abilityName, model, properties);
   },
 
   cannot(abilityString, model, properties) {

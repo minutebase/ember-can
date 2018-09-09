@@ -13,6 +13,8 @@ export default Helper.extend({
     let { abilityName, propertyName } = service.parse(abilityString);
     let ability = service.abilityFor(abilityName, model, properties);
 
+    propertyName = ability.parseProperty(propertyName);
+
     this._removeAbilityObserver();
     this._addAbilityObserver(ability, propertyName);
 

@@ -1,4 +1,4 @@
-import { classify } from '@ember/string';
+import { camelize } from '@ember/string';
 
 const stopWords = ['of', 'in', 'for', 'to', 'from', 'on'];
 
@@ -11,8 +11,7 @@ export default function(string) {
     parts.pop();
   }
 
-  let ability = classify(parts.join(' '));
-  let propertyName = `can${ability}`;
+  let propertyName = camelize(parts.join(' '));
 
   return { propertyName, abilityName };
 }

@@ -11,6 +11,21 @@ import { run } from '@ember/runloop';
 module('Integration | Helper | can', function(hooks) {
   setupRenderingTest(hooks);
 
+  test('it works with custom property parser', async function(assert) {
+    assert.expect(1);
+
+    this.owner.register('ability:post', Ability.extend({
+      parseProperty(propertyName) {
+        return propertyName; // without `can` prefix
+      },
+
+      worksWell: true
+    }));
+
+    await render(hbs`{{if (can "works well post") "true" "false"}}`);
+    assert.equal(this.element.textContent.trim(), 'true');
+  });
+
   test('it works without model', async function(assert) {
     assert.expect(1);
 
