@@ -34,7 +34,7 @@ module('Integration | Helper | can', function(hooks) {
     }));
 
     await render(hbs`{{if (can "write post") "true" "false"}}`);
-    assert.equal(this.element.textContent.trim(), 'true');
+    assert.dom(this.element).hasText('true');
   });
 
   test('it can receives model', async function(assert) {
@@ -47,7 +47,7 @@ module('Integration | Helper | can', function(hooks) {
     }));
 
     await render(hbs`{{if (can "write post" model) "true" "false"}}`);
-    assert.equal(this.element.textContent.trim(), 'false');
+    assert.dom(this.element).hasText('false');
 
     this.set('model', { write: false });
     assert.equal(this.element.textContent.trim(), 'false');
@@ -96,10 +96,10 @@ module('Integration | Helper | can', function(hooks) {
 
     this.set('write', false);
     await render(hbs`{{if (can "write post" write=write) "true" "false"}}`);
-    assert.equal(this.element.textContent.trim(), 'false');
+    assert.dom(this.element).hasText('false');
 
     this.set('write', true);
-    assert.equal(this.element.textContent.trim(), 'true');
+    assert.dom(this.element).hasText('true');
   });
 
   test('it can receives model and properties', async function(assert) {
@@ -114,11 +114,11 @@ module('Integration | Helper | can', function(hooks) {
     this.set('write', false);
     this.set('model', { write: false });
     await render(hbs`{{if (can "write post" model write=write) "true" "false"}}`);
-    assert.equal(this.element.textContent.trim(), 'false');
+    assert.dom(this.element).hasText('false');
 
     this.set('write', true);
     this.set('model', { write: true });
-    assert.equal(this.element.textContent.trim(), 'true');
+    assert.dom(this.element).hasText('true');
   });
 
   test('it reacts on ability change', async function(assert) {
@@ -137,9 +137,9 @@ module('Integration | Helper | can', function(hooks) {
     }));
 
     await render(hbs`{{if (can "write post") "true" "false"}}`);
-    assert.equal(this.element.textContent.trim(), 'false');
+    assert.dom(this.element).hasText('false');
 
     run(() => this.owner.lookup('service:session').set('isLoggedIn', true));
-    assert.equal(this.element.textContent.trim(), 'true');
+    assert.dom(this.element).hasText('true');
   });
 });

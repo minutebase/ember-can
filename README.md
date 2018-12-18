@@ -93,7 +93,7 @@ export default Component.extend({
 
   actions: {
     createPost() {
-      let canWrite = this.get('can').can('create post' this.get('post'), { user: this.get('author') });
+      let canWrite = this.get('can').can('create post', this.get('post'), { user: this.get('author') });
 
       if (canWrite) {
         // create post!
@@ -356,6 +356,7 @@ helper and your abilities should be available to your components automatically.
 
 ### Linting
 
+* `npm run lint:hbs`
 * `npm run lint:js`
 * `npm run lint:js -- --fix`
 
