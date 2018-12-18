@@ -22,6 +22,7 @@ Here are the details on updating from previous versions.
 2. The `model` passed to helpers or `can` service methods, as from now on, can be anything instead of an Ember.Object instance.
 3. `can` and `cannot` methods will always return a boolean
 4. Abilities are now an instance of the Ability class, so setting model or properties on it will not modify the class constructor anymore.
+5. Ability class name will be always singularized automatically, eg. `edit posts` -> `edit post`
 
 ## From v0.5.x
 We now automatically generate an abilities test file when generating an ability.

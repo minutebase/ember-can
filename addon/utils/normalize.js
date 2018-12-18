@@ -1,4 +1,5 @@
 import { camelize } from '@ember/string';
+import { singularize } from 'ember-inflector';
 
 const stopWords = ['of', 'in', 'for', 'to', 'from', 'on'];
 
@@ -11,7 +12,7 @@ const stopWords = ['of', 'in', 'for', 'to', 'from', 'on'];
  */
 export default function(string) {
   let parts = string.split(' ');
-  let abilityName = parts.pop();
+  let abilityName = singularize(parts.pop());
   let last = parts[parts.length - 1];
 
   if (stopWords.includes(last)) {

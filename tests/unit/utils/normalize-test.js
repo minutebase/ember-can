@@ -9,6 +9,13 @@ module('normalize', function() {
     assert.equal("post", norm.abilityName);
   });
 
+  test('always singularize abilityName', function(assert) {
+    let norm = normalize("edit posts");
+
+    assert.equal("edit", norm.propertyName);
+    assert.equal("post", norm.abilityName);
+  });
+
   test('removes stopwords from combined string', function(assert) {
     let norm;
 
