@@ -23,7 +23,7 @@ module('Integration | Helper | can', function(hooks) {
     }));
 
     await render(hbs`{{if (can "works well post") "true" "false"}}`);
-    assert.equal(this.element.textContent.trim(), 'true');
+    assert.dom(this.element).hasText('true');
   });
 
   test('it works without model', async function(assert) {
@@ -50,13 +50,13 @@ module('Integration | Helper | can', function(hooks) {
     assert.dom(this.element).hasText('false');
 
     this.set('model', { write: false });
-    assert.equal(this.element.textContent.trim(), 'false');
+    assert.dom(this.element).hasText('false');
 
     this.set('model', { write: true });
-    assert.equal(this.element.textContent.trim(), 'true');
+    assert.dom(this.element).hasText('true');
 
     this.set('model', null);
-    assert.equal(this.element.textContent.trim(), 'false');
+    assert.dom(this.element).hasText('false');
   });
 
   test('it works with default model', async function(assert) {
@@ -73,16 +73,16 @@ module('Integration | Helper | can', function(hooks) {
     }));
 
     await render(hbs`{{if (can "write post" model) "true" "false"}}`);
-    assert.equal(this.element.textContent.trim(), 'true');
+    assert.dom(this.element).hasText('true');
 
     this.set('model', undefined);
-    assert.equal(this.element.textContent.trim(), 'true');
+    assert.dom(this.element).hasText('true');
 
     this.set('model', null);
-    assert.equal(this.element.textContent.trim(), 'false');
+    assert.dom(this.element).hasText('false');
 
     this.set('model', { write: false });
-    assert.equal(this.element.textContent.trim(), 'false');
+    assert.dom(this.element).hasText('false');
   });
 
   test('it can receives properties', async function(assert) {

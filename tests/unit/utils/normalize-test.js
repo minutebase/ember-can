@@ -41,6 +41,6 @@ module('normalize', function() {
 
     norm = normalize("comment on issues");
     assert.equal("comment", norm.propertyName);
-    assert.equal("issues", norm.abilityName);
+    assert.equal("issue", norm.abilityName);
   });
 });

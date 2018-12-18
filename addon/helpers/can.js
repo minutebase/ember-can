@@ -9,7 +9,7 @@ export default Helper.extend({
   propertyName: null,
 
   compute([abilityString, model], properties) {
-    let service = this.get('can');
+    let service = this.can;
     let { abilityName, propertyName } = service.parse(abilityString);
     let ability = service.abilityFor(abilityName, model, properties);
 
@@ -32,9 +32,9 @@ export default Helper.extend({
   },
 
   _removeAbilityObserver() {
-    this.removeObserver(`ability.${this.get('propertyName')}`, this, 'recompute');
+    this.removeObserver(`ability.${this.propertyName}`, this, 'recompute');
 
-    let ability = this.get('ability')
+    let ability = this.ability
 
     if (ability) {
       ability.destroy();
