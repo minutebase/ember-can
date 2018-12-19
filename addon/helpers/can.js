@@ -1,5 +1,4 @@
 import Helper from '@ember/component/helper';
-
 import { inject as service } from '@ember/service';
 
 export default Helper.extend({
@@ -9,7 +8,7 @@ export default Helper.extend({
   propertyName: null,
 
   compute([abilityString, model], properties) {
-    let service = this.can;
+    let service = this.get('can');
     let { abilityName, propertyName } = service.parse(abilityString);
     let ability = service.abilityFor(abilityName, model, properties);
 
