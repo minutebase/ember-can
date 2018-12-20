@@ -152,7 +152,7 @@ Cannot helper is a negation of `can` helper with the same API.
 
 An ability class protects an individual model which is available in the ability as `model`.
 
-The ability checks themselves are simply standard Ember objects with computed properties:
+**Please note that all abilites names have to be in singular form**
 
 ```js
 // app/abilities/post.js
@@ -247,6 +247,22 @@ export default CanService.extend({
   }
 });
 ```
+
+You can also modify the property prefix by overriding `parseProperty` in our ability file:
+
+```js
+// app/abilities/feature.js
+import { Ability } from 'ember-can';
+import { camelize } from '@ember/string';
+
+export default Ability.extend({
+  parseProperty(propertyName) {
+    return camelize(`is-${propertyName}`);
+  },
+});
+```
+
+
 
 ## Injecting the user
 
