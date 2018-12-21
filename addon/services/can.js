@@ -1,4 +1,5 @@
 import Service from '@ember/service';
+import Ability from 'ember-can/ability';
 import { assert } from '@ember/debug';
 import { getOwner } from '@ember/application';
 import { assign } from '@ember/polyfills';
@@ -27,15 +28,18 @@ export default Service.extend({
    * @return {Ability}                Ability instance of requested ability
    */
   abilityFor(abilityName, model, properties = {}) {
-    let Ability = getOwner(this).factoryFor(`ability:${abilityName}`);
+    let AbilityFactory = getOwner(this).factoryFor(`ability:${abilityName}`);
 
-    assert(`No ability type found for '${abilityName}'`, Ability);
+    assert(`No ability type found for '${abilityName}'`, AbilityFactory );
 
     if (typeof model != 'undefined') {
       properties = assign({}, { model }, properties);
     }
 
-    return Ability.create(properties);
+    let ability = AbilityFactory.create(properties);
+    assert(`Ability '${abilityName}' has to inherit from ember-can Ability`, ability instanceof Ability);
+
+    return ability;
   },
 
   /**
