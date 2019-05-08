@@ -1,4 +1,4 @@
 import { Ability } from 'ember-can';
 
-export default Ability.extend({
-});
+export default class extends Ability {
+}
