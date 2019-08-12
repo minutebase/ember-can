@@ -23,16 +23,15 @@ module.exports = {
     var imports, test;
     if (testStyle === 'qunit') {
       imports =
-        "import { moduleFor, test } from 'ember-qunit';";
+        "import { module, test } from 'qunit';" + EOL +
+        "import { setupTest } from 'ember-qunit';";
       test =
-        "moduleFor('ability:" + name + "', 'Unit | Ability | " + name + "', {" + EOL +
-        "  // Specify the other units that are required for this test." + EOL +
-        "  // needs: ['service:foo']" + EOL +
-        "});" + EOL + EOL +
-        "// Replace this with your real tests." + EOL +
-        "test('it exists', function(assert) {" + EOL +
-        "  const ability = this.subject();" + EOL +
-        "  assert.ok(ability);" + EOL +
+        "module('Unit | Ability | " + name + "', function(hooks) {" + EOL +
+        "  setupTest(hooks);" + EOL + EOL +
+        "  test('it exists', function(assert) {" + EOL +
+        "    const ability = this.owner.lookup('ability:" + name + "');" + EOL +
+        "    assert.ok(ability);" + EOL +
+        "  });" + EOL +
         "});";
     } else if (testStyle === 'mocha') {
       imports =
