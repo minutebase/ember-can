@@ -7,5 +7,5 @@ export function ability(abilityName, resourceName) {
   return computed(resourceName, function() {
     let canService = getOwner(this).lookup('service:can');
     return canService.abilityFor(abilityName, this.get(resourceName));
-  });
+  }).readOnly();
 }
