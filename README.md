@@ -41,7 +41,7 @@ ember install ember-can
 You want to conditionally allow creating a new blog post:
 
 ```hbs
-{{#if (can "write post")}}
+{{#if (can "create post")}}
   Type post content here...
 {{else}}
   You can't write a new post!
@@ -53,14 +53,15 @@ We define an ability for the `Post` model in `/app/abilities/post.js`:
 ```js
 // app/abilities/post.js
 
-import { reads } from '@ember/object/computed';
+import { readOnly } from '@ember/object/computed';
 import { Ability } from 'ember-can';
 
 export default Ability.extend({
   session: service(),
 
-  user: reads('session.currentUser').readOnly(),
-  canCreate: reads('user.isAdmin').readOnly()
+  user: readOnly('session.currentUser'),
+
+  canCreate: readOnly('user.isAdmin')
 });
 ```
 
@@ -75,10 +76,11 @@ import { inject as service } from '@ember/service';
 export default Route.extend({
   can: service(),
 
-  beforeModel() {
+  beforeModel(transition) {
     let result = this._super(...arguments);
 
-    if (this.get('can').cannot('create post')) {
+    if (this.can.cannot('create post')) {
+      transition.abort();
       return this.transitionTo('index');
     }
 
@@ -97,9 +99,7 @@ export default Component.extend({
 
   actions: {
     createPost() {
-      let canWrite = this.get('can').can('create post', this.get('post'), { user: this.get('author') });
-
-      if (canWrite) {
+      if (this.can.can('create post', this.post)) {
         // create post!
       }
     }
@@ -138,7 +138,7 @@ As it's a sub-expression, you can use it anywhere a helper can be used.
 For example to give a div a class based on an ability you can use an inline if:
 
 ```hbs
-<div class="{{if (can 'edit post' post) 'is-editable'}}">
+<div class={{if (can "edit post" post) "is-editable"}}>
 
 </div>
 ```
@@ -218,7 +218,7 @@ For example:
 | String                      | property           | resource                | pod                            |
 |-----------------------------|--------------------|-------------------------|--------------------------------|
 | write post                  | `canWrite`         | `/abilities/post.js`    | `app/pods/post/ability.js`     |
-| manage members in projects  | `canManageMembers` | `/abilities/projects.js`| `app/pods/projects/ability.js` |
+| manage members in project  | `canManageMembers` | `/abilities/project.js`| `app/pods/project/ability.js` |
 | view profile for user       | `canViewProfile`   | `/abilities/user.js`    | `app/pods/user/ability.js`     |
 
 Current stopwords which are ignored are:
