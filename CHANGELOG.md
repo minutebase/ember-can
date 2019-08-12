@@ -1,5 +1,19 @@
 # Change Log
 
+## v2.0.0 (2019-08-12)
+
+#### :boom: Breaking Change
+* [#94](https://github.com/minutebase/ember-can/pull/94) Ember can v2 ([@Exelord](https://github.com/Exelord))
+
+#### :rocket: Enhancement
+* [#94](https://github.com/minutebase/ember-can/pull/94) Ember can v2 ([@Exelord](https://github.com/Exelord))
+
+#### Committers: 4
+- Logan Rosen ([@loganrosen](https://github.com/loganrosen))
+- Maciej Kwaśniak ([@Exelord](https://github.com/Exelord))
+- Milo Lee ([@oo6](https://github.com/oo6))
+- Zach Garwood ([@zachgarwood](https://github.com/zachgarwood))
+
 ## [v1.1.1](https://github.com/minutebase/ember-can/tree/v1.1.1) (2018-07-18)
 [Full Changelog](https://github.com/minutebase/ember-can/compare/v1.1.0...v1.1.1)
 
