@@ -30,7 +30,11 @@ Install this addon via ember-cli:
 ember install ember-can
 ```
 
-**Compatible with Ember.js `>=2.12.0`**
+## Compatibility
+
+* Ember.js v3.4 or above
+* Ember CLI v2.13 or above
+* Node.js v8 or above
 
 ## Quick Example
 
@@ -388,6 +392,10 @@ helper and your abilities should be available to your components automatically.
 * Visit the dummy application at [http://localhost:4200](http://localhost:4200).
 
 For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
+
+## Contributing
+
+See the [Contributing](CONTRIBUTING.md) guide for details.
 
 ## License
 
