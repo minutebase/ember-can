@@ -36,6 +36,7 @@
   },
   "devDependencies": {
     "@ember/optional-features": "0.7.0",
+    "babel-eslint": "10.0.2",
     "broccoli-asset-rev": "3.0.0",
     "ember-cli": "~3.11.0",
     "ember-cli-dependency-checker": "3.2.0",
@@ -51,6 +52,7 @@
     "ember-export-application-global": "2.0.0",
     "ember-load-initializers": "2.0.0",
     "ember-maybe-import-regenerator": "0.1.6",
+    "ember-native-class-polyfill": "^1.0.6",
     "ember-qunit": "4.5.1",
     "ember-resolver": "5.2.1",
     "ember-source": "~3.12.0",

@@ -32,7 +32,7 @@ export default Service.extend({
 
     assert(`No ability type found for '${abilityName}'`, AbilityFactory );
 
-    if (typeof model != 'undefined') {
+    if (typeof model !== 'undefined') {
       properties = assign({}, { model }, properties);
     }
 

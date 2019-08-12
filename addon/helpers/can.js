@@ -1,5 +1,7 @@
 import Helper from '@ember/component/helper';
 import { inject as service } from '@ember/service';
+import { addObserver, removeObserver } from '@ember/object/observers';
+import { setProperties } from '@ember/object';
 
 export default Helper.extend({
   can: service(),
@@ -8,16 +10,15 @@ export default Helper.extend({
   propertyName: null,
 
   compute([abilityString, model], properties) {
-    let service = this.get('can');
-    let { abilityName, propertyName } = service.parse(abilityString);
-    let ability = service.abilityFor(abilityName, model, properties);
+    let { abilityName, propertyName } = this.can.parse(abilityString);
+    let ability = this.can.abilityFor(abilityName, model, properties);
 
     propertyName = ability.parseProperty(propertyName);
 
     this._removeAbilityObserver();
     this._addAbilityObserver(ability, propertyName);
 
-    return ability.get(propertyName);
+    return ability[propertyName];
   },
 
   destroy() {
@@ -26,17 +27,12 @@ export default Helper.extend({
   },
 
   _addAbilityObserver(ability, propertyName) {
-    this.setProperties({ ability, propertyName });
-    this.addObserver(`ability.${propertyName}`, this, 'recompute');
+    setProperties(this, { ability, propertyName });
+    addObserver(this, `ability.${propertyName}`, this, 'recompute');
   },
 
   _removeAbilityObserver() {
-    this.removeObserver(`ability.${this.propertyName}`, this, 'recompute');
-
-    let ability = this.ability
-
-    if (ability) {
-      ability.destroy();
-    }
+    removeObserver(this, `ability.${this.propertyName}`, this, 'recompute');
+    this.ability && this.ability.destroy();
   }
 });
