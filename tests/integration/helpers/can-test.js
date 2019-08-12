@@ -6,22 +6,21 @@ import { Ability } from 'ember-can';
 import { computed } from '@ember/object';
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
-import { run } from '@ember/runloop';
 
 module('Integration | Helper | can', function(hooks) {
   setupRenderingTest(hooks);
 
   module('classic class', function() {
-    test('it works with native class', async function(assert) {
+    test('it works with custom property parser', async function(assert) {
       assert.expect(1);
 
-      this.owner.register('ability:post', class extends Ability {
-        worksWell = true;
+      this.owner.register('ability:post', Ability.extend({
+        worksWell: true,
 
         parseProperty(propertyName) {
           return propertyName; // without `can` prefix
         }
-      });
+      }));
 
       await render(hbs`{{if (can "works well post") "true" "false"}}`);
       assert.dom(this.element).hasText('true');
@@ -64,20 +63,8 @@ module('Integration | Helper | can', function(hooks) {
       assert.expect(4);
 
       this.owner.register('ability:post', Ability.extend({
-        model: computed({
-          get() {
-            if ('_model' in this) {
-              return this._model;
-            }
-
-            return { write: true }
-          },
-
-          set(key, value) {
-            this._model = value;
-            return value;
-          }
-        }),
+        // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
+        model: { write: true },
 
         canWrite: computed('model.write', function() {
           return this.get('model.write');
@@ -125,11 +112,14 @@ module('Integration | Helper | can', function(hooks) {
 
       this.set('write', false);
       this.set('model', { write: false });
-      await render(hbs`{{if (can "write post" model write=write) "true" "false"}}`);
+
+      await render(hbs`{{if (can "write post" model write=this.write) "true" "false"}}`);
+
       assert.dom(this.element).hasText('false');
 
       this.set('write', true);
       this.set('model', { write: true });
+
       assert.dom(this.element).hasText('true');
     });
 
@@ -151,7 +141,7 @@ module('Integration | Helper | can', function(hooks) {
       await render(hbs`{{if (can "write post") "true" "false"}}`);
       assert.dom(this.element).hasText('false');
 
-      run(() => this.owner.lookup('service:session').set('isLoggedIn', true));
+      this.owner.lookup('service:session').set('isLoggedIn', true);
       assert.dom(this.element).hasText('true');
     });
   });
@@ -288,7 +278,7 @@ module('Integration | Helper | can', function(hooks) {
       await render(hbs`{{if (can "write post") "true" "false"}}`);
       assert.dom(this.element).hasText('false');
 
-      run(() => this.owner.lookup('service:session').set('isLoggedIn', true));
+      this.owner.lookup('service:session').set('isLoggedIn', true);
       assert.dom(this.element).hasText('true');
     });
   });
