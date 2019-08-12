@@ -44,7 +44,6 @@
     "ember-cli-htmlbars": "3.1.0",
     "ember-cli-htmlbars-inline-precompile": "2.1.0",
     "ember-cli-inject-live-reload": "2.0.1",
-    "ember-cli-release": "1.0.0-beta.2",
     "ember-cli-sri": "2.1.1",
     "ember-cli-uglify": "3.0.0",
     "ember-disable-prototype-extensions": "1.1.3",
@@ -53,7 +52,7 @@
     "ember-maybe-import-regenerator": "0.1.6",
     "ember-qunit": "4.5.1",
     "ember-resolver": "5.2.1",
-    "ember-source": "~3.12.0",
+    "ember-source": "~3.8.0",
     "ember-source-channel-url": "2.0.1",
     "ember-template-lint": "1.5.1",
     "ember-try": "1.2.1",
@@ -64,7 +63,8 @@
     "qunit-dom": "0.9.0"
   },
   "engines": {
-    "node": "8.* || >= 10.*"
+    "node": "8.* || >= 10.*",
+    "npm": "6.10.2"
   },
   "ember-addon": {
     "configPath": "tests/dummy/config"
