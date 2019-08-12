@@ -1,8 +1,12 @@
 module.exports = {
   root: true,
+  parser: "babel-eslint",
   parserOptions: {
-    ecmaVersion: 2017,
-    sourceType: 'module'
+    ecmaVersion: 2018,
+    sourceType: 'module',
+    ecmaFeatures: {
+      "experimentalDecorators": true
+    },
   },
   plugins: [
     'ember'
@@ -25,6 +29,7 @@ module.exports = {
         'ember-cli-build.js',
         'index.js',
         'testem.js',
+        'blueprints/*/index.js',
         'config/**/*.js',
         'tests/dummy/config/**/*.js'
       ],
@@ -35,8 +40,7 @@ module.exports = {
         'tests/dummy/app/**'
       ],
       parserOptions: {
-        sourceType: 'script',
-        ecmaVersion: 2015
+        sourceType: 'script'
       },
       env: {
         browser: false,

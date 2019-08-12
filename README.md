@@ -30,14 +30,18 @@ Install this addon via ember-cli:
 ember install ember-can
 ```
 
-**Compatible with Ember.js `>=2.12.0`**
+## Compatibility
+
+* Ember.js v3.4 or above
+* Ember CLI v2.13 or above
+* Node.js v8 or above
 
 ## Quick Example
 
 You want to conditionally allow creating a new blog post:
 
 ```hbs
-{{#if (can "write post")}}
+{{#if (can "create post")}}
   Type post content here...
 {{else}}
   You can't write a new post!
@@ -49,14 +53,15 @@ We define an ability for the `Post` model in `/app/abilities/post.js`:
 ```js
 // app/abilities/post.js
 
-import { reads } from '@ember/object/computed';
+import { readOnly } from '@ember/object/computed';
 import { Ability } from 'ember-can';
 
 export default Ability.extend({
   session: service(),
 
-  user: reads('session.currentUser').readOnly(),
-  canCreate: reads('user.isAdmin').readOnly()
+  user: readOnly('session.currentUser'),
+
+  canCreate: readOnly('user.isAdmin')
 });
 ```
 
@@ -71,10 +76,11 @@ import { inject as service } from '@ember/service';
 export default Route.extend({
   can: service(),
 
-  beforeModel() {
+  beforeModel(transition) {
     let result = this._super(...arguments);
 
-    if (this.get('can').cannot('create post')) {
+    if (this.can.cannot('create post')) {
+      transition.abort();
       return this.transitionTo('index');
     }
 
@@ -93,9 +99,7 @@ export default Component.extend({
 
   actions: {
     createPost() {
-      let canWrite = this.get('can').can('create post', this.get('post'), { user: this.get('author') });
-
-      if (canWrite) {
+      if (this.can.can('create post', this.post)) {
         // create post!
       }
     }
@@ -134,7 +138,7 @@ As it's a sub-expression, you can use it anywhere a helper can be used.
 For example to give a div a class based on an ability you can use an inline if:
 
 ```hbs
-<div class="{{if (can 'edit post' post) 'is-editable'}}">
+<div class={{if (can "edit post" post) "is-editable"}}>
 
 </div>
 ```
@@ -152,7 +156,7 @@ Cannot helper is a negation of `can` helper with the same API.
 
 An ability class protects an individual model which is available in the ability as `model`.
 
-The ability checks themselves are simply standard Ember objects with computed properties:
+**Please note that all abilites names have to be in singular form**
 
 ```js
 // app/abilities/post.js
@@ -214,7 +218,7 @@ For example:
 | String                      | property           | resource                | pod                            |
 |-----------------------------|--------------------|-------------------------|--------------------------------|
 | write post                  | `canWrite`         | `/abilities/post.js`    | `app/pods/post/ability.js`     |
-| manage members in projects  | `canManageMembers` | `/abilities/projects.js`| `app/pods/projects/ability.js` |
+| manage members in project  | `canManageMembers` | `/abilities/project.js`| `app/pods/project/ability.js` |
 | view profile for user       | `canViewProfile`   | `/abilities/user.js`    | `app/pods/user/ability.js`     |
 
 Current stopwords which are ignored are:
@@ -247,6 +251,22 @@ export default CanService.extend({
   }
 });
 ```
+
+You can also modify the property prefix by overriding `parseProperty` in our ability file:
+
+```js
+// app/abilities/feature.js
+import { Ability } from 'ember-can';
+import { camelize } from '@ember/string';
+
+export default Ability.extend({
+  parseProperty(propertyName) {
+    return camelize(`is-${propertyName}`);
+  },
+});
+```
+
+
 
 ## Injecting the user
 
@@ -375,7 +395,7 @@ For more information on using ember-cli, visit [https://ember-cli.com/](https://
 
 ## Contributing
 
-Bug reports and pull requests are welcome on GitHub at https://github.com/minutebase/ember-can. This project is intended to be a safe, welcoming space for collaboration, and contributors are expected to adhere to the Contributor Covenant code of conduct.
+See the [Contributing](CONTRIBUTING.md) guide for details.
 
 ## License
 

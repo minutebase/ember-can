@@ -12,12 +12,12 @@ module('Unit | Service | can', function(hooks) {
     let service = this.owner.lookup('service:can');
 
     assert.deepEqual(service.parse('manage members in project'), {
-      propertyName: 'canManageMembers',
+      propertyName: 'manageMembers',
       abilityName: 'project'
     });
 
     assert.deepEqual(service.parse('add tags to post'), {
-      propertyName: 'canAddTags',
+      propertyName: 'addTags',
       abilityName: 'post'
     });
   });
@@ -38,6 +38,20 @@ module('Unit | Service | can', function(hooks) {
     assert.throws(() => service.abilityFor('abilityNotFound'), 'No ability type found for abilityNotFound');
   });
 
+  test('valueFor', function(assert) {
+    assert.expect(1);
+
+    let service = this.owner.lookup('service:can');
+
+    this.owner.register('ability:super-model', Ability.extend({
+      canTouchThis: computed('model', function() {
+        return this.get('model.yeah');
+      }),
+    }));
+
+    assert.equal(service.valueFor('touchThis', 'superModel', { yeah: 'Yeah!' }), 'Yeah!');
+  });
+
   test('can', function(assert) {
     assert.expect(1);
 
@@ -49,7 +63,7 @@ module('Unit | Service | can', function(hooks) {
       }),
     }));
 
-    assert.ok(service.can('touchThis in superModel', { yeah: true }));
+    assert.equal(service.can('touchThis in superModel', { yeah: true }), true);
   });
 
   test('cannot', function(assert) {
@@ -63,6 +77,6 @@ module('Unit | Service | can', function(hooks) {
       }),
     }));
 
-    assert.notOk(service.can('touchThis in superModel', { yeah: false }));
+    assert.equal(service.can('touchThis in superModel', { yeah: false }), false);
   });
 });
