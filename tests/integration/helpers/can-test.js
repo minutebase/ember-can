@@ -64,13 +64,24 @@ module('Integration | Helper | can', function(hooks) {
       assert.expect(4);
 
       this.owner.register('ability:post', Ability.extend({
-        model: computed(function() {
-          return { write: true }
+        model: computed({
+          get() {
+            if ('_model' in this) {
+              return this._model;
+            }
+
+            return { write: true }
+          },
+
+          set(key, value) {
+            this._model = value;
+            return value;
+          }
         }),
 
         canWrite: computed('model.write', function() {
           return this.get('model.write');
-        }),
+        }).readOnly(),
       }));
 
       await render(hbs`{{if (can "write post" model) "true" "false"}}`);
@@ -92,7 +103,7 @@ module('Integration | Helper | can', function(hooks) {
       this.owner.register('ability:post', Ability.extend({
         canWrite: computed('write', function() {
           return this.get('write');
-        }),
+        }).readOnly(),
       }));
 
       this.set('write', false);
@@ -109,7 +120,7 @@ module('Integration | Helper | can', function(hooks) {
       this.owner.register('ability:post', Ability.extend({
         canWrite: computed('model.write', 'write', function() {
           return this.get('model.write') && this.get('write');
-        }),
+        }).readOnly(),
       }));
 
       this.set('write', false);
@@ -199,10 +210,7 @@ module('Integration | Helper | can', function(hooks) {
       assert.expect(4);
 
       this.owner.register('ability:post', class extends Ability {
-        @computed()
-        get model() {
-          return { write: true }
-        }
+        model = { write: true }
 
         @computed('model.write')
         get canWrite() {
