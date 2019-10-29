@@ -1,7 +1,7 @@
 import { camelize } from '@ember/string';
 import { singularize } from 'ember-inflector';
 
-const stopWords = ['of', 'in', 'for', 'to', 'from', 'on'];
+const stopWords = ['of', 'in', 'for', 'to', 'from', 'on', 'as'];
 
 /**
  * Normalize string into an object with extracted propertyName and abilityName
