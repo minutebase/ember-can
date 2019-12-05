@@ -330,6 +330,28 @@ If the model property is not the same as ability name you can pass a second argu
 ability: ability('post', 'myModelProperty')
 ```
 
+#### Decorators
+
+If you are already using the native class syntax, you can use the `@can` decorator:
+
+```js
+import Component from '@ember/component';
+import { can } from 'ember-can/decorator';
+
+export default class extends Component {
+  data = { id: 1, body: "Test" };
+  test = "Some Additional Data";
+
+  @can("write post", { model: "data", additionalAttributes: { test: "test" } }) hasPermission;
+};
+```
+
+```hbs
+{{#if this.hasPermission}}
+  <p>{{this.data.body}}</p>
+{{/if}}
+```
+
 ## Accessing abilities within an Ember engine
 
 If you're using [engines](http://ember-engines.com/) and you want to access an *ability* within it, you will need it to be present in your Engine’s namespace. This is accomplished by doing what is called a "re-export":
