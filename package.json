@@ -23,12 +23,29 @@
     "Maciej Kwaśniak <maciej.kwasniak@macsour.com>"
   ],
   "scripts": {
+    "changelog": "lerna-changelog",
     "build": "ember build",
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
     "start": "ember serve",
     "test": "ember test",
     "test:all": "ember try:each"
+  },
+  "release-it": {
+    "plugins": {
+      "release-it-lerna-changelog": {
+        "infile": "CHANGELOG.md"
+      }
+    },
+    "git": {
+      "tagName": "v${version}",
+      "commitMessage": "v${version}",
+      "pushArgs": "--follow-tags --no-verify"
+    },
+    "github": {
+      "release": true,
+      "releaseName": "v${version}"
+    }
   },
   "dependencies": {
     "ember-cli-babel": "7.13.2",
@@ -60,7 +77,9 @@
     "eslint-plugin-node": "9.1.0",
     "lerna-changelog": "0.8.2",
     "loader.js": "4.7.0",
-    "qunit-dom": "0.9.0"
+    "qunit-dom": "0.9.0",
+    "release-it": "12.4.3",
+    "release-it-lerna-changelog": "1.0.3"
   },
   "engines": {
     "node": "8.* || >= 10.*"
