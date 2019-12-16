@@ -24,6 +24,7 @@
   ],
   "scripts": {
     "changelog": "lerna-changelog",
+    "release": "release-it",
     "build": "ember build",
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
