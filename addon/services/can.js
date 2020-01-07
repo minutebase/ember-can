@@ -55,7 +55,7 @@ export default Service.extend({
     let ability = this.abilityFor(abilityName, model, properties);
     let result = ability.getAbility(propertyName);
 
-    run(() => ability.destroy());
+    ability.destroy();
 
     return result;
   },
