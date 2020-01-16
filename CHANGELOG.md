@@ -1,3 +1,18 @@
+## v3.0.0 (2020-01-16)
+
+#### :boom: Breaking Change
+* [#114](https://github.com/minutebase/ember-can/pull/114) Drop support for node 8 ([@Exelord](https://github.com/Exelord))
+
+#### :rocket: Enhancement
+* [#113](https://github.com/minutebase/ember-can/pull/113) Clean ability helper state ([@Exelord](https://github.com/Exelord))
+* [#112](https://github.com/minutebase/ember-can/pull/112) Update dependencies ([@Exelord](https://github.com/Exelord))
+* [#102](https://github.com/minutebase/ember-can/pull/102) Add "as" as stop word ([@Exelord](https://github.com/Exelord))
+
+#### Committers: 3
+- Christian ([@makepanic](https://github.com/makepanic))
+- Maciej Kwaśniak ([@Exelord](https://github.com/Exelord))
+- Ondrej Sevcik ([@ondrejsevcik](https://github.com/ondrejsevcik))
+
 ## v2.1.0 (2019-12-16)
 
 #### :rocket: Enhancement
