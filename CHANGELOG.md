@@ -1,3 +1,11 @@
+## v2.1.0 (2019-12-16)
+
+#### :rocket: Enhancement
+* [#107](https://github.com/minutebase/ember-can/pull/107) Update dependencies ([@Exelord](https://github.com/Exelord))
+
+#### Committers: 1
+- Maciej Kwaśniak ([@Exelord](https://github.com/Exelord))
+
 # Change Log
 
 ## v2.0.0 (2019-08-12)

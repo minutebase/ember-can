@@ -1,6 +1,6 @@
 {
   "name": "ember-can",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Simple authorisation addon for Ember apps",
   "keywords": [
     "ember-addon",
@@ -23,6 +23,8 @@
     "Maciej Kwaśniak <maciej.kwasniak@macsour.com>"
   ],
   "scripts": {
+    "changelog": "lerna-changelog",
+    "release": "release-it",
     "build": "ember build",
     "lint:hbs": "ember-template-lint .",
     "lint:js": "eslint .",
@@ -30,9 +32,25 @@
     "test": "ember test",
     "test:all": "ember try:each"
   },
+  "release-it": {
+    "plugins": {
+      "release-it-lerna-changelog": {
+        "infile": "CHANGELOG.md"
+      }
+    },
+    "git": {
+      "tagName": "v${version}",
+      "commitMessage": "v${version}",
+      "pushArgs": "--follow-tags --no-verify"
+    },
+    "github": {
+      "release": true,
+      "releaseName": "v${version}"
+    }
+  },
   "dependencies": {
-    "ember-cli-babel": "7.8.0",
-    "ember-inflector": "3.0.1"
+    "ember-cli-babel": "^7.13.2",
+    "ember-inflector": "^3.0.1"
   },
   "devDependencies": {
     "@ember/optional-features": "0.7.0",
@@ -60,7 +78,9 @@
     "eslint-plugin-node": "9.1.0",
     "lerna-changelog": "0.8.2",
     "loader.js": "4.7.0",
-    "qunit-dom": "0.9.0"
+    "qunit-dom": "0.9.0",
+    "release-it": "12.4.3",
+    "release-it-lerna-changelog": "1.0.3"
   },
   "engines": {
     "node": "8.* || >= 10.*"
