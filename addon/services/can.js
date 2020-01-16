@@ -3,7 +3,6 @@ import Ability from 'ember-can/ability';
 import { assert } from '@ember/debug';
 import { getOwner } from '@ember/application';
 import { assign } from '@ember/polyfills';
-import { run } from '@ember/runloop';
 
 import normalizeAbilityString from 'ember-can/utils/normalize';
 
@@ -55,7 +54,7 @@ export default Service.extend({
     let ability = this.abilityFor(abilityName, model, properties);
     let result = ability.getAbility(propertyName);
 
-    run(() => ability.destroy());
+    ability.destroy();
 
     return result;
   },
