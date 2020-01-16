@@ -1,0 +1,8 @@
+title: Ember-can
+description: Simple authorisation addon for Ember apps
+google_analytics: 
+show_downloads: true
+theme: jekyll-theme-cayman
+
+gems:
+  - jekyll-mentions
