@@ -151,6 +151,53 @@ Cannot helper is a negation of `can` helper with the same API.
 {{cannot "doSth in myModel" model extraProperties}}
 ```
 
+### `ability`
+
+Ability helper will return the ability property as is instead of as a boolean like with can/cannot.
+It allows you to return objects in your abilitie's property as long as you include a 'can' property that represents the usual boolean ability you would return in a more classic scenario.
+
+```js
+// app/abilities/post.js
+
+import { computed } from '@ember/object';
+import { Ability } from 'ember-can';
+
+export default Ability.extend({
+  // only an admin can edit a post, if and only the post is editable
+  canEdit: computed('user.isAdmin', 'model.isNotEditable', function() {
+    if (!this.get('model.isNotEditable')) {
+      return {
+        can: false,
+        reason: 'This post cannot be edited'
+      }
+    }
+
+    if (!this.get('user.isAdmin')) {
+      return {
+        can: false,
+        reason: 'You need to be an admin to edit a post'
+      }
+    }
+
+    return true;
+  })
+});
+```
+
+```hbs
+{{ability "write post" post}}
+{{!-- returns { can: ..., reason: ... } or true --}}
+{{ability "write post:reason" post}}
+{{!-- returns 'This post cannot be edited', 'You need to be an admin to edit a post' or undefined --}}
+
+{{#if (can "write post" post)}}
+  <p>A post</p>
+{{else}}
+  {{#with (ability "write post:reason" post) as |cannotEditPostReason|}}
+    {{cannotEditPostReason}}
+  {{/with}}
+{{/if}}
+```
 
 ## Abilities
 
