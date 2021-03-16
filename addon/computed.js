@@ -1,4 +1,4 @@
-import { computed } from '@ember/object';
+import { computed, get } from '@ember/object';
 import { getOwner } from '@ember/application';
 
 export function ability(abilityName, resourceName) {
@@ -6,6 +6,6 @@ export function ability(abilityName, resourceName) {
 
   return computed(resourceName, function() {
     let canService = getOwner(this).lookup('service:can');
-    return canService.abilityFor(abilityName, this.get(resourceName));
+    return canService.abilityFor(abilityName, get(this, resourceName));
   }).readOnly();
 }
