@@ -1,39 +1,17 @@
-import Helper from '@ember/component/helper';
-import { inject as service } from '@ember/service';
-import { addObserver, removeObserver } from '@ember/object/observers';
-import { setProperties } from '@ember/object';
+import AbilityHelper from 'ember-can/helpers/ability';
+import { assert } from '@ember/debug';
 
-export default Helper.extend({
-  can: service(),
+export default AbilityHelper.extend({
+  compute([abilityString]) {
+    let { abilityName, propertyName, subProperty } = this.can.parse(abilityString);
 
-  ability: null,
-  propertyName: null,
+    assert(`Using 'abilityString:subProperty' syntax is forbidden in can and cannot helpers, use ability helper instead`, !subProperty);
 
-  compute([abilityString, model], properties) {
-    let { abilityName, propertyName } = this.can.parse(abilityString);
-    let ability = this.can.abilityFor(abilityName, model, properties);
-
-    propertyName = ability.parseProperty(propertyName);
-
-    this._removeAbilityObserver();
-    this._addAbilityObserver(ability, propertyName);
-
-    return ability[propertyName];
-  },
-
-  destroy() {
-    this._removeAbilityObserver();
-    return this._super(...arguments);
-  },
-
-  _addAbilityObserver(ability, propertyName) {
-    setProperties(this, { ability, propertyName });
-    addObserver(this, `ability.${propertyName}`, this, 'recompute');
-  },
-
-  _removeAbilityObserver() {
-    removeObserver(this, `ability.${this.propertyName}`, this, 'recompute');
-    this.ability && this.ability.destroy();
-    setProperties(this, { ability: null, propertyName: null });
+    let result = this._super(...arguments);
+    if (typeof result === 'object') {
+      assert(`Ability property ${propertyName} in '${abilityName}' is an object and must have a 'can' property`, 'can' in result);
+      return result.can
+    }
+    return result;
   }
 });

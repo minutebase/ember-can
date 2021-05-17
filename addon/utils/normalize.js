@@ -11,7 +11,9 @@ const stopWords = ['of', 'in', 'for', 'to', 'from', 'on', 'as'];
  * @return {Object}        extracted propertyName and abilityName
  */
 export default function(string) {
-  let parts = string.split(' ');
+  let [abilityString, subProperty] = string.split(':').map(s => s.trim());
+
+  let parts = abilityString.split(' ');
   let abilityName = singularize(parts.pop());
   let last = parts[parts.length - 1];
 
@@ -21,5 +23,5 @@ export default function(string) {
 
   let propertyName = camelize(parts.join(' '));
 
-  return { propertyName, abilityName };
+  return { subProperty, propertyName, abilityName };
 }

@@ -1,5 +1,6 @@
 import Service from '@ember/service';
 import Ability from 'ember-can/ability';
+import { get } from '@ember/object';
 import { assert } from '@ember/debug';
 import { getOwner } from '@ember/application';
 import { assign } from '@ember/polyfills';
@@ -44,19 +45,24 @@ export default Service.extend({
   /**
    * Returns a value for requested ability in specified ability class
    * @public
-   * @param  {String} propertyName name of ability, eg `createProjects`
-   * @param  {String} abilityName  name of ability class
+   * @param  {[type]} abilityString eg. 'create projects in account'
    * @param  {*}      model
    * @param  {Object} properties   extra properties (to be set on the ability instance)
    * @return {*}                   value of ability
    */
-  valueFor(propertyName, abilityName, model, properties) {
+  valueFor(abilityString, model, properties) {
+    let { abilityName, propertyName, subProperty } = this.parse(abilityString);
+
     let ability = this.abilityFor(abilityName, model, properties);
     let result = ability.getAbility(propertyName);
 
     ability.destroy();
 
-    return result;
+    if (!subProperty) {
+      return result;
+    }
+
+    return get(result, subProperty);
   },
 
   /**
@@ -68,8 +74,16 @@ export default Service.extend({
    * @return {Boolean}              value of ability converted to boolean
    */
   can(abilityString, model, properties) {
-    let { propertyName, abilityName } = this.parse(abilityString);
-    return !!this.valueFor(propertyName, abilityName, model, properties);
+    let { abilityName, propertyName, subProperty } = this.parse(abilityString);
+
+    assert(`Using 'abilityString:subProperty' syntax is forbidden in can and cannot helpers, use ability helper instead`, !subProperty);
+
+    let result = this.valueFor(abilityString, model, properties);
+    if (typeof result === 'object') {
+      assert(`Ability property ${propertyName} in '${abilityName}' is an object and must have a 'can' property`, 'can' in result);
+      return !!result.can
+    }
+    return !!result;
   },
 
   /**
