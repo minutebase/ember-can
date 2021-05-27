@@ -1,7 +1,7 @@
 import Helper from '@ember/component/helper';
 import { inject as service } from '@ember/service';
 import { addObserver, removeObserver } from '@ember/object/observers';
-import { setProperties } from '@ember/object';
+import { setProperties, get } from '@ember/object';
 
 export default Helper.extend({
   can: service(),
@@ -18,7 +18,7 @@ export default Helper.extend({
     this._removeAbilityObserver();
     this._addAbilityObserver(ability, propertyName);
 
-    return ability[propertyName];
+    return get(ability, propertyName);
   },
 
   destroy() {
