@@ -1,3 +1,19 @@
+## v3.1.0 (2021-05-27)
+
+#### :rocket: Enhancement
+* [#137](https://github.com/minutebase/ember-can/pull/137) feat: update docs about testing ember-can ([@Gorzas](https://github.com/Gorzas))
+* [#99](https://github.com/minutebase/ember-can/pull/99) Migrate blueprint to ES6 class ([@Gorzas](https://github.com/Gorzas))
+
+#### :bug: Bug Fix
+* [#140](https://github.com/minutebase/ember-can/pull/140) fix: update ember-cli-babel to 7.19 ([@Gorzas](https://github.com/Gorzas))
+* [#141](https://github.com/minutebase/ember-can/pull/141) use `get` from `@ember/object` to look up `propertyName` on `ability`… ([@MiniHeyd](https://github.com/MiniHeyd))
+* [#129](https://github.com/minutebase/ember-can/pull/129) Do not use global ember `get` ([@esbanarango](https://github.com/esbanarango))
+
+#### Committers: 3
+- Esteban Arango Medina ([@esbanarango](https://github.com/esbanarango))
+- José David Cano Pérez ([@Gorzas](https://github.com/Gorzas))
+- Steve Heydweiller ([@MiniHeyd](https://github.com/MiniHeyd))
+
 ## v3.0.0 (2020-01-16)
 
 #### :boom: Breaking Change
