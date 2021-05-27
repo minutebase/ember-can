@@ -25,5 +25,5 @@ export default EmberObject.extend({
    */
   getAbility(propertyName) {
     return this.get(this.parseProperty(propertyName));
-  }
+  },
 });
