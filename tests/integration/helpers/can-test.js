@@ -3,7 +3,8 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { Ability } from 'ember-can';
-import { computed } from '@ember/object';
+import { computed, get } from '@ember/object';
+import { readOnly } from '@ember/object/computed';
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import { run } from '@ember/runloop';
@@ -17,13 +18,13 @@ module('Integration | Helper | can', function (hooks) {
 
       this.owner.register(
         'ability:post',
-        Ability.extend({
-          worksWell: true,
+        class extends Ability {
+          worksWell = true;
 
           parseProperty(propertyName) {
             return propertyName; // without `can` prefix
-          },
-        })
+          }
+        }
       );
 
       await render(hbs`{{if (can "works well post") "true" "false"}}`);
@@ -35,9 +36,9 @@ module('Integration | Helper | can', function (hooks) {
 
       this.owner.register(
         'ability:post',
-        Ability.extend({
-          canWrite: true,
-        })
+        class extends Ability {
+          canWrite = true;
+        }
       );
 
       await render(hbs`{{if (can "write post") "true" "false"}}`);
@@ -49,9 +50,12 @@ module('Integration | Helper | can', function (hooks) {
 
       this.owner.register(
         'ability:post',
-        Ability.extend({
-          canWrite: computed.reads('model.write'),
-        })
+        class extends Ability {
+          @computed('model.write')
+          get canWrite() {
+            return get(this, 'model.write');
+          }
+        }
       );
 
       await render(hbs`{{if (can "write post" model) "true" "false"}}`);
@@ -72,12 +76,15 @@ module('Integration | Helper | can', function (hooks) {
 
       this.owner.register(
         'ability:post',
-        Ability.extend({
+        class extends Ability {
           // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
-          model: { write: true },
+          model = { write: true };
 
-          canWrite: computed.reads('model.write').readOnly(),
-        })
+          @readOnly('model.write')
+          get canWrite() {
+            return get(this, 'model.write');
+          }
+        }
       );
 
       await render(hbs`{{if (can "write post" model) "true" "false"}}`);
@@ -98,9 +105,12 @@ module('Integration | Helper | can', function (hooks) {
 
       this.owner.register(
         'ability:post',
-        Ability.extend({
-          canWrite: computed.reads('write').readOnly(),
-        })
+        class extends Ability {
+          @readOnly('write')
+          get canWrite() {
+            return this.write;
+          }
+        }
       );
 
       this.set('write', false);
@@ -116,9 +126,12 @@ module('Integration | Helper | can', function (hooks) {
 
       this.owner.register(
         'ability:post',
-        Ability.extend({
-          canWrite: computed.and('model.write', 'write').readOnly(),
-        })
+        class extends Ability {
+          @readOnly('model.write', 'write')
+          get canWrite() {
+            return get(this, 'model.write') && this.write;
+          }
+        }
       );
 
       this.set('write', false);
@@ -148,11 +161,14 @@ module('Integration | Helper | can', function (hooks) {
 
       this.owner.register(
         'ability:post',
-        Ability.extend({
-          session: service(),
+        class extends Ability {
+          @service() session;
 
-          canWrite: computed.reads('session.isLoggedIn'),
-        })
+          @computed('session.isLoggedIn')
+          get canWrite() {
+            return get(this, 'session.isLoggedIn');
+          }
+        }
       );
 
       await render(hbs`{{if (can "write post") "true" "false"}}`);

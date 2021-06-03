@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { Ability } from 'ember-can';
-import { computed } from '@ember/object';
+import { computed, get } from '@ember/object';
 
 module('Unit | Service | can', function (hooks) {
   setupTest(hooks);
@@ -27,7 +27,7 @@ module('Unit | Service | can', function (hooks) {
 
     let service = this.owner.lookup('service:can');
 
-    this.owner.register('ability:super-model', Ability.extend());
+    this.owner.register('ability:super-model', class extends Ability {});
 
     let ability = service.abilityFor(
       'superModel',
@@ -52,9 +52,12 @@ module('Unit | Service | can', function (hooks) {
 
     this.owner.register(
       'ability:super-model',
-      Ability.extend({
-        canTouchThis: computed.reads('model.yeah'),
-      })
+      class extends Ability {
+        @computed('model.yeah')
+        get canTouchThis() {
+          return get(this, 'model.yeah');
+        }
+      }
     );
 
     assert.equal(
@@ -70,9 +73,12 @@ module('Unit | Service | can', function (hooks) {
 
     this.owner.register(
       'ability:super-model',
-      Ability.extend({
-        canTouchThis: computed.reads('model.yeah'),
-      })
+      class extends Ability {
+        @computed('model.yeah')
+        get canTouchThis() {
+          return get(this, 'model.yeah');
+        }
+      }
     );
 
     assert.true(service.can('touchThis in superModel', { yeah: true }));
@@ -85,9 +91,12 @@ module('Unit | Service | can', function (hooks) {
 
     this.owner.register(
       'ability:super-model',
-      Ability.extend({
-        canTouchThis: computed.reads('model.yeah'),
-      })
+      class extends Ability {
+        @computed('model.yeah')
+        get canTouchThis() {
+          return get(this, 'model.yeah');
+        }
+      }
     );
 
     assert.false(service.can('touchThis in superModel', { yeah: false }));

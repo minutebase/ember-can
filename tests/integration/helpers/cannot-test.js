@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { Ability } from 'ember-can';
-import { computed } from '@ember/object';
+import { computed, get } from '@ember/object';
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import { run } from '@ember/runloop';
@@ -16,9 +16,9 @@ module('Integration | Helper | cannot', function (hooks) {
 
     this.owner.register(
       'ability:post',
-      Ability.extend({
-        canWrite: true,
-      })
+      class extends Ability {
+        canWrite = true;
+      }
     );
 
     await render(hbs`{{if (cannot "write post") "true" "false"}}`);
@@ -30,9 +30,12 @@ module('Integration | Helper | cannot', function (hooks) {
 
     this.owner.register(
       'ability:post',
-      Ability.extend({
-        canWrite: computed.reads('model.write'),
-      })
+      class extends Ability {
+        @computed('model.write')
+        get canWrite() {
+          return get(this, 'model.write');
+        }
+      }
     );
 
     this.set('model', { write: false });
@@ -48,9 +51,12 @@ module('Integration | Helper | cannot', function (hooks) {
 
     this.owner.register(
       'ability:post',
-      Ability.extend({
-        canWrite: computed.reads('write'),
-      })
+      class extends Ability {
+        @computed('write')
+        get canWrite() {
+          return this.write;
+        }
+      }
     );
 
     this.set('write', false);
@@ -66,9 +72,12 @@ module('Integration | Helper | cannot', function (hooks) {
 
     this.owner.register(
       'ability:post',
-      Ability.extend({
-        canWrite: computed.and('model.write', 'write'),
-      })
+      class extends Ability {
+        @computed('model.write', 'write')
+        get canWrite() {
+          return get(this, 'model.write') && this.write;
+        }
+      }
     );
 
     this.set('write', false);
@@ -95,11 +104,14 @@ module('Integration | Helper | cannot', function (hooks) {
 
     this.owner.register(
       'ability:post',
-      Ability.extend({
-        session: service(),
+      class extends Ability {
+        @service() session;
 
-        canWrite: computed.reads('session.isLoggedIn'),
-      })
+        @computed('session.isLoggedIn')
+        get canWrite() {
+          return get(this, 'session.isLoggedIn');
+        }
+      }
     );
 
     await render(hbs`{{if (cannot "write post") "true" "false"}}`);
