@@ -19,7 +19,10 @@ module.exports = {
   env: {
     browser: true,
   },
-  rules: {},
+  rules: {
+    'ember/no-classic-classes': 'warn',
+    'ember/no-observers': 'warn',
+  },
   overrides: [
     // node files
     {
