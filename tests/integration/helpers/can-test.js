@@ -8,44 +8,51 @@ import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import { run } from '@ember/runloop';
 
-module('Integration | Helper | can', function(hooks) {
+module('Integration | Helper | can', function (hooks) {
   setupRenderingTest(hooks);
 
-  module('classic class', function() {
-    test('it works with custom property parser', async function(assert) {
+  module('classic class', function () {
+    test('it works with custom property parser', async function (assert) {
       assert.expect(1);
 
-      this.owner.register('ability:post', Ability.extend({
-        worksWell: true,
+      this.owner.register(
+        'ability:post',
+        Ability.extend({
+          worksWell: true,
 
-        parseProperty(propertyName) {
-          return propertyName; // without `can` prefix
-        }
-      }));
+          parseProperty(propertyName) {
+            return propertyName; // without `can` prefix
+          },
+        })
+      );
 
       await render(hbs`{{if (can "works well post") "true" "false"}}`);
       assert.dom(this.element).hasText('true');
     });
 
-    test('it works without model', async function(assert) {
+    test('it works without model', async function (assert) {
       assert.expect(1);
 
-      this.owner.register('ability:post', Ability.extend({
-        canWrite: true
-      }));
+      this.owner.register(
+        'ability:post',
+        Ability.extend({
+          canWrite: true,
+        })
+      );
 
       await render(hbs`{{if (can "write post") "true" "false"}}`);
       assert.dom(this.element).hasText('true');
     });
 
-    test('it can receives model', async function(assert) {
+    test('it can receives model', async function (assert) {
       assert.expect(4);
 
-      this.owner.register('ability:post', Ability.extend({
-        canWrite: computed('model.write', function() {
-          return this.get('model.write');
-        }),
-      }));
+      this.owner.register(
+        'ability:post',
+        Ability.extend({
+          canWrite: computed.reads('model.write'),
+        })
+      );
 
       await render(hbs`{{if (can "write post" model) "true" "false"}}`);
       assert.dom(this.element).hasText('false');
@@ -60,17 +67,18 @@ module('Integration | Helper | can', function(hooks) {
       assert.dom(this.element).hasText('false');
     });
 
-    test('it works with default model', async function(assert) {
+    test('it works with default model', async function (assert) {
       assert.expect(4);
 
-      this.owner.register('ability:post', Ability.extend({
-        // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
-        model: { write: true },
+      this.owner.register(
+        'ability:post',
+        Ability.extend({
+          // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
+          model: { write: true },
 
-        canWrite: computed('model.write', function() {
-          return this.get('model.write');
-        }).readOnly(),
-      }));
+          canWrite: computed.reads('model.write').readOnly(),
+        })
+      );
 
       await render(hbs`{{if (can "write post" model) "true" "false"}}`);
       assert.dom(this.element).hasText('true');
@@ -85,14 +93,15 @@ module('Integration | Helper | can', function(hooks) {
       assert.dom(this.element).hasText('false');
     });
 
-    test('it can receives properties', async function(assert) {
+    test('it can receives properties', async function (assert) {
       assert.expect(2);
 
-      this.owner.register('ability:post', Ability.extend({
-        canWrite: computed('write', function() {
-          return this.get('write');
-        }).readOnly(),
-      }));
+      this.owner.register(
+        'ability:post',
+        Ability.extend({
+          canWrite: computed.reads('write').readOnly(),
+        })
+      );
 
       this.set('write', false);
       await render(hbs`{{if (can "write post" write=write) "true" "false"}}`);
@@ -102,19 +111,22 @@ module('Integration | Helper | can', function(hooks) {
       assert.dom(this.element).hasText('true');
     });
 
-    test('it can receives model and properties', async function(assert) {
+    test('it can receives model and properties', async function (assert) {
       assert.expect(2);
 
-      this.owner.register('ability:post', Ability.extend({
-        canWrite: computed('model.write', 'write', function() {
-          return this.get('model.write') && this.get('write');
-        }).readOnly(),
-      }));
+      this.owner.register(
+        'ability:post',
+        Ability.extend({
+          canWrite: computed.and('model.write', 'write').readOnly(),
+        })
+      );
 
       this.set('write', false);
       this.set('model', { write: false });
 
-      await render(hbs`{{if (can "write post" model write=this.write) "true" "false"}}`);
+      await render(
+        hbs`{{if (can "write post" model write=this.write) "true" "false"}}`
+      );
 
       assert.dom(this.element).hasText('false');
 
@@ -124,20 +136,24 @@ module('Integration | Helper | can', function(hooks) {
       assert.dom(this.element).hasText('true');
     });
 
-    test('it reacts on ability change', async function(assert) {
+    test('it reacts on ability change', async function (assert) {
       assert.expect(2);
 
-      this.owner.register('service:session', Service.extend({
-        isLoggedIn: false
-      }));
-
-      this.owner.register('ability:post', Ability.extend({
-        session: service(),
-
-        canWrite: computed('session.isLoggedIn', function() {
-          return this.get('session.isLoggedIn');
+      this.owner.register(
+        'service:session',
+        Service.extend({
+          isLoggedIn: false,
         })
-      }));
+      );
+
+      this.owner.register(
+        'ability:post',
+        Ability.extend({
+          session: service(),
+
+          canWrite: computed.reads('session.isLoggedIn'),
+        })
+      );
 
       await render(hbs`{{if (can "write post") "true" "false"}}`);
       assert.dom(this.element).hasText('false');

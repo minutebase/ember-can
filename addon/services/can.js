@@ -29,14 +29,17 @@ export default Service.extend({
   abilityFor(abilityName, model, properties = {}) {
     let AbilityFactory = getOwner(this).factoryFor(`ability:${abilityName}`);
 
-    assert(`No ability type found for '${abilityName}'`, AbilityFactory );
+    assert(`No ability type found for '${abilityName}'`, AbilityFactory);
 
     if (typeof model !== 'undefined') {
       properties = assign({}, { model }, properties);
     }
 
     let ability = AbilityFactory.create(properties);
-    assert(`Ability '${abilityName}' has to inherit from ember-can Ability`, ability instanceof Ability);
+    assert(
+      `Ability '${abilityName}' has to inherit from ember-can Ability`,
+      ability instanceof Ability
+    );
 
     return ability;
   },
@@ -82,5 +85,5 @@ export default Service.extend({
    */
   cannot(abilityString, model, properties) {
     return !this.can(abilityString, model, properties);
-  }
+  },
 });

@@ -7,7 +7,7 @@ on:
   pull_request:
 
 env:
-  NODE_VERSION: 10
+  NODE_VERSION: 12
 
 jobs:
   lint:
@@ -46,7 +46,7 @@ jobs:
           steps.cache-dependencies.outputs.cache-hit != 'true'
 
       - name: Lint
-        run: npm run lint:hbs &&  npm run lint:js
+        run: npm run lint
 
   test:
     name: Tests
@@ -85,7 +85,7 @@ jobs:
           steps.cache-dependencies.outputs.cache-hit != 'true'
 
       - name: Test
-        run: npm run test
+        run: npm run test:ember
 
   floating-dependencies:
     name: Floating Dependencies
@@ -123,7 +123,7 @@ jobs:
         run: npm install --no-package-lock
 
       - name: Test
-        run: npm run test
+        run: npm run test:ember
 
   try-scenarios:
     name: Tests - ${{ matrix.ember-try-scenario }}
@@ -135,12 +135,14 @@ jobs:
       fail-fast: false
       matrix:
         ember-try-scenario:
-          - ember-lts-3.8
-          - ember-lts-3.12
+          - ember-lts-3.20
+          - ember-lts-3.24
           - ember-release
           - ember-beta
           - ember-default-with-jquery
           - ember-classic
+          - embroider-safe
+          - embroider-optimized
         allow-failure: [false]
         include:
           - ember-try-scenario: ember-canary
@@ -181,4 +183,4 @@ jobs:
     - name: Test
       env:
         EMBER_TRY_SCENARIO: ${{ matrix.ember-try-scenario }}
-      run: node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO --- npm test
+      run: node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO
