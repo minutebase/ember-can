@@ -27,8 +27,10 @@ export default Helper.extend({
   },
 
   _addAbilityObserver(ability, propertyName) {
-    setProperties(this, { ability, propertyName });
-    addObserver(this, `ability.${propertyName}`, this, 'recompute');
+    if (!this.isDestroyed && !this.isDestroying) {
+      setProperties(this, { ability, propertyName });
+      addObserver(this, `ability.${propertyName}`, this, 'recompute');
+    }
   },
 
   _removeAbilityObserver() {
