@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { Ability } from 'ember-can';
-import { computed, get } from '@ember/object';
+import { computed } from '@ember/object';
 
 module('Unit | Service | can', function (hooks) {
   setupTest(hooks);
@@ -55,7 +55,7 @@ module('Unit | Service | can', function (hooks) {
       class extends Ability {
         @computed('model.yeah')
         get canTouchThis() {
-          return get(this, 'model.yeah');
+          return this.model.yeah;
         }
       }
     );
@@ -76,7 +76,7 @@ module('Unit | Service | can', function (hooks) {
       class extends Ability {
         @computed('model.yeah')
         get canTouchThis() {
-          return get(this, 'model.yeah');
+          return this.model.yeah;
         }
       }
     );
@@ -94,7 +94,7 @@ module('Unit | Service | can', function (hooks) {
       class extends Ability {
         @computed('model.yeah')
         get canTouchThis() {
-          return get(this, 'model.yeah');
+          return this.model.yeah;
         }
       }
     );

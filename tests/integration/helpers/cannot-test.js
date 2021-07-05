@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { Ability } from 'ember-can';
-import { computed, get } from '@ember/object';
+import { computed } from '@ember/object';
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import { run } from '@ember/runloop';
@@ -33,7 +33,7 @@ module('Integration | Helper | cannot', function (hooks) {
       class extends Ability {
         @computed('model.write')
         get canWrite() {
-          return get(this, 'model.write');
+          return this.model.write;
         }
       }
     );
@@ -75,7 +75,7 @@ module('Integration | Helper | cannot', function (hooks) {
       class extends Ability {
         @computed('model.write', 'write')
         get canWrite() {
-          return get(this, 'model.write') && this.write;
+          return this.model.write && this.write;
         }
       }
     );
@@ -109,7 +109,7 @@ module('Integration | Helper | cannot', function (hooks) {
 
         @computed('session.isLoggedIn')
         get canWrite() {
-          return get(this, 'session.isLoggedIn');
+          return this.session.isLoggedIn;
         }
       }
     );
