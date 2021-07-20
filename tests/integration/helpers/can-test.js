@@ -53,7 +53,7 @@ module('Integration | Helper | can', function (hooks) {
         class extends Ability {
           @computed('model.write')
           get canWrite() {
-            return this.model.write;
+            return this.model?.write;
           }
         }
       );
