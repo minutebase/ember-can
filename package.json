@@ -83,6 +83,7 @@
     "@types/ember__test": "^3.16.1",
     "@types/ember__test-helpers": "^2.0.1",
     "@types/ember__utils": "^3.16.2",
+    "@types/ember-data__model": "^3.16.2",
     "@types/ember-qunit": "^3.4.14",
     "@types/ember-resolver": "^5.0.10",
     "@types/htmlbars-inline-precompile": "^1.0.1",

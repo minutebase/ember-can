@@ -1,12 +1,16 @@
 import Service from '@ember/service';
+// @ts-ignore
 import Ability from 'ember-can/ability';
 import { assert } from '@ember/debug';
 import { getOwner } from '@ember/application';
 import { assign } from '@ember/polyfills';
 
+// @ts-ignore
 import normalizeAbilityString from 'ember-can/utils/normalize';
 
-export default Service.extend({
+import Model from '@ember-data/model';
+
+export default class CanService extends Service {
   /**
    * Parse ablityString into an object with extracted propertyName and abilityName
    * eg. for 'create projects in account' -> `{ propertyName: 'createProjects', abilityName: 'account'}`
@@ -14,9 +18,9 @@ export default Service.extend({
    * @param  {String} string eg. 'create projects in account'
    * @return {Object}        extracted propertyName and abilityName
    */
-  parse(abilityString) {
+  parse(abilityString: string): any {
     return normalizeAbilityString(abilityString);
-  },
+  }
 
   /**
    * Create an instance of Ability
@@ -26,7 +30,7 @@ export default Service.extend({
    * @param  {Object} [properties={}] extra properties (to be set on the ability instance)
    * @return {Ability}                Ability instance of requested ability
    */
-  abilityFor(abilityName, model, properties = {}) {
+  abilityFor(abilityName: string, model: Model, properties: Record<string, unknown> = {}) {
     let AbilityFactory = getOwner(this).factoryFor(`ability:${abilityName}`);
 
     assert(`No ability type found for '${abilityName}'`, AbilityFactory);
@@ -42,7 +46,7 @@ export default Service.extend({
     );
 
     return ability;
-  },
+  }
 
   /**
    * Returns a value for requested ability in specified ability class
@@ -53,14 +57,14 @@ export default Service.extend({
    * @param  {Object} properties   extra properties (to be set on the ability instance)
    * @return {*}                   value of ability
    */
-  valueFor(propertyName, abilityName, model, properties) {
+  valueFor(propertyName: string, abilityName: string, model: Model, properties: Record<string, unknown>): unknown {
     let ability = this.abilityFor(abilityName, model, properties);
     let result = ability.getAbility(propertyName);
 
     ability.destroy();
 
     return result;
-  },
+  }
 
   /**
    * Returns `true` if ability is permitted
@@ -70,10 +74,10 @@ export default Service.extend({
    * @param  {[type]} properties    extra properties (to be set on the ability instance)
    * @return {Boolean}              value of ability converted to boolean
    */
-  can(abilityString, model, properties) {
+  can(abilityString: string, model: Model, properties: Record<string, unknown>): boolean {
     let { propertyName, abilityName } = this.parse(abilityString);
     return !!this.valueFor(propertyName, abilityName, model, properties);
-  },
+  }
 
   /**
    * Returns `true` if ability is not permitted
@@ -83,7 +87,7 @@ export default Service.extend({
    * @param  {[type]} properties    extra properties (to be set on the ability instance)
    * @return {Boolean}              value of ability converted to boolean
    */
-  cannot(abilityString, model, properties) {
+  cannot(abilityString: string, model: Model, properties: Record<string, unknown>): boolean {
     return !this.can(abilityString, model, properties);
-  },
-});
+  }
+}
