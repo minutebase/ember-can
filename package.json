@@ -34,7 +34,9 @@
     "test:ember": "ember test",
     "test:ember-compatibility": "ember try:each",
     "changelog": "lerna-changelog",
-    "release": "release-it"
+    "release": "release-it",
+    "prepack": "ember ts:precompile",
+    "postpack": "ember ts:clean"
   },
   "release-it": {
     "plugins": {
@@ -55,6 +57,7 @@
   "dependencies": {
     "ember-cli-babel": "^7.26.6",
     "ember-cli-htmlbars": "^5.7.1",
+    "ember-cli-typescript": "^4.2.1",
     "ember-inflector": "^4.0.2"
   },
   "devDependencies": {
@@ -63,6 +66,28 @@
     "@embroider/test-setup": "^0.42.3",
     "@glimmer/component": "^1.0.4",
     "@glimmer/tracking": "^1.0.4",
+    "@types/ember__application": "^3.16.3",
+    "@types/ember__array": "^3.16.4",
+    "@types/ember__component": "^3.16.6",
+    "@types/ember__controller": "^3.16.5",
+    "@types/ember__debug": "^3.16.4",
+    "@types/ember__engine": "^3.16.3",
+    "@types/ember__error": "^3.16.1",
+    "@types/ember__object": "^3.12.6",
+    "@types/ember__polyfills": "^3.12.1",
+    "@types/ember__routing": "^3.16.15",
+    "@types/ember__runloop": "^3.16.3",
+    "@types/ember__service": "^3.16.1",
+    "@types/ember__string": "^3.16.3",
+    "@types/ember__template": "^3.16.1",
+    "@types/ember__test": "^3.16.1",
+    "@types/ember__test-helpers": "^2.0.1",
+    "@types/ember__utils": "^3.16.2",
+    "@types/ember-qunit": "^3.4.14",
+    "@types/ember-resolver": "^5.0.10",
+    "@types/htmlbars-inline-precompile": "^1.0.1",
+    "@types/qunit": "^2.11.2",
+    "@types/rsvp": "^4.0.4",
     "babel-eslint": "^10.1.0",
     "broccoli-asset-rev": "3.0.0",
     "ember-auto-import": "^2.0.2",
@@ -71,6 +96,7 @@
     "ember-cli-inject-live-reload": "2.1.0",
     "ember-cli-sri": "2.1.1",
     "ember-cli-terser": "^4.0.2",
+    "ember-cli-typescript-blueprints": "^3.0.0",
     "ember-disable-prototype-extensions": "1.1.3",
     "ember-export-application-global": "2.0.1",
     "ember-load-initializers": "2.1.2",
@@ -95,7 +121,8 @@
     "qunit": "^2.16.0",
     "qunit-dom": "^1.6.0",
     "release-it": "14.10.0",
-    "release-it-lerna-changelog": "3.1.0"
+    "release-it-lerna-changelog": "3.1.0",
+    "typescript": "^4.3.5"
   },
   "engines": {
     "node": "12.* || >= 14"
