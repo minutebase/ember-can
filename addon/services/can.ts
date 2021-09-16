@@ -8,7 +8,7 @@ import { assign } from '@ember/polyfills';
 // @ts-ignore
 import normalizeAbilityString from 'ember-can/utils/normalize';
 
-import Model from '@ember-data/model';
+import type Model from '@ember-data/model';
 
 export default class CanService extends Service {
   /**
