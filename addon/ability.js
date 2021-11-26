@@ -1,6 +1,7 @@
 import EmberObject from '@ember/object';
 import { camelize } from '@ember/string';
 
+// eslint-disable-next-line ember/no-classic-classes
 export default EmberObject.extend({
   model: null,
 

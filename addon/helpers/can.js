@@ -3,6 +3,7 @@ import { inject as service } from '@ember/service';
 import { addObserver, removeObserver } from '@ember/object/observers';
 import { setProperties, get } from '@ember/object';
 
+// eslint-disable-next-line ember/no-classic-classes
 export default Helper.extend({
   can: service(),
 
@@ -28,6 +29,7 @@ export default Helper.extend({
 
   _addAbilityObserver(ability, propertyName) {
     setProperties(this, { ability, propertyName });
+    // eslint-disable-next-line ember/no-observers
     addObserver(this, `ability.${propertyName}`, this, 'recompute');
   },
 

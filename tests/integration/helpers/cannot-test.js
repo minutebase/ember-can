@@ -90,9 +90,9 @@ module('Integration | Helper | cannot', function (hooks) {
 
     this.owner.register(
       'service:session',
-      Service.extend({
-        isLoggedIn: false,
-      })
+      class extends Service {
+        isLoggedIn = false;
+      }
     );
 
     this.owner.register(

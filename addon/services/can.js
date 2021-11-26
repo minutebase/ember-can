@@ -6,6 +6,7 @@ import { assign } from '@ember/polyfills';
 
 import normalizeAbilityString from 'ember-can/utils/normalize';
 
+// eslint-disable-next-line ember/no-classic-classes
 export default Service.extend({
   /**
    * Parse ablityString into an object with extracted propertyName and abilityName
