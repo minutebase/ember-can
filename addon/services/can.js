@@ -2,7 +2,6 @@ import Service from '@ember/service';
 import Ability from 'ember-can/ability';
 import { assert } from '@ember/debug';
 import { getOwner } from '@ember/application';
-import { assign } from '@ember/polyfills';
 
 import normalizeAbilityString from 'ember-can/utils/normalize';
 
@@ -32,7 +31,7 @@ export default class CanService extends Service {
     assert(`No ability type found for '${abilityName}'`, AbilityFactory);
 
     if (typeof model !== 'undefined') {
-      properties = assign({}, { model }, properties);
+      properties = { model, ...properties };
     }
 
     let ability = AbilityFactory.create(properties);
