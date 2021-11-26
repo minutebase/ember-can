@@ -3,7 +3,7 @@ import { setupRenderingTest } from 'ember-qunit';
 import { render } from '@ember/test-helpers';
 import hbs from 'htmlbars-inline-precompile';
 import { Ability } from 'ember-can';
-import { computed } from '@ember/object';
+import { reads, and } from '@ember/object/computed';
 import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import { run } from '@ember/runloop';
@@ -31,12 +31,12 @@ module('Integration | Helper | cannot', function (hooks) {
     this.owner.register(
       'ability:post',
       Ability.extend({
-        canWrite: computed.reads('model.write'),
+        canWrite: reads('model.write'),
       })
     );
 
     this.set('model', { write: false });
-    await render(hbs`{{if (cannot "write post" model) "true" "false"}}`);
+    await render(hbs`{{if (cannot "write post" this.model) "true" "false"}}`);
     assert.dom(this.element).hasText('true');
 
     this.set('model', { write: true });
@@ -49,12 +49,14 @@ module('Integration | Helper | cannot', function (hooks) {
     this.owner.register(
       'ability:post',
       Ability.extend({
-        canWrite: computed.reads('write'),
+        canWrite: reads('write'),
       })
     );
 
     this.set('write', false);
-    await render(hbs`{{if (cannot "write post" write=write) "true" "false"}}`);
+    await render(
+      hbs`{{if (cannot "write post" write=this.write) "true" "false"}}`
+    );
     assert.dom(this.element).hasText('true');
 
     this.set('write', true);
@@ -67,14 +69,14 @@ module('Integration | Helper | cannot', function (hooks) {
     this.owner.register(
       'ability:post',
       Ability.extend({
-        canWrite: computed.and('model.write', 'write'),
+        canWrite: and('model.write', 'write'),
       })
     );
 
     this.set('write', false);
     this.set('model', { write: false });
     await render(
-      hbs`{{if (cannot "write post" model write=write) "true" "false"}}`
+      hbs`{{if (cannot "write post" this.model write=this.write) "true" "false"}}`
     );
     assert.dom(this.element).hasText('true');
 
@@ -88,9 +90,9 @@ module('Integration | Helper | cannot', function (hooks) {
 
     this.owner.register(
       'service:session',
-      Service.extend({
-        isLoggedIn: false,
-      })
+      class extends Service {
+        isLoggedIn = false;
+      }
     );
 
     this.owner.register(
@@ -98,7 +100,7 @@ module('Integration | Helper | cannot', function (hooks) {
       Ability.extend({
         session: service(),
 
-        canWrite: computed.reads('session.isLoggedIn'),
+        canWrite: reads('session.isLoggedIn'),
       })
     );
 

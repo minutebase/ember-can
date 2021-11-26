@@ -1,7 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { Ability } from 'ember-can';
-import { computed } from '@ember/object';
+import { reads } from '@ember/object/computed';
 
 module('Unit | Service | can', function (hooks) {
   setupTest(hooks);
@@ -37,7 +37,7 @@ module('Unit | Service | can', function (hooks) {
 
     assert.ok(ability);
     assert.ok(ability.get('model.yeah'));
-    assert.equal(ability.get('otherProp'), 'it works');
+    assert.strictEqual(ability.get('otherProp'), 'it works');
     assert.ok(ability instanceof Ability);
     assert.throws(
       () => service.abilityFor('abilityNotFound'),
@@ -53,11 +53,11 @@ module('Unit | Service | can', function (hooks) {
     this.owner.register(
       'ability:super-model',
       Ability.extend({
-        canTouchThis: computed.reads('model.yeah'),
+        canTouchThis: reads('model.yeah'),
       })
     );
 
-    assert.equal(
+    assert.strictEqual(
       service.valueFor('touchThis', 'superModel', { yeah: 'Yeah!' }),
       'Yeah!'
     );
@@ -71,7 +71,7 @@ module('Unit | Service | can', function (hooks) {
     this.owner.register(
       'ability:super-model',
       Ability.extend({
-        canTouchThis: computed.reads('model.yeah'),
+        canTouchThis: reads('model.yeah'),
       })
     );
 
@@ -86,7 +86,7 @@ module('Unit | Service | can', function (hooks) {
     this.owner.register(
       'ability:super-model',
       Ability.extend({
-        canTouchThis: computed.reads('model.yeah'),
+        canTouchThis: reads('model.yeah'),
       })
     );
 

@@ -1,7 +1,7 @@
 import CanHelper from 'ember-can/helpers/can';
 
-export default CanHelper.extend({
+export default class CannotHelper extends CanHelper {
   compute() {
-    return !this._super(...arguments);
-  },
-});
+    return !super.compute(...arguments);
+  }
+}

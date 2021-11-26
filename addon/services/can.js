@@ -2,13 +2,12 @@ import Service from '@ember/service';
 import Ability from 'ember-can/ability';
 import { assert } from '@ember/debug';
 import { getOwner } from '@ember/application';
-import { assign } from '@ember/polyfills';
 
 import normalizeAbilityString from 'ember-can/utils/normalize';
 
-export default Service.extend({
+export default class CanService extends Service {
   /**
-   * Parse ablityString into an object with extracted propertyName and abilityName
+   * Parse abilityString into an object with extracted propertyName and abilityName
    * eg. for 'create projects in account' -> `{ propertyName: 'createProjects', abilityName: 'account'}`
    * @public
    * @param  {String} string eg. 'create projects in account'
@@ -16,7 +15,7 @@ export default Service.extend({
    */
   parse(abilityString) {
     return normalizeAbilityString(abilityString);
-  },
+  }
 
   /**
    * Create an instance of Ability
@@ -32,7 +31,7 @@ export default Service.extend({
     assert(`No ability type found for '${abilityName}'`, AbilityFactory);
 
     if (typeof model !== 'undefined') {
-      properties = assign({}, { model }, properties);
+      properties = { model, ...properties };
     }
 
     let ability = AbilityFactory.create(properties);
@@ -42,7 +41,7 @@ export default Service.extend({
     );
 
     return ability;
-  },
+  }
 
   /**
    * Returns a value for requested ability in specified ability class
@@ -60,7 +59,7 @@ export default Service.extend({
     ability.destroy();
 
     return result;
-  },
+  }
 
   /**
    * Returns `true` if ability is permitted
@@ -73,7 +72,7 @@ export default Service.extend({
   can(abilityString, model, properties) {
     let { propertyName, abilityName } = this.parse(abilityString);
     return !!this.valueFor(propertyName, abilityName, model, properties);
-  },
+  }
 
   /**
    * Returns `true` if ability is not permitted
@@ -85,5 +84,5 @@ export default Service.extend({
    */
   cannot(abilityString, model, properties) {
     return !this.can(abilityString, model, properties);
-  },
-});
+  }
+}

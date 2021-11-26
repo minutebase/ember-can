@@ -10,114 +10,79 @@ env:
   NODE_VERSION: 12
 
 jobs:
-  lint:
-    name: Lint
+  dependencies:
+    name: Install dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
 
       - uses: actions/setup-node@v2
         with:
           node-version: '${{ env.NODE_VERSION }}'
+          check-latest: true
+          cache: 'npm'
 
       - name: Install latest npm
         run: npm install -g npm@latest
 
-      - name: Get package manager's global cache path
-        id: global-cache-dir-path
-        run: echo "::set-output name=dir::$(npm config get cache)"
+      - name: Install Dependencies
+        run: npm ci
 
-      - name: Cache package manager's global cache and node_modules
-        id: cache-dependencies
-        uses: actions/cache@v2
+  lint:
+    name: Lint
+    needs: dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
         with:
-          path: |
-            ${{ steps.global-cache-dir-path.outputs.dir }}
-            node_modules
-          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-${{hashFiles('**/package-lock.json')}}
-          restore-keys: |
-            ${{ runner.os }}-${{ env.NODE_VERSION }}-
+          node-version: '${{ env.NODE_VERSION }}'
+          check-latest: true
+          cache: 'npm'
 
       - name: Install Dependencies
         run: npm ci
-        if: |
-          steps.cache-dependencies.outputs.cache-hit != 'true'
 
       - name: Lint
         run: npm run lint
 
   test:
     name: Tests
+    needs: dependencies
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
 
       - uses: actions/setup-node@v2
         with:
           node-version: '${{ env.NODE_VERSION }}'
-
-      - name: Install latest npm
-        run: npm install -g npm@latest
-
-      - name: Get package manager's global cache path
-        id: global-cache-dir-path
-        run: echo "::set-output name=dir::$(npm config get cache)"
-
-      - name: Cache package manager's global cache and node_modules
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            ${{ steps.global-cache-dir-path.outputs.dir }}
-            node_modules
-          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-${{hashFiles('**/package-lock.json')}}
-          restore-keys: |
-            ${{ runner.os }}-${{ env.NODE_VERSION }}-
+          check-latest: true
+          cache: 'npm'
 
       - name: Install Dependencies
         run: npm ci
-        if: |
-          steps.cache-dependencies.outputs.cache-hit != 'true'
 
       - name: Test
         run: npm run test:ember
 
   floating-dependencies:
     name: Floating Dependencies
-    runs-on: ubuntu-latest
     needs: test
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
 
       - uses: actions/setup-node@v2
         with:
           node-version: '${{ env.NODE_VERSION }}'
+          check-latest: true
+          cache: 'npm'
 
       - name: Install latest npm
         run: npm install -g npm@latest
-
-      - name: Get package manager's global cache path
-        id: global-cache-dir-path
-        run: echo "::set-output name=dir::$(npm config get cache)"
-
-      - name: Cache package manager's global cache and node_modules
-        id: cache-dependencies
-        uses: actions/cache@v2
-        with:
-          path: |
-            ${{ steps.global-cache-dir-path.outputs.dir }}
-            node_modules
-          key: ${{ runner.os }}-${{ env.NODE_VERSION }}-${{hashFiles('**/package-lock.json')}}
-          restore-keys: |
-            ${{ runner.os }}-${{ env.NODE_VERSION }}-
 
       - name: Install Dependencies
         run: npm install --no-package-lock
@@ -139,7 +104,6 @@ jobs:
           - ember-lts-3.24
           - ember-release
           - ember-beta
-          - ember-default-with-jquery
           - ember-classic
           - embroider-safe
           - embroider-optimized
@@ -150,35 +114,15 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        fetch-depth: 1
 
     - uses: actions/setup-node@v2
       with:
         node-version: '${{ env.NODE_VERSION }}'
-
-    - name: Install latest npm
-      run: npm install -g npm@latest
-
-    - name: Get package manager's global cache path
-      id: global-cache-dir-path
-      run: echo "::set-output name=dir::$(pm config get cache)"
-
-    - name: Cache package manager's global cache and node_modules
-      id: cache-dependencies
-      uses: actions/cache@v2
-      with:
-        path: |
-          ${{ steps.global-cache-dir-path.outputs.dir }}
-          node_modules
-        key: ${{ runner.os }}-${{ env.NODE_VERSION }}-${{hashFiles('**/package-lock.json')}}
-        restore-keys: |
-          ${{ runner.os }}-${{ env.NODE_VERSION }}-
+        check-latest: true
+        cache: 'npm'
 
     - name: Install Dependencies
       run: npm ci
-      if: |
-        steps.cache-dependencies.outputs.cache-hit != 'true'
 
     - name: Test
       env:

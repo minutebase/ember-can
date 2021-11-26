@@ -57,7 +57,7 @@ import { readOnly } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { Ability } from 'ember-can';
 
-export default class extends Ability {
+export default class PostAbility extends Ability {
   @service session;
 
   @readOnly('session.currentUser') user;
@@ -74,7 +74,7 @@ We can also re-use the same ability to check if a user has access to a route:
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
-export default class extends Route {
+export default class NewPostRoute extends Route {
   @service can;
 
   beforeModel(transition) {
@@ -97,7 +97,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 
-export default class extends Component {
+export default class CreatePostComponent extends Component {
   @service can;
 
   @action
@@ -166,7 +166,7 @@ An ability class protects an individual model which is available in the ability 
 import { computed } from '@ember/object';
 import { Ability } from 'ember-can';
 
-export default class extends Ability {
+export default class PostAbility extends Ability {
   // only admins can write a post
   @computed('user.isAdmin')
   get canWrite() {
@@ -248,12 +248,12 @@ For example, to use the format "person.canEdit" instead of the default "edit per
 // app/services/can.js
 import Service from 'ember-can/services/can';
 
-export default CanService.extend({
+export default class extends CanService {
   parse(str) {
     let [abilityName, propertyName] = str.split('.');
     return { propertyName, abilityName };
   }
-});
+};
 ```
 
 You can also modify the property prefix by overriding `parseProperty` in our ability file:
@@ -263,14 +263,12 @@ You can also modify the property prefix by overriding `parseProperty` in our abi
 import { Ability } from 'ember-can';
 import { camelize } from '@ember/string';
 
-export default Ability.extend({
+export default class FeatureAbility extends Ability {
   parseProperty(propertyName) {
     return camelize(`is-${propertyName}`);
   },
-});
+};
 ```
-
-
 
 ## Injecting the user
 
@@ -283,7 +281,7 @@ If you're using an `Ember.Service` as your session, you can just inject it into 
 import { Ability } from 'ember-can';
 import { inject as service } from '@ember/service';
 
-export default class extends Ability {
+export default class FooAbility extends Ability {
   @service session;
 }
 ```
@@ -300,7 +298,7 @@ import Component from '@ember/component';
 import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
-export default class extends Component {
+export default class MyComponent extends Component {
   @service can; // inject can service
 
   post = null; // received from higher template
@@ -313,28 +311,6 @@ export default class extends Component {
 
 // Template:
 // {{if ability.canWrite "true" "false"}}
-```
-
-#### Optional way
-
-Optionally you can use `ability` computed to simplify the syntax:
-```js
-import Component from '@ember/component';
-import { inject as service } from '@ember/service';
-import { ability } from 'ember-can/computed';
-
-export default class extends Component {
-  @service can; // inject can service
-
-  post = null; // received from higher template
-
-  @ability('post') ability;
-}
-```
-
-If the model property is not the same as ability name you can pass a second argument:
-```js
-ability: ability('post', 'myModelProperty')
 ```
 
 ## Accessing abilities within an Ember engine
