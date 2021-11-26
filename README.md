@@ -266,8 +266,6 @@ export default Ability.extend({
 });
 ```
 
-
-
 ## Injecting the user
 
 How does the ability know who's logged in? This depends on how you implement it in your app!
@@ -307,27 +305,6 @@ export default Component.extend({
 
 // Template:
 // {{if ability.canWrite "true" "false"}}
-```
-
-#### Optional way
-
-Optionally you can use `ability` computed to simplify the syntax:
-```js
-import Component from '@ember/component';
-import { ability } from 'ember-can/computed';
-
-export default Component.extend({
-  can: service(), // inject can service
-
-  post: null, // received from higher template
-
-  ability: ability('post')
-});
-```
-
-If the model property is not the same as ability name you can pass a second argument:
-```js
-ability: ability('post', 'myModelProperty')
 ```
 
 ## Accessing abilities within an Ember engine
