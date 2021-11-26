@@ -54,15 +54,16 @@ We define an ability for the `Post` model in `/app/abilities/post.js`:
 // app/abilities/post.js
 
 import { readOnly } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 import { Ability } from 'ember-can';
 
-export default Ability.extend({
-  session: service(),
+export default class extends Ability {
+  @service session;
 
-  user: readOnly('session.currentUser'),
+  @readOnly('session.currentUser') user;
 
-  canCreate: readOnly('user.isAdmin')
-});
+  @readOnly('user.isAdmin') canCreate;
+}
 ```
 
 We can also re-use the same ability to check if a user has access to a route:
@@ -73,11 +74,11 @@ We can also re-use the same ability to check if a user has access to a route:
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
-export default Route.extend({
-  can: service(),
+export default class extends Route {
+  @service can;
 
   beforeModel(transition) {
-    let result = this._super(...arguments);
+    let result = super.beforeModel(...arguments);
 
     if (this.can.cannot('create post')) {
       transition.abort();
@@ -86,22 +87,23 @@ export default Route.extend({
 
     return result;
   }
-});
+}
 ```
 
 And we can also check the permission before firing action:
 
 ```js
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  can: service(),
+export default class extends Component {
+  @service can;
 
-  actions: {
-    createPost() {
-      if (this.can.can('create post', this.post)) {
-        // create post!
-      }
+  @action
+  createPost() {
+    if (this.can.can('create post', this.post)) {
+      // create post!
     }
   }
 });
@@ -164,17 +166,19 @@ An ability class protects an individual model which is available in the ability 
 import { computed } from '@ember/object';
 import { Ability } from 'ember-can';
 
-export default Ability.extend({
+export default class extends Ability {
   // only admins can write a post
-  canWrite: computed('user.isAdmin', function() {
+  @computed('user.isAdmin')
+  get canWrite() {
     return this.get('user.isAdmin');
-  }),
+  }
 
   // only the person who wrote a post can edit it
-  canEdit: computed('user.id', 'model.author', function() {
+  @computed('user.id', 'model.author')
+  get canEdit() {
     return this.get('user.id') === this.get('model.author');
-  })
-});
+  }
+}
 
 // Usage:
 // {{if (can "write post" post) "true" "false"}}
@@ -277,9 +281,9 @@ If you're using an `Ember.Service` as your session, you can just inject it into 
 import { Ability } from 'ember-can';
 import { inject as service } from '@ember/service';
 
-export default Ability.extend({
-  session: service()
-});
+export default class extends Ability {
+  @service session;
+}
 ```
 
 The ability classes will now have access to `session` which can then be used to check if the user is logged in etc...
@@ -291,17 +295,19 @@ so that you can bind to them in your templates.
 
 ```js
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
-export default Component.extend({
-  can: service(), // inject can service
+export default class extends Component {
+  @service can; // inject can service
 
-  post: null, // received from higher template
+  post = null; // received from higher template
 
-  ability: computed('post', function() {
+  @computed('post')
+  get ability() {
     return this.get('can').abilityFor('post', this.get('post') /*, customProperties */);
-  }),
-});
+  }
+}
 
 // Template:
 // {{if ability.canWrite "true" "false"}}
