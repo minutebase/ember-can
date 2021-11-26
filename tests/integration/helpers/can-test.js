@@ -67,32 +67,6 @@ module('Integration | Helper | can', function (hooks) {
       assert.dom(this.element).hasText('false');
     });
 
-    test('it works with default model', async function (assert) {
-      assert.expect(4);
-
-      this.owner.register(
-        'ability:post',
-        Ability.extend({
-          // eslint-disable-next-line ember/avoid-leaking-state-in-ember-objects
-          model: { write: true },
-
-          canWrite: reads('model.write').readOnly(),
-        })
-      );
-
-      await render(hbs`{{if (can "write post" this.model) "true" "false"}}`);
-      assert.dom(this.element).hasText('true');
-
-      this.set('model', undefined);
-      assert.dom(this.element).hasText('true');
-
-      this.set('model', null);
-      assert.dom(this.element).hasText('false');
-
-      this.set('model', { write: false });
-      assert.dom(this.element).hasText('false');
-    });
-
     test('it can receives properties', async function (assert) {
       assert.expect(2);
 
