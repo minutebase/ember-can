@@ -1,3 +1,13 @@
+
+## v3.2.0 (2021-11-26)
+
+#### :boom: Breaking Change
+* [#142](https://github.com/minutebase/ember-can/pull/142) Upgrade dependencies and drop support for Ember 3.8, 3.12, 3.16 and Node 10 ([@Exelord](https://github.com/Exelord))
+
+#### Committers: 2
+- Francesco Novy ([@mydea](https://github.com/mydea))
+- Maciej Kwaśniak ([@Exelord](https://github.com/Exelord))
+
 ## v3.1.0 (2021-05-27)
 
 #### :rocket: Enhancement
