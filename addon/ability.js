@@ -1,27 +1,22 @@
-import EmberObject from '@ember/object';
 import { camelize } from '@ember/string';
+import { setOwner } from '@ember/application';
 
-export default class Ability extends EmberObject {
-  /**
-   * Parse propertyName into ability property
-   * eg: `createProject` will be parsed to `canCreateProject` using default definition
-   * @public
-   * @param  {[String]} propertyName [description]
-   * @return {[String]}              [description]
-   */
-  parseProperty(propertyName) {
+export default class Ability {
+  static parseProperty(propertyName) {
     return camelize(`can-${propertyName}`);
   }
 
-  /**
-   * Get parsed ability value based on propertyName
-   * eg: `createProject` will return a value for `canCreateProject`
-   * using default `parseProperty` definition
-   * @param  {String} propertyName property name, eg. `createProject`
-   * @return {*}                   value of parsed `propertyName` property
-   */
-  getAbility(propertyName) {
-    // eslint-disable-next-line ember/classic-decorator-no-classic-methods
-    return this.get(this.parseProperty(propertyName));
+  static getAbility(ability, propertyName, model, properties = {}) {
+    const abilityValue = ability[this.parseProperty(propertyName)];
+
+    if (typeof abilityValue === 'function') {
+      return abilityValue.call(ability, model, properties);
+    }
+
+    return abilityValue;
+  }
+
+  constructor(owner) {
+    setOwner(this, owner);
   }
 }
