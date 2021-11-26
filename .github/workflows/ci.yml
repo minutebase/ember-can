@@ -10,13 +10,11 @@ env:
   NODE_VERSION: 12
 
 jobs:
-  lint:
-    name: Lint
+  dependencies:
+    name: Install dependencies
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
 
       - uses: actions/setup-node@v2
         with:
@@ -26,6 +24,22 @@ jobs:
 
       - name: Install latest npm
         run: npm install -g npm@latest
+
+      - name: Install Dependencies
+        run: npm ci
+
+  lint:
+    name: Lint
+    needs: dependencies
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '${{ env.NODE_VERSION }}'
+          check-latest: true
+          cache: 'npm'
 
       - name: Install Dependencies
         run: npm ci
@@ -35,21 +49,17 @@ jobs:
 
   test:
     name: Tests
+    needs: dependencies
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
 
       - uses: actions/setup-node@v2
         with:
           node-version: '${{ env.NODE_VERSION }}'
           check-latest: true
           cache: 'npm'
-
-      - name: Install latest npm
-        run: npm install -g npm@latest
 
       - name: Install Dependencies
         run: npm ci
@@ -59,13 +69,11 @@ jobs:
 
   floating-dependencies:
     name: Floating Dependencies
-    runs-on: ubuntu-latest
     needs: test
+    runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
-        with:
-          fetch-depth: 1
 
       - uses: actions/setup-node@v2
         with:
@@ -106,17 +114,12 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
-      with:
-        fetch-depth: 1
 
     - uses: actions/setup-node@v2
       with:
         node-version: '${{ env.NODE_VERSION }}'
         check-latest: true
         cache: 'npm'
-
-    - name: Install latest npm
-      run: npm install -g npm@latest
 
     - name: Install Dependencies
       run: npm ci
