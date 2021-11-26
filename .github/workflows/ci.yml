@@ -139,7 +139,6 @@ jobs:
           - ember-lts-3.24
           - ember-release
           - ember-beta
-          - ember-default-with-jquery
           - ember-classic
           - embroider-safe
           - embroider-optimized
