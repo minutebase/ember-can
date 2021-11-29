@@ -1,5 +1,6 @@
 import { camelize } from '@ember/string';
 import { setOwner } from '@ember/application';
+import { get } from '@ember/object';
 
 export default class Ability {
   static parseProperty(propertyName) {
@@ -7,7 +8,7 @@ export default class Ability {
   }
 
   static getAbility(ability, propertyName, model, properties = {}) {
-    const abilityValue = ability[this.parseProperty(propertyName)];
+    const abilityValue = get(ability, this.parseProperty(propertyName));
 
     if (typeof abilityValue === 'function') {
       return abilityValue.call(ability, model, properties);
