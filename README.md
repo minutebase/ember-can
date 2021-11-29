@@ -53,16 +53,21 @@ We define an ability for the `Post` model in `/app/abilities/post.js`:
 ```js
 // app/abilities/post.js
 
-import { readOnly } from '@ember/object/computed';
 import { inject as service } from '@ember/service';
 import { Ability } from 'ember-can';
 
 export default class PostAbility extends Ability {
   @service session;
 
-  @readOnly('session.currentUser') user;
+  @computed('session.currentUser');
+  get user() {
+    return this.session.currentUser;
+  }
 
   @readOnly('user.isAdmin') canCreate;
+  get canCreate() {
+    return this.user.isAdmin;
+  }
 }
 ```
 
@@ -75,12 +80,12 @@ import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
 export default class NewPostRoute extends Route {
-  @service can;
+  @service abilities;
 
   beforeModel(transition) {
     let result = super.beforeModel(...arguments);
 
-    if (this.can.cannot('create post')) {
+    if (this.abilities.cannot('create post')) {
       transition.abort();
       return this.transitionTo('index');
     }
@@ -98,11 +103,11 @@ import { inject as service } from '@ember/service';
 import { action } from '@ember/object';
 
 export default class CreatePostComponent extends Component {
-  @service can;
+  @service abilities;
 
   @action
   createPost() {
-    if (this.can.can('create post', this.post)) {
+    if (this.abilities.can('create post', this.post)) {
       // create post!
     }
   }
@@ -170,13 +175,13 @@ export default class PostAbility extends Ability {
   // only admins can write a post
   @computed('user.isAdmin')
   get canWrite() {
-    return this.get('user.isAdmin');
+    return this.user.isAdmin;
   }
 
   // only the person who wrote a post can edit it
   @computed('user.id', 'model.author')
   get canEdit() {
-    return this.get('user.id') === this.get('model.author');
+    return this.user.id === this.model.author;
   }
 }
 
@@ -198,11 +203,11 @@ but also `member` as a bound property.
 {{/if}}
 ```
 
-Similarly using `can` service you can pass additional attributes after or instead of the resource:
+Similarly using `abilities` service you can pass additional attributes after or instead of the resource:
 
 ```js
-this.get('can').can('edit post', post, { author: bob });
-this.get('can').cannot('write post', null, { project: project });
+this.abilities.can('edit post', post, { author: bob });
+this.abilities.cannot('write post', null, { project: project });
 ```
 
 These will set `author` and `project` on the ability respectively so you can use them in the checks.
@@ -238,17 +243,17 @@ Current stopwords which are ignored are:
 
 The default lookup is a bit "clever"/"cute" for some people's tastes, so you can override this if you choose.
 
-Simply extend the default `CanService` in `app/services/can.js` and override `parse`.
+Simply extend the default `AbilitiesService` in `app/services/abilities.js` and override `parse`.
 
 `parse` takes the ability string eg "manage members in projects" and should return an object with `propertyName` and `abilityName`.
 
 For example, to use the format "person.canEdit" instead of the default "edit person" you could do the following:
 
 ```js
-// app/services/can.js
-import Service from 'ember-can/services/can';
+// app/services/abilities.js
+import Service from 'ember-can/services/abilities';
 
-export default class extends CanService {
+export default class AbilitiesService extends Service {
   parse(str) {
     let [abilityName, propertyName] = str.split('.');
     return { propertyName, abilityName };
@@ -299,13 +304,13 @@ import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
 export default class MyComponent extends Component {
-  @service can; // inject can service
+  @service abilities; // inject abilities service
 
   post = null; // received from higher template
 
   @computed('post')
   get ability() {
-    return this.get('can').abilityFor('post', this.get('post') /*, customProperties */);
+    return this.abilities.abilityFor('post', this.post /*, customProperties */);
   }
 }
 
