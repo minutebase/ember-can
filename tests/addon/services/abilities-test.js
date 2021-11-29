@@ -3,7 +3,7 @@ import { setupTest } from 'ember-qunit';
 import { Ability } from 'ember-can';
 import { reads } from '@ember/object/computed';
 
-module('Unit | Service | abilities', function (hooks) {
+module('Addon | Service | abilities', function (hooks) {
   setupTest(hooks);
 
   test('parse', function (assert) {

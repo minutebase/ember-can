@@ -8,7 +8,7 @@ import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import { run } from '@ember/runloop';
 
-module('Integration | Helper | can', function (hooks) {
+module('Addon | Helper | can', function (hooks) {
   setupRenderingTest(hooks);
 
   module('classic class', function () {

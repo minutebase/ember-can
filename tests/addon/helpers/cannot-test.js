@@ -8,7 +8,7 @@ import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import { run } from '@ember/runloop';
 
-module('Integration | Helper | cannot', function (hooks) {
+module('Addon | Helper | cannot', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it works without model', async function (assert) {
