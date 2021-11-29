@@ -1,4 +1,15 @@
 
+
+## v4.1.0 (2021-11-29)
+
+#### :rocket: Enhancement
+* [#152](https://github.com/minutebase/ember-can/pull/152) Deprecate CanService in favor of AbilitiesService ([@Exelord](https://github.com/Exelord))
+
+#### Committers: 1
+- Maciej Kwaśniak ([@Exelord](https://github.com/Exelord))
+
+## v4.0.0 (2021-11-26)
+
 ## v3.2.0 (2021-11-26)
 
 #### :boom: Breaking Change
