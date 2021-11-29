@@ -7,10 +7,38 @@ import Service from '@ember/service';
 import { inject as service } from '@ember/service';
 import { tracked } from '@glimmer/tracking';
 // eslint-disable-next-line ember/no-computed-properties-in-native-classes
-import { computed } from '@ember/object';
+import { computed, set } from '@ember/object';
+import Sinon from 'sinon';
 
 module('Addon | Helper | can', function (hooks) {
   setupRenderingTest(hooks);
+
+  test('it is calling service correctly', async function (assert) {
+    assert.expect(4);
+
+    this.owner.register(
+      'ability:post',
+      class extends Ability {
+        get canWrite() {
+          return this.model?.write;
+        }
+      }
+    );
+    const service = this.owner.lookup('service:abilities');
+
+    const spy = Sinon.spy(service, 'can');
+
+    this.model = { name: 'can' };
+
+    await render(
+      hbs`{{if (can "write post" this.model prop="name") "true" "false"}}`
+    );
+
+    assert.true(spy.calledOnce);
+    assert.strictEqual(spy.firstCall.args[0], 'write post');
+    assert.strictEqual(spy.firstCall.args[1], this.model);
+    assert.deepEqual(spy.firstCall.args[2], { prop: 'name' });
+  });
 
   test('it reacts to model change', async function (assert) {
     assert.expect(4);
@@ -31,14 +59,16 @@ module('Addon | Helper | can', function (hooks) {
     await render(hbs`{{if (can "write post" this.model) "true" "false"}}`);
     assert.dom(this.element).hasText('false');
 
-    this.set('model', new Model());
+    set(this, 'model', new Model());
+    await settled();
     assert.dom(this.element).hasText('true');
 
     this.model.write = false;
     await settled();
     assert.dom(this.element).hasText('false');
 
-    this.set('model', new Model());
+    set(this, 'model', new Model());
+    await settled();
     assert.dom(this.element).hasText('true');
   });
 
@@ -142,8 +172,56 @@ module('Addon | Helper | can', function (hooks) {
     await render(hbs`{{if (can "write post") "true" "false"}}`);
     assert.dom(this.element).hasText('false');
 
-    session.set('isChange', true);
+    set(session, 'isChange', true);
 
+    await settled();
+
+    assert.dom(this.element).hasText('true');
+  });
+
+  test('it reacts to changes when using methods', async function (assert) {
+    assert.expect(3);
+
+    this.owner.register(
+      'service:session',
+      class extends Service {
+        @tracked isTrackedChanged = false;
+        isComputedChanged = false;
+
+        get isTracked() {
+          return this.isTrackedChanged;
+        }
+
+        @computed('isComputedChanged')
+        get isComputed() {
+          return this.isComputedChanged;
+        }
+      }
+    );
+
+    this.owner.register(
+      'ability:post',
+      class extends Ability {
+        @service session;
+
+        canWrite() {
+          return this.session.isTracked && this.session.isComputed;
+        }
+      }
+    );
+
+    const session = this.owner.lookup('service:session');
+
+    await render(hbs`{{if (can "write post") "true" "false"}}`);
+    assert.dom(this.element).hasText('false');
+
+    session.isTrackedChanged = true;
+
+    await settled();
+
+    assert.dom(this.element).hasText('false');
+
+    set(session, 'isComputedChanged', true);
     await settled();
 
     assert.dom(this.element).hasText('true');
