@@ -54,7 +54,7 @@ export default class AbilitiesService extends Service {
    */
   valueFor(propertyName, abilityName, model, properties) {
     let ability = this.abilityFor(abilityName, model, properties);
-    let result = ability.getAbility(propertyName);
+    let result = ability.getAbility(propertyName, model, properties);
 
     ability.destroy();
 

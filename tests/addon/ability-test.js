@@ -1,4 +1,4 @@
-import { test, skip, module } from 'qunit';
+import { test, module } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import Ability from 'ember-can/ability';
 import Sinon from 'sinon';
@@ -39,7 +39,7 @@ module('Addon | ability', function (hooks) {
       assert.strictEqual(ability.getAbility('writeComment'), undefined);
     });
 
-    skip('supports methods', function (assert) {
+    test('supports methods', function (assert) {
       class MyAbility extends Ability {
         canWritePost() {
           return true;
@@ -52,7 +52,7 @@ module('Addon | ability', function (hooks) {
       assert.strictEqual(ability.getAbility('writeComment'), undefined);
     });
 
-    skip('supports models and properties', function (assert) {
+    test('supports models and properties', function (assert) {
       class MyAbility extends Ability {
         canWritePost() {
           return true;

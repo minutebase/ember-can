@@ -1,6 +1,7 @@
 import { module, test } from 'qunit';
 import { setupTest } from 'ember-qunit';
 import { Ability } from 'ember-can';
+import Sinon from 'sinon';
 
 module('Unit | Service | abilities', function (hooks) {
   setupTest(hooks);
@@ -40,23 +41,34 @@ module('Unit | Service | abilities', function (hooks) {
   });
 
   test('valueFor', function (assert) {
-    assert.expect(1);
+    assert.expect(4);
 
-    let service = this.owner.lookup('service:abilities');
+    const fakeAbility = Sinon.fake(({ yeah }) => yeah);
 
     this.owner.register(
       'ability:super-model',
       class extends Ability {
-        get canTouchThis() {
-          return this.model.yeah;
+        canTouchThis() {
+          return fakeAbility(...arguments);
         }
       }
     );
 
+    let service = this.owner.lookup('service:abilities');
+
     assert.strictEqual(
-      service.valueFor('touchThis', 'superModel', { yeah: 'Yeah!' }),
+      service.valueFor(
+        'touchThis',
+        'superModel',
+        { yeah: 'Yeah!' },
+        { props: true }
+      ),
       'Yeah!'
     );
+
+    assert.true(fakeAbility.calledOnce);
+    assert.deepEqual(fakeAbility.firstCall.args[0], { yeah: 'Yeah!' });
+    assert.deepEqual(fakeAbility.firstCall.args[1], { props: true });
   });
 
   test('abilityFor', function (assert) {
