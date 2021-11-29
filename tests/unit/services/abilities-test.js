@@ -3,13 +3,13 @@ import { setupTest } from 'ember-qunit';
 import { Ability } from 'ember-can';
 import { reads } from '@ember/object/computed';
 
-module('Unit | Service | can', function (hooks) {
+module('Unit | Service | abilities', function (hooks) {
   setupTest(hooks);
 
   test('parse', function (assert) {
     assert.expect(2);
 
-    let service = this.owner.lookup('service:can');
+    let service = this.owner.lookup('service:abilities');
 
     assert.deepEqual(service.parse('manage members in project'), {
       propertyName: 'manageMembers',
@@ -25,7 +25,7 @@ module('Unit | Service | can', function (hooks) {
   test('abilityFor', function (assert) {
     assert.expect(5);
 
-    let service = this.owner.lookup('service:can');
+    let service = this.owner.lookup('service:abilities');
 
     this.owner.register('ability:super-model', Ability.extend());
 
@@ -48,7 +48,7 @@ module('Unit | Service | can', function (hooks) {
   test('valueFor', function (assert) {
     assert.expect(1);
 
-    let service = this.owner.lookup('service:can');
+    let service = this.owner.lookup('service:abilities');
 
     this.owner.register(
       'ability:super-model',
@@ -66,7 +66,7 @@ module('Unit | Service | can', function (hooks) {
   test('can', function (assert) {
     assert.expect(1);
 
-    let service = this.owner.lookup('service:can');
+    let service = this.owner.lookup('service:abilities');
 
     this.owner.register(
       'ability:super-model',
@@ -81,7 +81,7 @@ module('Unit | Service | can', function (hooks) {
   test('cannot', function (assert) {
     assert.expect(1);
 
-    let service = this.owner.lookup('service:can');
+    let service = this.owner.lookup('service:abilities');
 
     this.owner.register(
       'ability:super-model',

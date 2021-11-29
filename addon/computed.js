@@ -8,7 +8,9 @@ export function ability(abilityName, resourceName) {
     false,
     {
       for: 'ember-can',
-      since: '4.0.0',
+      since: {
+        enabled: '4.0.0',
+      },
       id: 'ember-can.deprecate-ability-computed',
       until: '5.0.0',
     }
@@ -17,7 +19,7 @@ export function ability(abilityName, resourceName) {
   resourceName = resourceName || abilityName;
 
   return computed(resourceName, function () {
-    let canService = getOwner(this).lookup('service:can');
+    let canService = getOwner(this).lookup('service:abilities');
     return canService.abilityFor(abilityName, get(this, resourceName));
   }).readOnly();
 }
