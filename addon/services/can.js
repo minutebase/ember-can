@@ -1,88 +1,59 @@
-import Service from '@ember/service';
-import Ability from 'ember-can/ability';
-import { assert } from '@ember/debug';
-import { getOwner } from '@ember/application';
+import AbilitiesService from './abilities';
+import { deprecate } from '@ember/debug';
 
-import normalizeAbilityString from 'ember-can/utils/normalize';
-
-export default class CanService extends Service {
-  /**
-   * Parse abilityString into an object with extracted propertyName and abilityName
-   * eg. for 'create projects in account' -> `{ propertyName: 'createProjects', abilityName: 'account'}`
-   * @public
-   * @param  {String} string eg. 'create projects in account'
-   * @return {Object}        extracted propertyName and abilityName
-   */
-  parse(abilityString) {
-    return normalizeAbilityString(abilityString);
-  }
-
-  /**
-   * Create an instance of Ability
-   * @public
-   * @param  {String} abilityName     name of ability class
-   * @param  {*}      model
-   * @param  {Object} [properties={}] extra properties (to be set on the ability instance)
-   * @return {Ability}                Ability instance of requested ability
-   */
-  abilityFor(abilityName, model, properties = {}) {
-    let AbilityFactory = getOwner(this).factoryFor(`ability:${abilityName}`);
-
-    assert(`No ability type found for '${abilityName}'`, AbilityFactory);
-
-    if (typeof model !== 'undefined') {
-      properties = { model, ...properties };
+function deprecateMethod() {
+  deprecate(
+    'Using CanService has been deprecated in favor of AbilitiesService. You should replace all occurrences with new `abilities` service.',
+    false,
+    {
+      id: 'ember-can.can-service',
+      until: '5.0.0',
+      for: 'ember-can',
+      since: {
+        enabled: '4.1.0',
+      },
     }
+  );
+}
 
-    let ability = AbilityFactory.create(properties);
-    assert(
-      `Ability '${abilityName}' has to inherit from ember-can Ability`,
-      ability instanceof Ability
-    );
-
-    return ability;
+export default class CanService extends AbilitiesService {
+  /**
+   * @deprecated Use new AbilitiesService methods
+   */
+  parse() {
+    deprecateMethod();
+    return super.parse(...arguments);
   }
 
   /**
-   * Returns a value for requested ability in specified ability class
-   * @public
-   * @param  {String} propertyName name of ability, eg `createProjects`
-   * @param  {String} abilityName  name of ability class
-   * @param  {*}      model
-   * @param  {Object} properties   extra properties (to be set on the ability instance)
-   * @return {*}                   value of ability
+   * @deprecated Use new AbilitiesService methods
    */
-  valueFor(propertyName, abilityName, model, properties) {
-    let ability = this.abilityFor(abilityName, model, properties);
-    let result = ability.getAbility(propertyName);
-
-    ability.destroy();
-
-    return result;
+  abilityFor() {
+    deprecateMethod();
+    return super.abilityFor(...arguments);
   }
 
   /**
-   * Returns `true` if ability is permitted
-   * @public
-   * @param  {[type]} abilityString eg. 'create projects in account'
-   * @param  {*}      model
-   * @param  {[type]} properties    extra properties (to be set on the ability instance)
-   * @return {Boolean}              value of ability converted to boolean
+   * @deprecated Use new AbilitiesService methods
    */
-  can(abilityString, model, properties) {
-    let { propertyName, abilityName } = this.parse(abilityString);
-    return !!this.valueFor(propertyName, abilityName, model, properties);
+  valueFor() {
+    deprecateMethod();
+    return super.valueFor(...arguments);
   }
 
   /**
-   * Returns `true` if ability is not permitted
-   * @public
-   * @param  {[type]} abilityString eg. 'create projects in account'
-   * @param  {*}      model
-   * @param  {[type]} properties    extra properties (to be set on the ability instance)
-   * @return {Boolean}              value of ability converted to boolean
+   * @deprecated Use new AbilitiesService methods
    */
-  cannot(abilityString, model, properties) {
-    return !this.can(abilityString, model, properties);
+  can() {
+    deprecateMethod();
+    return super.can(...arguments);
+  }
+
+  /**
+   * @deprecated Use new AbilitiesService methods
+   */
+  cannot() {
+    deprecateMethod();
+    return super.cannot(...arguments);
   }
 }

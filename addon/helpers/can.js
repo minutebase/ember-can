@@ -4,14 +4,14 @@ import { addObserver, removeObserver } from '@ember/object/observers';
 import { setProperties, get } from '@ember/object';
 
 export default class CanHelper extends Helper {
-  @service('can') can;
+  @service('abilities') abilities;
 
   ability;
   propertyName;
 
   compute([abilityString, model], properties) {
-    let { abilityName, propertyName } = this.can.parse(abilityString);
-    let ability = this.can.abilityFor(abilityName, model, properties);
+    let { abilityName, propertyName } = this.abilities.parse(abilityString);
+    let ability = this.abilities.abilityFor(abilityName, model, properties);
 
     propertyName = ability.parseProperty(propertyName);
 
