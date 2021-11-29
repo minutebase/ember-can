@@ -1,7 +1,10 @@
 import { test, module } from 'qunit';
+import { setupTest } from 'ember-qunit';
 import normalize from 'ember-can/utils/normalize';
 
-module('Unit | Util | normalize', function () {
+module('Addon | Util | normalize', function (hooks) {
+  setupTest(hooks);
+
   test('normalizes basic combined string', function (assert) {
     let norm = normalize('edit post');
 
