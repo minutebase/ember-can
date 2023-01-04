@@ -59,7 +59,7 @@ import { Ability } from 'ember-can';
 export default class PostAbility extends Ability {
   @service session;
 
-  @computed('session.currentUser');
+  @computed('session.currentUser')
   get user() {
     return this.session.currentUser;
   }
