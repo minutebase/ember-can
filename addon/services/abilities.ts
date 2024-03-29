@@ -27,8 +27,12 @@ export default class AbilitiesService extends Service {
    * @param  {Object} [properties={}] extra properties (to be set on the ability instance)
    * @return {Ability}                Ability instance of requested ability
    */
-  abilityFor(abilityName: string, model?: Model, properties = {}): Ability {
-    let AbilityFactory = getOwner(this).factoryFor(`ability:${abilityName}`);
+  abilityFor(
+    abilityName: string,
+    model?: Model,
+    properties: Record<string, unknown> = {}
+  ): Ability {
+    let AbilityFactory = getOwner(this)?.factoryFor(`ability:${abilityName}`);
 
     assert(`No ability type found for '${abilityName}'`, AbilityFactory);
 
@@ -57,8 +61,8 @@ export default class AbilitiesService extends Service {
   valueFor(
     propertyName: string,
     abilityName: string,
-    model: Model,
-    properties: Record<string, unknown>
+    model?: Model,
+    properties?: Record<string, unknown>
   ): unknown {
     let ability = this.abilityFor(abilityName, model, properties);
     let result = ability.getAbility(propertyName, model, properties);
@@ -78,8 +82,8 @@ export default class AbilitiesService extends Service {
    */
   can(
     abilityString: string,
-    model: Model,
-    properties: Record<string, unknown>
+    model?: Model,
+    properties?: Record<string, unknown>
   ): boolean {
     let { propertyName, abilityName } = this.parse(abilityString);
     return !!this.valueFor(propertyName, abilityName, model, properties);
@@ -95,8 +99,8 @@ export default class AbilitiesService extends Service {
    */
   cannot(
     abilityString: string,
-    model: Model,
-    properties: Record<string, unknown>
+    model?: Model,
+    properties?: Record<string, unknown>
   ): boolean {
     return !this.can(abilityString, model, properties);
   }

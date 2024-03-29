@@ -15,7 +15,7 @@ export default function (string: string) {
   let abilityName = singularize(parts.pop() as string);
   let last = parts[parts.length - 1];
 
-  if (stopWords.includes(last)) {
+  if (stopWords.includes(last as string)) {
     parts.pop();
   }
 
