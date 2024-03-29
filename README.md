@@ -53,16 +53,22 @@ We define an ability for the `Post` model in `/app/abilities/post.js`:
 ```js
 // app/abilities/post.js
 
-import { readOnly } from '@ember/object/computed';
+import { inject as service } from '@ember/service';
 import { Ability } from 'ember-can';
 
-export default Ability.extend({
-  session: service(),
+export default class PostAbility extends Ability {
+  @service session;
 
-  user: readOnly('session.currentUser'),
+  @computed('session.currentUser')
+  get user() {
+    return this.session.currentUser;
+  }
 
-  canCreate: readOnly('user.isAdmin')
-});
+  @readOnly('user.isAdmin') canCreate;
+  get canCreate() {
+    return this.user.isAdmin;
+  }
+}
 ```
 
 We can also re-use the same ability to check if a user has access to a route:
@@ -73,35 +79,36 @@ We can also re-use the same ability to check if a user has access to a route:
 import Route from '@ember/routing/route';
 import { inject as service } from '@ember/service';
 
-export default Route.extend({
-  can: service(),
+export default class NewPostRoute extends Route {
+  @service abilities;
 
   beforeModel(transition) {
-    let result = this._super(...arguments);
+    let result = super.beforeModel(...arguments);
 
-    if (this.can.cannot('create post')) {
+    if (this.abilities.cannot('create post')) {
       transition.abort();
       return this.transitionTo('index');
     }
 
     return result;
   }
-});
+}
 ```
 
 And we can also check the permission before firing action:
 
 ```js
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
+import { action } from '@ember/object';
 
-export default Component.extend({
-  can: service(),
+export default class CreatePostComponent extends Component {
+  @service abilities;
 
-  actions: {
-    createPost() {
-      if (this.can.can('create post', this.post)) {
-        // create post!
-      }
+  @action
+  createPost() {
+    if (this.abilities.can('create post', this.post)) {
+      // create post!
     }
   }
 });
@@ -164,17 +171,19 @@ An ability class protects an individual model which is available in the ability 
 import { computed } from '@ember/object';
 import { Ability } from 'ember-can';
 
-export default Ability.extend({
+export default class PostAbility extends Ability {
   // only admins can write a post
-  canWrite: computed('user.isAdmin', function() {
-    return this.get('user.isAdmin');
-  }),
+  @computed('user.isAdmin')
+  get canWrite() {
+    return this.user.isAdmin;
+  }
 
   // only the person who wrote a post can edit it
-  canEdit: computed('user.id', 'model.author', function() {
-    return this.get('user.id') === this.get('model.author');
-  })
-});
+  @computed('user.id', 'model.author')
+  get canEdit() {
+    return this.user.id === this.model.author;
+  }
+}
 
 // Usage:
 // {{if (can "write post" post) "true" "false"}}
@@ -194,11 +203,11 @@ but also `member` as a bound property.
 {{/if}}
 ```
 
-Similarly using `can` service you can pass additional attributes after or instead of the resource:
+Similarly using `abilities` service you can pass additional attributes after or instead of the resource:
 
 ```js
-this.get('can').can('edit post', post, { author: bob });
-this.get('can').cannot('write post', null, { project: project });
+this.abilities.can('edit post', post, { author: bob });
+this.abilities.cannot('write post', null, { project: project });
 ```
 
 These will set `author` and `project` on the ability respectively so you can use them in the checks.
@@ -234,22 +243,22 @@ Current stopwords which are ignored are:
 
 The default lookup is a bit "clever"/"cute" for some people's tastes, so you can override this if you choose.
 
-Simply extend the default `CanService` in `app/services/can.js` and override `parse`.
+Simply extend the default `AbilitiesService` in `app/services/abilities.js` and override `parse`.
 
 `parse` takes the ability string eg "manage members in projects" and should return an object with `propertyName` and `abilityName`.
 
 For example, to use the format "person.canEdit" instead of the default "edit person" you could do the following:
 
 ```js
-// app/services/can.js
-import Service from 'ember-can/services/can';
+// app/services/abilities.js
+import Service from 'ember-can/services/abilities';
 
-export default CanService.extend({
+export default class AbilitiesService extends Service {
   parse(str) {
     let [abilityName, propertyName] = str.split('.');
     return { propertyName, abilityName };
   }
-});
+};
 ```
 
 You can also modify the property prefix by overriding `parseProperty` in our ability file:
@@ -259,14 +268,12 @@ You can also modify the property prefix by overriding `parseProperty` in our abi
 import { Ability } from 'ember-can';
 import { camelize } from '@ember/string';
 
-export default Ability.extend({
+export default class FeatureAbility extends Ability {
   parseProperty(propertyName) {
     return camelize(`is-${propertyName}`);
   },
-});
+};
 ```
-
-
 
 ## Injecting the user
 
@@ -279,9 +286,9 @@ If you're using an `Ember.Service` as your session, you can just inject it into 
 import { Ability } from 'ember-can';
 import { inject as service } from '@ember/service';
 
-export default Ability.extend({
-  session: service()
-});
+export default class FooAbility extends Ability {
+  @service session;
+}
 ```
 
 The ability classes will now have access to `session` which can then be used to check if the user is logged in etc...
@@ -293,41 +300,22 @@ so that you can bind to them in your templates.
 
 ```js
 import Component from '@ember/component';
+import { inject as service } from '@ember/service';
 import { computed } from '@ember/object';
 
-export default Component.extend({
-  can: service(), // inject can service
+export default class MyComponent extends Component {
+  @service abilities; // inject abilities service
 
-  post: null, // received from higher template
+  post = null; // received from higher template
 
-  ability: computed('post', function() {
-    return this.get('can').abilityFor('post', this.get('post') /*, customProperties */);
-  }),
-});
+  @computed('post')
+  get ability() {
+    return this.abilities.abilityFor('post', this.post /*, customProperties */);
+  }
+}
 
 // Template:
 // {{if ability.canWrite "true" "false"}}
-```
-
-#### Optional way
-
-Optionally you can use `ability` computed to simplify the syntax:
-```js
-import Component from '@ember/component';
-import { ability } from 'ember-can/computed';
-
-export default Component.extend({
-  can: service(), // inject can service
-
-  post: null, // received from higher template
-
-  ability: ability('post')
-});
-```
-
-If the model property is not the same as ability name you can pass a second argument:
-```js
-ability: ability('post', 'myModelProperty')
 ```
 
 ## Accessing abilities within an Ember engine

@@ -1,12 +1,19 @@
 {
   "compilerOptions": {
-    "module": "commonjs",
-    "target": "es2018",
-    "jsx": "preserve",
-    "experimentalDecorators": true
+    "target": "ES2020",
+    "module": "ES2020",
+    "moduleResolution": "Node",
+    "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": true,
+    "noEmitOnError": true,
+    "baseUrl": ".",
+    "experimentalDecorators": true,
+    "paths": {
+      "ember-can/tests/*": ["tests/*"],
+      "ember-can/*": ["addon/*"],
+      "dummy": ["tests/dummy*"],
+    }
   },
-  "exclude": [
-    "node_modules",
-    "**/node_modules/*"
-  ]
+  "include": ["app/**/*", "tests/**/*", "addon/**/*"]
 }

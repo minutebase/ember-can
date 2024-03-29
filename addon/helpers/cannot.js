@@ -1,7 +1,10 @@
-import CanHelper from 'ember-can/helpers/can';
+import Helper from '@ember/component/helper';
+import { inject as service } from '@ember/service';
 
-export default CanHelper.extend({
-  compute() {
-    return !this._super(...arguments);
-  },
-});
+export default class CannotHelper extends Helper {
+  @service('abilities') abilities;
+
+  compute([abilityString, model], properties = {}) {
+    return this.abilities.cannot(abilityString, model, properties);
+  }
+}
