@@ -1,56 +1,18 @@
 {
+  "extends": "@tsconfig/ember/tsconfig.json",
   "compilerOptions": {
-    "target": "es2020",
-    "allowJs": true,
-    "moduleResolution": "node",
-    "allowSyntheticDefaultImports": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "strictNullChecks": true,
-    "strictPropertyInitialization": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noEmitOnError": true,
-    "noEmit": true,
-    "inlineSourceMap": true,
-    "inlineSources": true,
+    // The combination of `baseUrl` with `paths` allows Ember's classic package
+    // layout, which is not resolvable with the Node resolution algorithm, to
+    // work with TypeScript.
     "baseUrl": ".",
-    "module": "es6",
-    "experimentalDecorators": true,
     "paths": {
-      "dummy/tests/*": [
-        "tests/*"
-      ],
-      "dummy/*": [
-        "tests/dummy/app/*",
-        "app/*"
-      ],
-      "ember-can": [
-        "addon"
-      ],
-      "ember-can/*": [
-        "addon/*"
-      ],
-      "ember-can/test-support": [
-        "addon-test-support"
-      ],
-      "ember-can/test-support/*": [
-        "addon-test-support/*"
-      ],
-      "*": [
-        "types/*"
-      ]
+      "dummy/tests/*": ["tests/*"],
+      "dummy/*": ["tests/dummy/app/*", "app/*"],
+      "ember-can": ["addon"],
+      "ember-can/*": ["addon/*"],
+      "ember-can/test-support": ["addon-test-support"],
+      "ember-can/test-support/*": ["addon-test-support/*"],
+      "*": ["types/*"]
     }
-  },
-  "include": [
-    "app/**/*",
-    "addon/**/*",
-    "tests/**/*",
-    "types/**/*",
-    "test-support/**/*",
-    "addon-test-support/**/*"
-  ]
+  }
 }
