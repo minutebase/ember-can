@@ -27,7 +27,7 @@ export default class AbilitiesService extends Service {
    * @param  {Object} [properties={}] extra properties (to be set on the ability instance)
    * @return {Ability}                Ability instance of requested ability
    */
-  abilityFor(abilityName: string, model?: string, properties = {}): Ability {
+  abilityFor(abilityName: string, model?: Model, properties = {}): Ability {
     let AbilityFactory = getOwner(this).factoryFor(`ability:${abilityName}`);
 
     assert(`No ability type found for '${abilityName}'`, AbilityFactory);
