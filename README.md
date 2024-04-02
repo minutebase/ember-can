@@ -32,9 +32,9 @@ ember install ember-can
 
 ## Compatibility
 
-* Ember.js v3.20 or above
-* Ember CLI v3.20 or above
-* Node.js v12 or above
+* Ember.js v4.8 or above
+* Ember CLI v4.8 or above
+* Node.js v18 or above
 
 ## Quick Example
 

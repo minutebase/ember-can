@@ -92,7 +92,7 @@
     "release-it": "14.11.8"
   },
   "engines": {
-    "node": "12.* || 14.* || >= 16"
+    "node": ">= 18"
   },
   "ember": {
     "edition": "octane"
