@@ -1,6 +1,6 @@
 {
   "name": "ember-can",
-  "version": "4.2.1",
+  "version": "4.2.0",
   "description": "Simple authorization addon for Ember apps",
   "keywords": [
     "ember-addon",
@@ -74,7 +74,7 @@
     "ember-source": "~4.0.0",
     "ember-source-channel-url": "^3.0.0",
     "ember-template-lint": "^3.14.0",
-    "ember-try": "^2.0.0",
+    "ember-try": "^3.0.0",
     "eslint": "^7.29.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-ember": "^10.5.8",
