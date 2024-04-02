@@ -48,13 +48,13 @@
     }
   },
   "dependencies": {
+    "@ember/string": "^3.1.1",
     "ember-cli-babel": "^7.26.6",
     "ember-cli-htmlbars": "^6.0.0",
     "ember-inflector": "^4.0.2"
   },
   "devDependencies": {
     "@ember/optional-features": "^2.0.0",
-    "@ember/string": "^3.1.1",
     "@ember/test-helpers": "^2.6.0",
     "@embroider/test-setup": "^0.47.2",
     "@glimmer/component": "^1.0.4",
