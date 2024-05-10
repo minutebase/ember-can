@@ -3,128 +3,82 @@ name: CI
 on:
   push:
     branches:
+      - main
       - master
-  pull_request:
+  pull_request: {}
 
 env:
   NODE_VERSION: 18
 
+concurrency:
+  group: ci-${{ github.head_ref || github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  dependencies:
-    name: Install dependencies
+  test:
+    name: "Tests"
     runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
+    timeout-minutes: 10
 
-      - uses: actions/setup-node@v2
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install Node
+        uses: actions/setup-node@v3
         with:
           node-version: '${{ env.NODE_VERSION }}'
-          check-latest: true
-          cache: 'npm'
-
-      - name: Install latest npm
-        run: npm install -g npm@latest
-
+          cache: npm
       - name: Install Dependencies
         run: npm ci
-
-  lint:
-    name: Lint
-    needs: dependencies
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '${{ env.NODE_VERSION }}'
-          check-latest: true
-          cache: 'npm'
-
-      - name: Install Dependencies
-        run: npm ci
-
       - name: Lint
         run: npm run lint
-
-  test:
-    name: Tests
-    needs: dependencies
-    runs-on: ubuntu-latest
-
-    steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-node@v2
-        with:
-          node-version: '${{ env.NODE_VERSION }}'
-          check-latest: true
-          cache: 'npm'
-
-      - name: Install Dependencies
-        run: npm ci
-
-      - name: Test
+      - name: Run Tests
         run: npm run test:ember
 
-  floating-dependencies:
-    name: Floating Dependencies
-    needs: test
+  floating:
+    name: "Floating Dependencies"
     runs-on: ubuntu-latest
+    timeout-minutes: 10
 
     steps:
-      - uses: actions/checkout@v2
-
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: '${{ env.NODE_VERSION }}'
-          check-latest: true
-          cache: 'npm'
-
-      - name: Install latest npm
-        run: npm install -g npm@latest
-
+          cache: npm
       - name: Install Dependencies
-        run: npm install --no-package-lock
-
-      - name: Test
+        run: npm install --no-shrinkwrap
+      - name: Run Tests
         run: npm run test:ember
 
   try-scenarios:
-    name: Tests - ${{ matrix.ember-try-scenario }}
+    name: ${{ matrix.try-scenario }}
     runs-on: ubuntu-latest
-    continue-on-error: ${{ matrix.allow-failure }}
-    needs: test
+    needs: "test"
+    timeout-minutes: 10
 
     strategy:
       fail-fast: false
       matrix:
-        ember-try-scenario:
+        try-scenario:
           - ember-lts-3.20
           - ember-lts-3.24
+          - ember-lts-3.28
+          - ember-lts-4.4
+          - ember-lts-4.8
           - ember-release
           - ember-beta
-          - ember-classic
+          - ember-canary
           - embroider-safe
           - embroider-optimized
-        allow-failure: [false]
-        include:
-          - ember-try-scenario: ember-canary
-            allow-failure: true
 
     steps:
-    - uses: actions/checkout@v2
-
-    - uses: actions/setup-node@v2
-      with:
-        node-version: '${{ env.NODE_VERSION }}'
-        check-latest: true
-        cache: 'npm'
-
-    - name: Install Dependencies
-      run: npm ci
-
-    - name: Test
-      env:
-        EMBER_TRY_SCENARIO: ${{ matrix.ember-try-scenario }}
-      run: node_modules/.bin/ember try:one $EMBER_TRY_SCENARIO
+      - uses: actions/checkout@v3
+      - name: Install Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '${{ env.NODE_VERSION }}'
+          cache: npm
+      - name: Install Dependencies
+        run: npm ci
+      - name: Run Tests
+        run: ./node_modules/.bin/ember try:one ${{ matrix.try-scenario }}
