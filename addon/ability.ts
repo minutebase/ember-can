@@ -2,6 +2,8 @@ import EmberObject from '@ember/object';
 import { camelize } from '@ember/string';
 import { get } from '@ember/object';
 
+import type Model from '@ember-data/model';
+
 export default class EmberObjectAbility extends EmberObject {
   /**
    * Parse propertyName into ability property
@@ -10,7 +12,7 @@ export default class EmberObjectAbility extends EmberObject {
    * @param  {[String]} propertyName [description]
    * @return {[String]}              [description]
    */
-  parseProperty(propertyName) {
+  parseProperty(propertyName: string): string {
     return camelize(`can-${propertyName}`);
   }
 
@@ -23,7 +25,11 @@ export default class EmberObjectAbility extends EmberObject {
    * @param  {Object} properties
    * @return {*}                   value of parsed `propertyName` property
    */
-  getAbility(propertyName, model, properties) {
+  getAbility(
+    propertyName: string,
+    model?: Model,
+    properties?: Record<string, unknown>
+  ): unknown {
     const abilityValue = get(this, this.parseProperty(propertyName));
 
     if (typeof abilityValue === 'function') {
