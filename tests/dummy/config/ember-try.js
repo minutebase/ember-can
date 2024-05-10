@@ -10,6 +10,10 @@ module.exports = async function () {
         name: 'ember-lts-3.20',
         npm: {
           devDependencies: {
+            '@ember/test-helpers': '^2.9.4',
+            'ember-cli': '~4.12.2',
+            'ember-qunit': '^5.1.5',
+            'ember-resolver': '^8.0.0',
             'ember-source': '~3.20.5',
           },
         },
@@ -18,6 +22,10 @@ module.exports = async function () {
         name: 'ember-lts-3.24',
         npm: {
           devDependencies: {
+            '@ember/test-helpers': '^2.9.4',
+            'ember-cli': '~4.12.2',
+            'ember-qunit': '^5.1.5',
+            'ember-resolver': '^8.0.0',
             'ember-source': '~3.24.3',
           },
         },
@@ -26,6 +34,10 @@ module.exports = async function () {
         name: 'ember-lts-3.28',
         npm: {
           devDependencies: {
+            '@ember/test-helpers': '^2.9.4',
+            'ember-cli': '~4.12.2',
+            'ember-qunit': '^6.0.0',
+            'ember-resolver': '^8.0.0',
             'ember-source': '~3.28.0',
           },
         },
@@ -34,6 +46,7 @@ module.exports = async function () {
         name: 'ember-lts-4.4',
         npm: {
           devDependencies: {
+            'ember-resolver': '^8.0.0',
             'ember-source': '~4.4.0',
           },
         },
