@@ -11,15 +11,15 @@ const stopWords = ['of', 'in', 'for', 'to', 'from', 'on', 'as'];
  * @return {Object}        extracted propertyName and abilityName
  */
 export default function (string: string) {
-  let parts = string.split(' ');
-  let abilityName = singularize(parts.pop() as string);
-  let last = parts[parts.length - 1];
+  const parts = string.split(' ');
+  const abilityName = singularize(parts.pop() as string);
+  const last = parts[parts.length - 1];
 
   if (stopWords.includes(last as string)) {
     parts.pop();
   }
 
-  let propertyName = camelize(parts.join(' '));
+  const propertyName = camelize(parts.join(' '));
 
   return { propertyName, abilityName };
 }
