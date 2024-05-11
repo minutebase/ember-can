@@ -14,15 +14,13 @@ module('Addon | Helper | cannot', function (hooks) {
   setupRenderingTest(hooks);
 
   test('it is calling service correctly', async function (assert) {
-    assert.expect(4);
-
     this.owner.register(
       'ability:post',
       class extends Ability {
         get canWrite() {
           return this.model?.write;
         }
-      }
+      },
     );
     const service = this.owner.lookup('service:abilities');
 
@@ -31,7 +29,7 @@ module('Addon | Helper | cannot', function (hooks) {
     this.model = { name: 'can' };
 
     await render(
-      hbs`{{if (cannot "write post" this.model prop="name") "false" "true"}}`
+      hbs`{{if (cannot "write post" this.model prop="name") "false" "true"}}`,
     );
 
     assert.true(spy.calledOnce);
@@ -41,15 +39,13 @@ module('Addon | Helper | cannot', function (hooks) {
   });
 
   test('it reacts to model change', async function (assert) {
-    assert.expect(4);
-
     this.owner.register(
       'ability:post',
       class extends Ability {
         get canWrite() {
           return this.model?.write;
         }
-      }
+      },
     );
 
     class Model {
@@ -73,13 +69,11 @@ module('Addon | Helper | cannot', function (hooks) {
   });
 
   test('it reacts to ability change', async function (assert) {
-    assert.expect(2);
-
     this.owner.register(
       'service:session',
       class extends Service {
         @tracked isLoggedIn = false;
-      }
+      },
     );
 
     this.owner.register(
@@ -90,7 +84,7 @@ module('Addon | Helper | cannot', function (hooks) {
         get canWrite() {
           return this.session.isLoggedIn;
         }
-      }
+      },
     );
 
     await render(hbs`{{if (cannot "write post") "false" "true"}}`);
@@ -104,8 +98,6 @@ module('Addon | Helper | cannot', function (hooks) {
   });
 
   test('it reacts to tracked properties change', async function (assert) {
-    assert.expect(2);
-
     this.owner.register(
       'service:session',
       class extends Service {
@@ -114,7 +106,7 @@ module('Addon | Helper | cannot', function (hooks) {
         get isLoggedIn() {
           return this.isChange;
         }
-      }
+      },
     );
 
     this.owner.register(
@@ -125,7 +117,7 @@ module('Addon | Helper | cannot', function (hooks) {
         get canWrite() {
           return this.session.isLoggedIn;
         }
-      }
+      },
     );
 
     const session = this.owner.lookup('service:session');
@@ -141,8 +133,6 @@ module('Addon | Helper | cannot', function (hooks) {
   });
 
   test('it reacts to computed properties change', async function (assert) {
-    assert.expect(2);
-
     this.owner.register(
       'service:session',
       class extends Service {
@@ -152,7 +142,7 @@ module('Addon | Helper | cannot', function (hooks) {
         get isLoggedIn() {
           return this.isChange;
         }
-      }
+      },
     );
 
     this.owner.register(
@@ -164,7 +154,7 @@ module('Addon | Helper | cannot', function (hooks) {
         get canWrite() {
           return this.session.isLoggedIn;
         }
-      }
+      },
     );
 
     const session = this.owner.lookup('service:session');
@@ -180,8 +170,6 @@ module('Addon | Helper | cannot', function (hooks) {
   });
 
   test('it reacts to changes when using methods', async function (assert) {
-    assert.expect(3);
-
     this.owner.register(
       'service:session',
       class extends Service {
@@ -196,7 +184,7 @@ module('Addon | Helper | cannot', function (hooks) {
         get isComputed() {
           return this.isComputedChanged;
         }
-      }
+      },
     );
 
     this.owner.register(
@@ -207,7 +195,7 @@ module('Addon | Helper | cannot', function (hooks) {
         canWrite() {
           return this.session.isTracked && this.session.isComputed;
         }
-      }
+      },
     );
 
     const session = this.owner.lookup('service:session');

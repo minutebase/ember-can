@@ -7,8 +7,6 @@ module('Unit | Service | abilities', function (hooks) {
   setupTest(hooks);
 
   test('can', function (assert) {
-    assert.expect(1);
-
     let service = this.owner.lookup('service:abilities');
 
     this.owner.register(
@@ -17,15 +15,13 @@ module('Unit | Service | abilities', function (hooks) {
         get canTouchThis() {
           return this.model.yeah;
         }
-      }
+      },
     );
 
     assert.true(service.can('touchThis in superModel', { yeah: true }));
   });
 
   test('cannot', function (assert) {
-    assert.expect(1);
-
     let service = this.owner.lookup('service:abilities');
 
     this.owner.register(
@@ -34,15 +30,13 @@ module('Unit | Service | abilities', function (hooks) {
         get canTouchThis() {
           return this.model.yeah;
         }
-      }
+      },
     );
 
     assert.true(service.cannot('touchThis in superModel', { yeah: false }));
   });
 
   test('valueFor', function (assert) {
-    assert.expect(4);
-
     const fakeAbility = Sinon.fake(({ yeah }) => yeah);
 
     this.owner.register(
@@ -51,7 +45,7 @@ module('Unit | Service | abilities', function (hooks) {
         canTouchThis() {
           return fakeAbility(...arguments);
         }
-      }
+      },
     );
 
     let service = this.owner.lookup('service:abilities');
@@ -61,9 +55,9 @@ module('Unit | Service | abilities', function (hooks) {
         'touchThis',
         'superModel',
         { yeah: 'Yeah!' },
-        { props: true }
+        { props: true },
       ),
-      'Yeah!'
+      'Yeah!',
     );
 
     assert.true(fakeAbility.calledOnce);
@@ -72,8 +66,6 @@ module('Unit | Service | abilities', function (hooks) {
   });
 
   test('abilityFor', function (assert) {
-    assert.expect(3);
-
     let service = this.owner.lookup('service:abilities');
 
     this.owner.register('ability:super-model', class extends Ability {});
@@ -85,13 +77,11 @@ module('Unit | Service | abilities', function (hooks) {
 
     assert.throws(
       () => service.abilityFor('abilityNotFound'),
-      'No ability type found for abilityNotFound'
+      'No ability type found for abilityNotFound',
     );
   });
 
   test('parse', function (assert) {
-    assert.expect(2);
-
     let service = this.owner.lookup('service:abilities');
 
     assert.deepEqual(service.parse('manage members in project'), {

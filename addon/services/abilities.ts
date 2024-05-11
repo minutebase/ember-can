@@ -30,7 +30,7 @@ export default class AbilitiesService extends Service {
   abilityFor(
     abilityName: string,
     model?: Model,
-    properties: Record<string, unknown> = {}
+    properties: Record<string, unknown> = {},
   ): Ability {
     let AbilityFactory = getOwner(this)?.factoryFor(`ability:${abilityName}`);
 
@@ -43,7 +43,7 @@ export default class AbilitiesService extends Service {
     let ability = AbilityFactory.create(properties);
     assert(
       `Ability '${abilityName}' has to inherit from ember-can Ability`,
-      ability instanceof Ability
+      ability instanceof Ability,
     );
 
     return ability;
@@ -62,7 +62,7 @@ export default class AbilitiesService extends Service {
     propertyName: string,
     abilityName: string,
     model?: Model,
-    properties?: Record<string, unknown>
+    properties?: Record<string, unknown>,
   ): unknown {
     let ability = this.abilityFor(abilityName, model, properties);
     let result = ability.getAbility(propertyName, model, properties);
@@ -83,7 +83,7 @@ export default class AbilitiesService extends Service {
   can(
     abilityString: string,
     model?: Model,
-    properties?: Record<string, unknown>
+    properties?: Record<string, unknown>,
   ): boolean {
     let { propertyName, abilityName } = this.parse(abilityString);
     return !!this.valueFor(propertyName, abilityName, model, properties);
@@ -100,7 +100,7 @@ export default class AbilitiesService extends Service {
   cannot(
     abilityString: string,
     model?: Model,
-    properties?: Record<string, unknown>
+    properties?: Record<string, unknown>,
   ): boolean {
     return !this.can(abilityString, model, properties);
   }
