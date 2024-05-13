@@ -1,5 +1,5 @@
 import { computed, get } from '@ember/object';
-import { getOwner } from '@ember/application';
+import { getOwner } from '@ember/owner';
 import { deprecate } from '@ember/debug';
 
 export function ability(abilityName, resourceName) {
