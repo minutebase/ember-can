@@ -25,6 +25,8 @@ export default {
       'computed.js',
       'computed.js',
       'ability.ts',
+      'services/**/*.js',
+      'utils/**/*.js',
     ]),
 
     // These are the modules that should get reexported into the traditional

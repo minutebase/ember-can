@@ -97,7 +97,11 @@
     "version": 2,
     "type": "addon",
     "main": "addon-main.cjs",
-    "app-js": {}
+    "app-js": {
+      "./services/abilities.js": "./dist/_app_/services/abilities.js",
+      "./services/can.js": "./dist/_app_/services/can.js",
+      "./utils/normalize.js": "./dist/_app_/utils/normalize.js"
+    }
   },
   "peerDependencies": {
     "@ember/string": "^3.1.1",
