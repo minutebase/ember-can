@@ -1,10 +1,10 @@
 ﻿{
   "schemaVersion": "1.0.0",
-  "projectName": "<%= addonName %>",
+  "projectName": "ember-can",
   "packages": [
     {
       "name": "@embroider/addon-blueprint",
-      "version": "<%= blueprintVersion %>",
+      "version": "2.16.0",
       "blueprints": [
         {
           "name": "@embroider/addon-blueprint",
