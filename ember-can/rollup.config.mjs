@@ -34,7 +34,6 @@ export default {
     // not everything in publicEntrypoints necessarily needs to go here.
     addon.appReexports([
       'helpers/**/*.js',
-      'initializers/**/*.js',
       'services/**/*.js',
       'utils/**/*.js',
     ]),
