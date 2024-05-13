@@ -10,16 +10,16 @@ const stopWords = ['of', 'in', 'for', 'to', 'from', 'on', 'as'];
  * @param  {String} string eg. 'create projects in account'
  * @return {Object}        extracted propertyName and abilityName
  */
-export default function (string) {
-  let parts = string.split(' ');
-  let abilityName = singularize(parts.pop());
-  let last = parts[parts.length - 1];
+export default function (string: string) {
+  const parts = string.split(' ');
+  const abilityName = singularize(parts.pop() as string);
+  const last = parts[parts.length - 1];
 
-  if (stopWords.includes(last)) {
+  if (stopWords.includes(last as string)) {
     parts.pop();
   }
 
-  let propertyName = camelize(parts.join(' '));
+  const propertyName = camelize(parts.join(' '));
 
   return { propertyName, abilityName };
 }

@@ -13,7 +13,7 @@ export function ability(abilityName, resourceName) {
       },
       id: 'ember-can.deprecate-ability-computed',
       until: '5.0.0',
-    }
+    },
   );
 
   resourceName = resourceName || abilityName;

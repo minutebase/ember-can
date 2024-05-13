@@ -12,7 +12,7 @@ function deprecateMethod() {
       since: {
         enabled: '4.1.0',
       },
-    }
+    },
   );
 }
 

@@ -9,7 +9,7 @@ module('Addon | ability', function (hooks) {
   test('parseProperty', function (assert) {
     assert.strictEqual(
       Ability.create().parseProperty('writePost'),
-      'canWritePost'
+      'canWritePost',
     );
   });
 
