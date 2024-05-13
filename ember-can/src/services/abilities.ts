@@ -103,8 +103,10 @@ export default class AbilitiesService extends Service {
   }
 }
 
-function isAbilityClass(possibleAbilityClass: unknown): possibleAbilityClass is Ability {
-  const abilityClass = (possibleAbilityClass as Ability);
+function isAbilityClass(
+  possibleAbilityClass: unknown,
+): possibleAbilityClass is Ability {
+  const abilityClass = possibleAbilityClass as Ability;
   return (
     abilityClass.parseProperty !== undefined &&
     typeof abilityClass.parseProperty === 'function' &&
