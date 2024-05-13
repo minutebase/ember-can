@@ -16,12 +16,12 @@
     "release": "release-it"
   },
   "devDependencies": {
-    "@glint/core": "^1.2.1",
+    "@glint/core": "^1.4.0",
     "@release-it-plugins/lerna-changelog": "^6.1.0",
     "@release-it-plugins/workspaces": "^4.2.0",
-    "concurrently": "^8.2.0",
-    "prettier": "^3.0.3",
-    "prettier-plugin-ember-template-tag": "^1.1.0",
+    "concurrently": "^8.2.2",
+    "prettier": "^3.2.5",
+    "prettier-plugin-ember-template-tag": "^2.0.2",
     "release-it": "^17.2.1",
     "typescript": "^5.4.5"
   },
