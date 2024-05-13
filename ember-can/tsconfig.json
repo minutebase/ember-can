@@ -8,10 +8,6 @@
     "environment": ["ember-loose", "ember-template-imports"]
   },
   "compilerOptions": {
-    "types": [
-      "ember-source/types",
-    ],
-    
     "allowJs": true,
     "declarationDir": "declarations",
     /**
