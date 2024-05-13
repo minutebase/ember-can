@@ -1,5 +1,5 @@
-﻿import CanHelper from './helpers/can';
-import CannotHelper from './helpers/cannot';
+﻿import CanHelper from './helpers/can.ts';
+import CannotHelper from './helpers/cannot.ts';
 
 export default interface Registry {
   Can: typeof CanHelper;
