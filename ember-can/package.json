@@ -98,6 +98,8 @@
     "type": "addon",
     "main": "addon-main.cjs",
     "app-js": {
+      "./helpers/can.js": "./dist/_app_/helpers/can.js",
+      "./helpers/cannot.js": "./dist/_app_/helpers/cannot.js",
       "./services/abilities.js": "./dist/_app_/services/abilities.js",
       "./services/can.js": "./dist/_app_/services/can.js",
       "./utils/normalize.js": "./dist/_app_/utils/normalize.js"

@@ -23,8 +23,8 @@ export default {
     addon.publicEntrypoints([
       'index.js',
       'computed.js',
-      'computed.js',
       'ability.ts',
+      'helpers/**/*.js',
       'services/**/*.js',
       'utils/**/*.js',
     ]),
