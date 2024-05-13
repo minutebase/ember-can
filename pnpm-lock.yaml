@@ -178,6 +178,9 @@ importers:
       '@tsconfig/ember':
         specifier: ^3.0.6
         version: 3.0.6
+      '@types/qunit':
+        specifier: ^2.19.10
+        version: 2.19.10
       '@types/rsvp':
         specifier: ^4.0.9
         version: 4.0.9
@@ -2961,6 +2964,10 @@ packages:
 
   /@types/qs@6.9.15:
     resolution: {integrity: sha512-uXHQKES6DQKKCLh441Xv/dwxOq1TVS3JPUMlEqoEglvlhR6Mxnlew/Xq/LRVHpLyk7iK3zODe1qYHIMltO7XGg==}
+    dev: true
+
+  /@types/qunit@2.19.10:
+    resolution: {integrity: sha512-gVB+rxvxmbyPFWa6yjjKgcumWal3hyqoTXI0Oil161uWfo1OCzWZ/rnEumsx+6uVgrwPrCrhpQbLkzfildkSbg==}
     dev: true
 
   /@types/range-parser@1.2.7:
