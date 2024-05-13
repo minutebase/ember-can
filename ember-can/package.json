@@ -51,7 +51,6 @@
   "dependencies": {
     "@embroider/addon-shim": "^1.8.8",
     "decorator-transforms": "^2.0.0",
-    "@babel/core": "^7.24.5",
     "ember-inflector": "^4.0.2"
   },
   "devDependencies": {
