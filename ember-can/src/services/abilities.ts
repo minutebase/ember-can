@@ -40,7 +40,7 @@ export default class AbilitiesService extends Service {
     const ability = AbilityFactory.create(properties);
     assert(
       `Ability '${abilityName}' has to inherit from ember-can Ability`,
-      ability instanceof Ability,
+      isAbilityClass(ability), // "ability instanceof Ability" is not working cause of a bug in ember-auto-import see https://github.com/embroider-build/ember-auto-import/issues/588
     );
 
     return ability;
@@ -101,4 +101,14 @@ export default class AbilitiesService extends Service {
   ): boolean {
     return !this.can(abilityString, model, properties);
   }
+}
+
+function isAbilityClass(possibleAbilityClass: unknown): possibleAbilityClass is Ability {
+  const abilityClass = (possibleAbilityClass as Ability);
+  return (
+    abilityClass.parseProperty !== undefined &&
+    typeof abilityClass.parseProperty === 'function' &&
+    abilityClass.getAbility !== undefined &&
+    typeof abilityClass.getAbility === 'function'
+  );
 }
