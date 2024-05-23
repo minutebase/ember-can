@@ -8,6 +8,8 @@ module.exports = {
 
   anonymousOptions: ['name'],
 
+  shouldTransformTypeScript: true,
+
   fileMapTokens: function () {
     return {
       __name__: function (options) {

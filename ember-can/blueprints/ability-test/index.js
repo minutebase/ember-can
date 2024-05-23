@@ -6,6 +6,8 @@ var EOL = require('os').EOL;
 module.exports = {
   description: 'Generates an ability unit test.',
 
+  shouldTransformTypeScript: true,
+
   _getTestStyle: function () {
     if ('ember-cli-mocha' in this.project.addonPackages) {
       return 'mocha';
