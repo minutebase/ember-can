@@ -28,6 +28,7 @@
   },
   "files": [
     "addon-main.cjs",
+    "blueprints",
     "declarations",
     "dist"
   ],
