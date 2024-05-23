@@ -33,8 +33,7 @@ ember install ember-can
 ## Compatibility
 
 * Ember.js v3.20 or above
-* Ember CLI v3.20 or above
-* Node.js v18 or above
+* Embroider or ember-auto-import v2
 
 ## Quick Example
 
