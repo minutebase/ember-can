@@ -120,8 +120,7 @@
     "app-js": {
       "./helpers/can.js": "./dist/_app_/helpers/can.js",
       "./helpers/cannot.js": "./dist/_app_/helpers/cannot.js",
-      "./services/abilities.js": "./dist/_app_/services/abilities.js",
-      "./utils/normalize.js": "./dist/_app_/utils/normalize.js"
+      "./services/abilities.js": "./dist/_app_/services/abilities.js"
     }
   },
   "peerDependencies": {
