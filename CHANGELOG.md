@@ -1,4 +1,13 @@
 
+
+## v5.0.1 (2024-07-01)
+
+#### :bug: Bug Fix
+* [#173](https://github.com/minutebase/ember-can/pull/173) Make helper types more explicit ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+
+#### Committers: 1
+- Robbie Wagner ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+
 ## v5.0.0 (2024-06-06)
 
 #### :boom: Breaking Change
