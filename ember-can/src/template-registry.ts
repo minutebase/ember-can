@@ -2,6 +2,6 @@
 import CannotHelper from './helpers/cannot.ts';
 
 export default interface Registry {
-  Can: typeof CanHelper;
-  Cannot: typeof CannotHelper;
+  can: typeof CanHelper;
+  cannot: typeof CannotHelper;
 }
