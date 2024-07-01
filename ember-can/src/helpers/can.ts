@@ -4,7 +4,7 @@ import type Ability from '../services/abilities.ts';
 
 interface CanSignature {
   Args: {
-    Positional: never[];
+    Positional: [abilityString: string, model?: Record<string, unknown>];
     Named: Record<string, unknown>;
   };
   Return: boolean;

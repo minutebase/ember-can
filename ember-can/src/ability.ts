@@ -25,7 +25,7 @@ export default class EmberObjectAbility extends EmberObject {
    */
   getAbility(
     propertyName: string,
-    model?: Model,
+    model?: Record<string, unknown>,
     properties?: Record<string, unknown>,
   ): unknown {
     const abilityValue = get(this, this.parseProperty(propertyName));
@@ -36,8 +36,4 @@ export default class EmberObjectAbility extends EmberObject {
 
     return abilityValue;
   }
-}
-
-export interface Model {
-  [key: string]: unknown;
 }
