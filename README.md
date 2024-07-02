@@ -30,6 +30,9 @@ Install this addon via ember-cli:
 ember install ember-can
 ```
 
+After install add `import 'ember-can/resolver';` inside your app.[js|ts]
+
+
 ## Compatibility
 
 * Ember.js v3.28 or above
