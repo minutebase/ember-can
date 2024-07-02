@@ -2,6 +2,15 @@
 
 
 
+
+## v5.0.4 (2024-07-02)
+
+#### :bug: Bug Fix
+* [#179](https://github.com/minutebase/ember-can/pull/179) Make model type unknown ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+
+#### Committers: 1
+- Robbie Wagner ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+
 ## v5.0.3 (2024-07-02)
 
 #### :house: Internal
