@@ -9,3 +9,6 @@ Resolver.reopen({
     };
   },
 });
+
+export function initialize() {}
+export default { initialize };
