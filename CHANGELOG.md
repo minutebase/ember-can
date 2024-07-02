@@ -1,6 +1,15 @@
 
 
 
+
+## v5.0.3 (2024-07-02)
+
+#### :house: Internal
+* [#178](https://github.com/minutebase/ember-can/pull/178) Tweak TS paths ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+
+#### Committers: 1
+- Robbie Wagner ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+
 ## v5.0.2 (2024-07-02)
 
 #### :bug: Bug Fix
