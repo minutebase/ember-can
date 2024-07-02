@@ -26,7 +26,7 @@ export default class AbilitiesService extends Service {
    */
   abilityFor(
     abilityName: string,
-    model?: Record<string, unknown>,
+    model?: unknown,
     properties: Record<string, unknown> = {},
   ): Ability {
     const AbilityFactory = getOwner(this)?.factoryFor(`ability:${abilityName}`);
@@ -58,7 +58,7 @@ export default class AbilitiesService extends Service {
   valueFor(
     propertyName: string,
     abilityName: string,
-    model?: Record<string, unknown>,
+    model?: unknown,
     properties?: Record<string, unknown>,
   ): unknown {
     const ability = this.abilityFor(abilityName, model, properties);
@@ -79,7 +79,7 @@ export default class AbilitiesService extends Service {
    */
   can(
     abilityString: string,
-    model?: Record<string, unknown>,
+    model?: unknown,
     properties?: Record<string, unknown>,
   ): boolean {
     const { propertyName, abilityName } = this.parse(abilityString);
@@ -96,7 +96,7 @@ export default class AbilitiesService extends Service {
    */
   cannot(
     abilityString: string,
-    model?: Record<string, unknown>,
+    model?: unknown,
     properties?: Record<string, unknown>,
   ): boolean {
     return !this.can(abilityString, model, properties);

@@ -4,7 +4,7 @@ import type Ability from 'ember-can/services/abilities';
 
 interface CanSignature {
   Args: {
-    Positional: [abilityString: string, model?: Record<string, unknown>];
+    Positional: [abilityString: string, model?: unknown];
     Named: Record<string, unknown>;
   };
   Return: boolean;
