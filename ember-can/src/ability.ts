@@ -25,7 +25,7 @@ export default class EmberObjectAbility extends EmberObject {
    */
   getAbility(
     propertyName: string,
-    model?: Record<string, unknown>,
+    model?: unknown,
     properties?: Record<string, unknown>,
   ): unknown {
     const abilityValue = get(this, this.parseProperty(propertyName));
