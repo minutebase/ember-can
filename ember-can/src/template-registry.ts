@@ -1,5 +1,5 @@
-﻿import CanHelper from 'ember-can/helpers/can';
-import CannotHelper from 'ember-can/helpers/cannot';
+﻿import CanHelper from './helpers/can.ts';
+import CannotHelper from './helpers/cannot.ts';
 
 export default interface Registry {
   can: typeof CanHelper;
