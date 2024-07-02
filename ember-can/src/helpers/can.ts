@@ -1,6 +1,6 @@
 import Helper from '@ember/component/helper';
 import { inject as service } from '@ember/service';
-import type Ability from 'ember-can/services/abilities';
+import type Ability from '../services/abilities.ts';
 
 interface CanSignature {
   Args: {

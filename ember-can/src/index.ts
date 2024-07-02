@@ -1,3 +1,3 @@
-import Ability from 'ember-can/ability';
+import Ability from './ability.ts';
 
 export { Ability };

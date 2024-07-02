@@ -1,5 +1,5 @@
 import Service from '@ember/service';
-import Ability from 'ember-can/ability';
+import Ability from '../ability.ts';
 import { assert } from '@ember/debug';
 import { getOwner } from '@ember/application';
 import normalizeAbilityString from '../-private/normalize.ts';
