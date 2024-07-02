@@ -1,5 +1,16 @@
 
 
+
+## v5.0.2 (2024-07-02)
+
+#### :bug: Bug Fix
+* [#174](https://github.com/minutebase/ember-can/pull/174) fix: make helpers lowercase in template registry ([@charlesfries](https://github.com/charlesfries))
+* [#176](https://github.com/minutebase/ember-can/pull/176) Fix looking up abilities ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 2
+- Charles Fries ([@charlesfries](https://github.com/charlesfries))
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v5.0.1 (2024-07-01)
 
 #### :bug: Bug Fix
