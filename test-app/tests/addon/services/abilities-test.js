@@ -94,4 +94,48 @@ module('Unit | Service | abilities', function (hooks) {
       abilityName: 'post',
     });
   });
+
+  module('async', function (hooks) {
+    hooks.beforeEach(function () {
+      this.owner.register(
+        'ability:super-model',
+        class extends Ability {
+          async canTouchThis() {
+            if (this.model.fail) {
+              throw new Error();
+            }
+
+            return await this.model.yeah;
+          }
+        },
+      );
+    });
+
+    test('can', async function (assert) {
+      let service = this.owner.lookup('service:abilities');
+      let can = service.can('touchThis in superModel', { yeah: true });
+
+      assert.true(can instanceof Promise);
+      assert.true(await can);
+    });
+
+    test('cannot', async function (assert) {
+      let service = this.owner.lookup('service:abilities');
+      let cannot = service.cannot('touchThis in superModel', { yeah: false });
+
+      assert.true(cannot instanceof Promise);
+      assert.true(await cannot);
+    });
+
+    test('rejected promise', async function (assert) {
+      let service = this.owner.lookup('service:abilities');
+
+      assert.false(
+        await service.can('touchThis in superModel', { fail: true }),
+      );
+      assert.true(
+        await service.cannot('touchThis in superModel', { fail: true }),
+      );
+    });
+  });
 });

@@ -214,4 +214,37 @@ module('Addon | Helper | can', function (hooks) {
 
     assert.dom(this.element).hasText('true');
   });
+
+  module('async', function () {
+    test('it can handle promises', async function (assert) {
+      const promise = new Promise((resolve) => {
+        this._resolve = resolve;
+      });
+
+      this.owner.register(
+        'ability:post',
+        class extends Ability {
+          async canWrite() {
+            return await promise;
+          }
+        },
+      );
+
+      await render(hbs`
+        {{#let (can "write post") as |promise|}}
+          <span data-test-is-pending>{{is-pending promise}}</span>
+          <span data-test-value>{{await promise}}</span>
+        {{/let}}
+      `);
+
+      assert.dom('[data-test-is-pending]').hasText('true');
+      assert.dom('[data-test-value]').hasText('');
+
+      await this._resolve(true);
+      await settled();
+
+      assert.dom('[data-test-is-pending]').hasText('false');
+      assert.dom('[data-test-value]').hasText('true');
+    });
+  });
 });

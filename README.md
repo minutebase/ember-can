@@ -326,6 +326,49 @@ If you're using [engines](http://ember-engines.com/) and you want to access an *
 export { default } from 'my-app/abilities/foo-bar';
 ```
 
+## Asynchronous abilities
+
+Some abilities might have the need to run asynchronously e.g. to fetch some
+information from a backend. With `ember-can` it is possible to implement an
+ability that returns a promise instead of a boolean value.
+
+```js
+// app/abilities/post.js
+
+import { Ability } from 'ember-can';
+
+export default class PostAbility extends Ability {
+  async canWrite() {
+    const response = await fetch('/api/post/can-i-write');
+
+    return response.status === 200;
+  }
+}
+```
+
+In order to use that async ability in a template, you need to install
+`ember-promise-helpers` and await the `can` helper accordingly:
+
+```hbs
+{{#let (can 'write post' post) as |hasPermission|}}
+  {{#if (is-pending hasPermission)}}
+    We don't know yet if you can write a post!
+  {{else if (await hasPermission)}}
+    You can write a post!
+  {{else}}
+    You can't write a post!
+  {{/if}}
+{{/let}}
+```
+
+The usage in JS code is the same as handling regular promises:
+
+```js
+if (await this.abilities.cannot('edit post', post)) {
+  alert("You can't write a post!");
+}
+```
+
 ## Upgrade guide
 
 See [UPGRADING.md](https://github.com/minutebase/ember-can/blob/master/UPGRADING.md) for more details.
