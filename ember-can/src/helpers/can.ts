@@ -7,7 +7,7 @@ interface CanSignature {
     Positional: [abilityString: string, model?: unknown];
     Named: Record<string, unknown>;
   };
-  Return: boolean;
+  Return: boolean | Promise<boolean>;
 }
 
 export default class CanHelper extends Helper<CanSignature> {
@@ -16,7 +16,7 @@ export default class CanHelper extends Helper<CanSignature> {
   compute(
     [abilityString, model]: CanSignature['Args']['Positional'],
     properties: CanSignature['Args']['Named'] = {},
-  ): boolean {
+  ): boolean | Promise<boolean> {
     return this.abilities.can(abilityString ?? '', model, properties);
   }
 }

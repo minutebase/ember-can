@@ -70,6 +70,33 @@ export default class AbilitiesService extends Service {
   }
 
   /**
+   * Returns a value for a requested ability string.
+   * @private
+   * @param  {[type]} abilityString     eg. 'create projects in account'
+   * @param  {*}      model
+   * @param  {[type]} properties        extra properties (to be set on the ability instance)
+   * @param  {[type]} invert            invert the boolean result
+   * @return {Boolean|Promise<Boolean>} value of ability converted to boolean (might be a promise)
+   */
+  #getValue(
+    abilityString: string,
+    model?: unknown,
+    properties?: Record<string, unknown>,
+    invert?: boolean,
+  ): boolean | Promise<boolean> {
+    const { propertyName, abilityName } = this.parse(abilityString);
+    const result = this.valueFor(propertyName, abilityName, model, properties);
+
+    if (result instanceof Promise) {
+      return result
+        .then((value) => (invert ? !value : !!value))
+        .catch(() => (invert ? true : false));
+    }
+
+    return invert ? !result : !!result;
+  }
+
+  /**
    * Returns `true` if ability is permitted
    * @public
    * @param  {[type]} abilityString eg. 'create projects in account'
@@ -81,9 +108,8 @@ export default class AbilitiesService extends Service {
     abilityString: string,
     model?: unknown,
     properties?: Record<string, unknown>,
-  ): boolean {
-    const { propertyName, abilityName } = this.parse(abilityString);
-    return !!this.valueFor(propertyName, abilityName, model, properties);
+  ): boolean | Promise<boolean> {
+    return this.#getValue(abilityString, model, properties, false);
   }
 
   /**
@@ -98,8 +124,8 @@ export default class AbilitiesService extends Service {
     abilityString: string,
     model?: unknown,
     properties?: Record<string, unknown>,
-  ): boolean {
-    return !this.can(abilityString, model, properties);
+  ): boolean | Promise<boolean> {
+    return this.#getValue(abilityString, model, properties, true);
   }
 }
 

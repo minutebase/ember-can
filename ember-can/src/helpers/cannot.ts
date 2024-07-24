@@ -7,7 +7,7 @@ interface CannotSignature {
     Positional: [abilityString: string, model?: unknown];
     Named: Record<string, unknown>;
   };
-  Return: boolean;
+  Return: boolean | Promise<boolean>;
 }
 
 export default class CannotHelper extends Helper<CannotSignature> {
@@ -16,7 +16,7 @@ export default class CannotHelper extends Helper<CannotSignature> {
   compute(
     [abilityString, model]: CannotSignature['Args']['Positional'],
     properties: CannotSignature['Args']['Named'] = {},
-  ): boolean {
+  ): boolean | Promise<boolean> {
     return this.abilities.cannot(abilityString ?? '', model, properties);
   }
 }
