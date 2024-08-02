@@ -28,7 +28,7 @@
   "devDependencies": {
     "@babel/core": "^7.24.5",
     "@ember/optional-features": "^2.1.0",
-    "@ember/string": "^3.1.1",
+    "@ember/string": "^4.0.0",
     "@ember/test-helpers": "^3.3.0",
     "@embroider/test-setup": "4.0.0",
     "@glimmer/component": "^1.1.2",
@@ -74,6 +74,7 @@
     "ember-cli-sri": "^2.1.1",
     "ember-cli-terser": "^4.0.2",
     "ember-fetch": "^8.1.2",
+    "ember-inflector": "^5.0.0",
     "ember-load-initializers": "^2.1.2",
     "ember-modifier": "^4.1.0",
     "ember-page-title": "^8.2.3",

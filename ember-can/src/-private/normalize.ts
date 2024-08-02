@@ -1,4 +1,5 @@
 import { camelize } from '@ember/string';
+// @ts-expect-error Could not find a declaration file for module 'ember-inflector'.
 import { singularize } from 'ember-inflector';
 
 const stopWords = ['of', 'in', 'for', 'to', 'from', 'on', 'as'];
