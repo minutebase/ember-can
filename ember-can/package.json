@@ -51,14 +51,13 @@
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.8.8",
-    "decorator-transforms": "^2.0.0",
-    "ember-inflector": "^4.0.2"
+    "decorator-transforms": "^2.0.0"
   },
   "devDependencies": {
     "@babel/core": "^7.24.5",
     "@babel/plugin-transform-typescript": "^7.24.5",
     "@babel/runtime": "^7.24.5",
-    "@ember/string": "^3.1.1",
+    "@ember/string": "^4.0.0",
     "@embroider/addon-dev": "^4.3.1",
     "@glimmer/component": "^1.1.2",
     "@glint/core": "^1.4.0",
@@ -91,6 +90,7 @@
     "@typescript-eslint/parser": "^7.8.0",
     "babel-plugin-ember-template-compilation": "^2.2.5",
     "concurrently": "^8.2.2",
+    "ember-inflector": "^5.0.1",
     "ember-resolver": "^12.0.1",
     "ember-source": "^5.8.0",
     "ember-template-lint": "^6.0.0",
@@ -126,7 +126,8 @@
     }
   },
   "peerDependencies": {
-    "@ember/string": "^3.1.1",
+    "@ember/string": "^3.1.1 || ^4.0.0",
+    "ember-inflector": "^4.0.2 || ^5.0.1",
     "ember-source": "^3.28.0 || ^4.0.0 || >=5.0.0",
     "ember-resolver": ">= 8.0.0"
   }
