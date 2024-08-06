@@ -3,6 +3,18 @@
 
 
 
+
+## v6.0.0 (2024-08-06)
+
+#### :boom: Breaking Change
+* [#183](https://github.com/minutebase/ember-can/pull/183) Allow `@ember/string` v4 and move `ember-inflector` to peerDependencies ([@mkszepp](https://github.com/mkszepp))
+
+#### :bug: Bug Fix
+* [#180](https://github.com/minutebase/ember-can/pull/180) Addon v2 should always use relative paths for own files ([@mkszepp](https://github.com/mkszepp))
+
+#### Committers: 1
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+
 ## v5.0.4 (2024-07-02)
 
 #### :bug: Bug Fix
