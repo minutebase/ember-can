@@ -30,6 +30,22 @@ Install this addon via ember-cli:
 ember install ember-can
 ```
 
+Starting from `ember-resolver` version 13 and above, you need to update your app.js or app.ts file by adding the following import:
+```js
+import { extendResolver } from 'ember-can';
+```
+
+Next, replace `Resolver = Resolver;` with:
+
+```js
+Resolver = extendResolver(Resolver);
+```
+
+Without this update, the app will encounter an error where it cannot find your abilities.
+
+This change you can also make for `ember-resolver` < 13, but is not necessary.
+
+
 ## Compatibility
 
 * Ember.js v3.28 or above
