@@ -43,6 +43,23 @@ Resolver = extendResolver(Resolver);
 
 Without this update, the app will encounter an error where it cannot find your abilities.
 
+After changes your app file looks like:
+```js
+import Application from '@ember/application';
+import Resolver from 'ember-resolver';
+import loadInitializers from 'ember-load-initializers';
+import config from 'test-app/config/environment';
+import { extendResolver } from 'ember-can';
+
+export default class App extends Application {
+  modulePrefix = config.modulePrefix;
+  podModulePrefix = config.podModulePrefix;
+  Resolver = extendResolver(Resolver);
+}
+
+loadInitializers(App, config.modulePrefix);
+```
+
 This change you can also make for `ember-resolver` < 13, but is not necessary.
 
 
