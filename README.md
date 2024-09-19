@@ -48,7 +48,7 @@ After changes your app file looks like:
 import Application from '@ember/application';
 import Resolver from 'ember-resolver';
 import loadInitializers from 'ember-load-initializers';
-import config from 'test-app/config/environment';
+import config from 'my-app/config/environment';
 import { extendResolver } from 'ember-can';
 
 export default class App extends Application {
