@@ -51,7 +51,6 @@
   },
   "dependencies": {
     "@embroider/addon-shim": "^1.8.8",
-    "@embroider/macros": "^1.16.6",
     "decorator-transforms": "^2.0.0"
   },
   "devDependencies": {
@@ -122,7 +121,6 @@
     "app-js": {
       "./helpers/can.js": "./dist/_app_/helpers/can.js",
       "./helpers/cannot.js": "./dist/_app_/helpers/cannot.js",
-      "./initializers/setup-ember-can.js": "./dist/_app_/initializers/setup-ember-can.js",
       "./services/abilities.js": "./dist/_app_/services/abilities.js"
     }
   },
