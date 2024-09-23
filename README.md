@@ -30,6 +30,38 @@ Install this addon via ember-cli:
 ember install ember-can
 ```
 
+After installation you will need to add the following import to your app.js or app.ts:
+
+```js
+import { extendResolver } from 'ember-can';
+```
+
+Next, replace `Resolver = Resolver;` with:
+
+```js
+Resolver = extendResolver(Resolver);
+```
+
+Without this update, the app will encounter an error where it cannot find your abilities.
+
+After these changes your app file should look something like:
+```js
+import Application from '@ember/application';
+import Resolver from 'ember-resolver';
+import loadInitializers from 'ember-load-initializers';
+import config from 'my-app/config/environment';
+import { extendResolver } from 'ember-can';
+
+export default class App extends Application {
+  modulePrefix = config.modulePrefix;
+  podModulePrefix = config.podModulePrefix;
+  Resolver = extendResolver(Resolver);
+}
+
+loadInitializers(App, config.modulePrefix);
+```
+
+
 ## Compatibility
 
 * Ember.js v3.28 or above

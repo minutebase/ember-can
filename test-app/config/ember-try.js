@@ -62,6 +62,15 @@ module.exports = async function () {
         },
       },
       {
+        name: 'ember-resolver-12',
+        npm: {
+          devDependencies: {
+            'ember-source': '~5.8.0',
+            'ember-resolver': '^12.0.0',
+          },
+        },
+      },
+      {
         name: 'ember-release',
         npm: {
           devDependencies: {
