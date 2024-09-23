@@ -30,7 +30,8 @@ Install this addon via ember-cli:
 ember install ember-can
 ```
 
-After installation you need to update your app.js or app.ts file by adding the following import:
+After installation you will need to add the following import to your app.js or app.ts:
+
 ```js
 import { extendResolver } from 'ember-can';
 ```
@@ -43,7 +44,7 @@ Resolver = extendResolver(Resolver);
 
 Without this update, the app will encounter an error where it cannot find your abilities.
 
-After changes your app file looks like:
+After these changes your app file should look something like:
 ```js
 import Application from '@ember/application';
 import Resolver from 'ember-resolver';
