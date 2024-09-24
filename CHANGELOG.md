@@ -4,6 +4,19 @@
 
 
 
+
+## v7.0.0 (2024-09-24)
+
+#### :boom: Breaking Change
+* [#186](https://github.com/minutebase/ember-can/pull/186) Switch from an initializer to manual `extendResolver` usage ([@mkszepp](https://github.com/mkszepp))
+
+#### :house: Internal
+* [#187](https://github.com/minutebase/ember-can/pull/187) pnpm 9 ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+
+#### Committers: 2
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+- Robbie Wagner ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+
 ## v6.0.0 (2024-08-06)
 
 #### :boom: Breaking Change
