@@ -5,7 +5,7 @@ export default function extendResolver(
 ): typeof Resolver {
   return class EmberCanResolver extends resolver {
     pluralizedTypes: Record<string, string> = {
-      ...this.pluralizedTypes,
+      ...super.pluralizedTypes,
       ability: 'abilities',
     };
   };
