@@ -5,7 +5,8 @@ export default function extendResolver(
 ): typeof Resolver {
   return class EmberCanResolver extends resolver {
     pluralizedTypes: Record<string, string> = {
-      ...super.pluralizedTypes,
+      // @ts-expect-error Property 'pluralizedTypes' is used before its initialization.
+      ...this.pluralizedTypes,
       ability: 'abilities',
     };
   };
