@@ -1,7 +1,7 @@
 import Service from '@ember/service';
 import Ability from '../ability.ts';
 import { assert } from '@ember/debug';
-import { getOwner } from '@ember/application';
+import { getOwner } from '@ember/owner';
 import normalizeAbilityString from '../-private/normalize.ts';
 
 export default class AbilitiesService extends Service {
