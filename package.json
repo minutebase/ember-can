@@ -1,54 +1,24 @@
 {
   "private": true,
-  "repository": "https://github.com/minutebase/ember-can",
+  "repository": "",
   "license": "MIT",
-  "author": "Richard Livsey <richard@minutebase.com>",
+  "author": "",
   "scripts": {
     "build": "pnpm --filter ember-can build",
     "lint": "pnpm --filter '*' lint",
     "lint:fix": "pnpm --filter '*' lint:fix",
     "prepare": "pnpm build",
-    "start": "concurrently 'pnpm:start:*' --restart-after 5000 --prefix-colors cyan,white,yellow",
+    "start": "concurrently 'pnpm:start:*' --restart-after 5000 --prefixColors auto",
     "start:addon": "pnpm --filter ember-can start --no-watch.clearScreen",
     "start:test-app": "pnpm --filter test-app start",
     "test": "pnpm --filter '*' test",
-    "test:ember": "pnpm --filter '*' test:ember",
-    "release": "release-it"
+    "test:ember": "pnpm --filter '*' test:ember"
   },
+  "packageManager": "pnpm@10.0.0",
   "devDependencies": {
-    "@glint/core": "^1.4.0",
-    "@release-it-plugins/lerna-changelog": "^6.1.0",
-    "@release-it-plugins/workspaces": "^4.2.0",
-    "concurrently": "^8.2.2",
-    "prettier": "^3.2.5",
-    "prettier-plugin-ember-template-tag": "^2.0.2",
-    "release-it": "^17.2.1",
-    "typescript": "^5.4.5"
-  },
-  "engines": {
-    "node": ">= 18"
-  },
-  "release-it": {
-    "plugins": {
-      "@release-it-plugins/workspaces": {
-        "workspaces": [
-          "ember-can"
-        ]
-      },
-      "@release-it-plugins/lerna-changelog": {
-        "infile": "CHANGELOG.md"
-      }
-    },
-    "git": {
-      "tagName": "v${version}",
-      "commitMessage": "v${version}",
-      "pushArgs": "--follow-tags --no-verify"
-    },
-    "github": {
-      "release": true,
-      "releaseName": "v${version}",
-      "tokenRef": "GITHUB_AUTH"
-    },
-    "npm": false
+    "@glint/core": "^1.2.1",
+    "concurrently": "^9.1.2",
+    "prettier": "^3.0.3",
+    "prettier-plugin-ember-template-tag": "^2.0.2"
   }
 }
