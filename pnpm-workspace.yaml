@@ -1,3 +1,5 @@
 packages:
-  - 'ember-can'
-  - 'test-app'
+  - ember-can
+  - test-app
+onlyBuiltDependencies:
+  - core-js
