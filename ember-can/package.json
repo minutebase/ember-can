@@ -125,9 +125,9 @@
     }
   },
   "peerDependencies": {
-    "@ember/string": "^3.1.1 || ^4.0.0",
-    "ember-inflector": "^4.0.2 || >=5.0.1",
+    "@ember/string": ">=3.0.1",
+    "ember-inflector": ">=5.0.1",
     "ember-source": ">=4.12.0",
-    "ember-resolver": ">= 8.0.0"
+    "ember-resolver": ">= 10.0.0"
   }
 }
