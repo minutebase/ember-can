@@ -20,17 +20,17 @@ export default {
     // up your addon's public API. Also make sure your package.json#exports
     // is aligned to the config here.
     // See https://github.com/embroider-build/embroider/blob/main/docs/v2-faq.md#how-can-i-define-the-public-exports-of-my-addon
-    addon.publicEntrypoints([
-      'index.js',
-      'ability.ts',
-      'helpers/**/*.js',
-      'services/**/*.js',
-    ]),
+    addon.publicEntrypoints(['**/*.js', 'index.js', 'template-registry.js']),
 
     // These are the modules that should get reexported into the traditional
     // "app" tree. Things in here should also be in publicEntrypoints above, but
     // not everything in publicEntrypoints necessarily needs to go here.
-    addon.appReexports(['helpers/**/*.js', 'services/**/*.js']),
+    addon.appReexports([
+      'components/**/*.js',
+      'helpers/**/*.js',
+      'modifiers/**/*.js',
+      'services/**/*.js',
+    ]),
 
     // Follow the V2 Addon rules about dependencies. Your code can import from
     // `dependencies` and `peerDependencies` as well as standard Ember-provided
@@ -53,6 +53,9 @@ export default {
 
     // Ensure that .gjs files are properly integrated as Javascript
     addon.gjs(),
+
+    // Emit .d.ts declaration files
+    addon.declarations('declarations'),
 
     // addons are allowed to contain imports of .css files, which we want rollup
     // to leave alone and keep in the published output.
