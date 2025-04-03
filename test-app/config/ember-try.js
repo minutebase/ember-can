@@ -32,6 +32,33 @@ module.exports = async function () {
         },
       },
       {
+        name: 'ember-resolver-10',
+        npm: {
+          devDependencies: {
+            'ember-source': '~4.12.0',
+            'ember-resolver': '^10.0.0',
+          },
+        },
+      },
+      {
+        name: 'ember-resolver-11',
+        npm: {
+          devDependencies: {
+            'ember-source': '~4.12.0',
+            'ember-resolver': '^11.0.0',
+          },
+        },
+      },
+      {
+        name: 'ember-resolver-12',
+        npm: {
+          devDependencies: {
+            'ember-source': '~5.8.0',
+            'ember-resolver': '^12.0.0',
+          },
+        },
+      },
+      {
         name: 'ember-release',
         npm: {
           devDependencies: {
