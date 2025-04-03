@@ -62,12 +62,11 @@ jobs:
       fail-fast: false
       matrix:
         try-scenario:
-          - ember-lts-3.28
-          - ember-lts-4.4
-          - ember-lts-4.8
           - ember-lts-4.12
           - ember-lts-5.4
           - ember-lts-5.8
+          - ember-resolver-10
+          - ember-resolver-11
           - ember-resolver-12
           - ember-release
           - ember-beta

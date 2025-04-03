@@ -1,8 +1,6 @@
 import Helper from '@ember/component/helper';
-import * as s from '@ember/service';
+import { service } from '@ember/service';
 import type Ability from '../services/abilities.ts';
-
-const service = s.service ?? s.inject;
 
 interface CannotSignature {
   Args: {
