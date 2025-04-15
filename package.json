@@ -1,8 +1,8 @@
 {
   "private": true,
-  "repository": "",
+  "repository": "https://github.com/minutebase/ember-can",
   "license": "MIT",
-  "author": "",
+  "author": "Richard Livsey <richard@minutebase.com>",
   "scripts": {
     "build": "pnpm --filter ember-can build",
     "lint": "pnpm --filter '*' lint",
@@ -14,11 +14,40 @@
     "test": "pnpm --filter '*' test",
     "test:ember": "pnpm --filter '*' test:ember"
   },
-  "packageManager": "pnpm@10.0.0",
   "devDependencies": {
     "@glint/core": "^1.5.2",
+    "@release-it-plugins/lerna-changelog": "^6.1.0",
+    "@release-it-plugins/workspaces": "^4.2.0",
     "concurrently": "^9.1.2",
     "prettier": "^3.5.3",
-    "prettier-plugin-ember-template-tag": "^2.0.5"
-  }
+    "prettier-plugin-ember-template-tag": "^2.0.5",
+    "release-it": "^17.2.1"
+  },
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org"
+  },
+  "release-it": {
+    "plugins": {
+      "@release-it-plugins/workspaces": {
+        "workspaces": [
+          "ember-can"
+        ]
+      },
+      "@release-it-plugins/lerna-changelog": {
+        "infile": "CHANGELOG.md"
+      }
+    },
+    "git": {
+      "tagName": "v${version}",
+      "commitMessage": "v${version}",
+      "pushArgs": "--follow-tags --no-verify"
+    },
+    "github": {
+      "release": true,
+      "releaseName": "v${version}",
+      "tokenRef": "GITHUB_AUTH"
+    },
+    "npm": false
+  },
+  "packageManager": "pnpm@10.7.1+sha512.2d92c86b7928dc8284f53494fb4201f983da65f0fb4f0d40baafa5cf628fa31dae3e5968f12466f17df7e97310e30f343a648baea1b9b350685dafafffdf5808"
 }
