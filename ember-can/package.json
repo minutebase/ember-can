@@ -69,7 +69,7 @@
     "concurrently": "^9.0.1",
     "ember-inflector": "^5.0.1",
     "ember-resolver": "^13.0.1",
-    "ember-source": "^5.4.0",
+    "ember-source": "^5.12.0",
     "ember-template-lint": "^6.0.0",
     "eslint": "^9.17.0",
     "eslint-config-prettier": "^9.1.0",
