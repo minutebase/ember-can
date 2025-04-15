@@ -1,6 +1,6 @@
 {
   "name": "ember-can",
-  "version": "7.0.0",
+  "version": "8.0.0",
   "description": "Simple authorization addon for Ember apps",
   "keywords": [
     "ember-addon"

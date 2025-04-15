@@ -5,6 +5,23 @@
 
 
 
+
+## v8.0.0 (2025-04-15)
+
+#### :boom: Breaking Change
+* [#190](https://github.com/minutebase/ember-can/pull/190) Remove support for ember < 4.12 ([@mkszepp](https://github.com/mkszepp))
+
+#### :rocket: Enhancement
+* [#189](https://github.com/minutebase/ember-can/pull/189) Cleanup `@ember/service` deprecation ([@mkszepp](https://github.com/mkszepp))
+* [#188](https://github.com/minutebase/ember-can/pull/188) Widen `ember-inflector` support ([@mkszepp](https://github.com/mkszepp))
+
+#### :house: Internal
+* [#191](https://github.com/minutebase/ember-can/pull/191) Update to latest blueprints ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+
+#### Committers: 2
+- Markus Sanin ([@mkszepp](https://github.com/mkszepp))
+- Robbie Wagner ([@RobbieTheWagner](https://github.com/RobbieTheWagner))
+
 ## v7.0.0 (2024-09-24)
 
 #### :boom: Breaking Change
