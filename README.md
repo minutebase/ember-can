@@ -64,7 +64,7 @@ loadInitializers(App, config.modulePrefix);
 
 ## Compatibility
 
-* Ember.js v3.28 or above
+* Ember.js v4.12 or above
 * Embroider or ember-auto-import v2
 
 ## Quick Example
