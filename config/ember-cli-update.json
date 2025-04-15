@@ -1,15 +1,16 @@
-﻿{
+{
   "schemaVersion": "1.0.0",
   "projectName": "ember-can",
   "packages": [
     {
       "name": "@embroider/addon-blueprint",
-      "version": "2.16.0",
+      "version": "4.1.1",
       "blueprints": [
         {
           "name": "@embroider/addon-blueprint",
           "isBaseBlueprint": true,
           "options": [
+            "--ci-provider=github",
             "--pnpm",
             "--typescript"
           ]
