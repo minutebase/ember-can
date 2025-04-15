@@ -16,9 +16,9 @@
   },
   "packageManager": "pnpm@10.0.0",
   "devDependencies": {
-    "@glint/core": "^1.2.1",
+    "@glint/core": "^1.5.2",
     "concurrently": "^9.1.2",
-    "prettier": "^3.0.3",
-    "prettier-plugin-ember-template-tag": "^2.0.2"
+    "prettier": "^3.5.3",
+    "prettier-plugin-ember-template-tag": "^2.0.5"
   }
 }
