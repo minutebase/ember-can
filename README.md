@@ -10,10 +10,6 @@
 
 [![CI](https://github.com/minutebase/ember-can/actions/workflows/ci.yml/badge.svg)](https://github.com/minutebase/ember-can/actions/workflows/ci.yml)
 
-<a href="https://david-dm.org/minutebase/ember-can" title="dependencies status">
-  <img src="https://david-dm.org/minutebase/ember-can/status.svg"/>
-</a>
-
 ---
 
 Simple authorisation addon for Ember.
