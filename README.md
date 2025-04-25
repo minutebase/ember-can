@@ -1,24 +1,16 @@
 # Ember-can
 
-<p align="center">
-  <a href="http://badge.fury.io/js/ember-can" title="Package version">
-    <img src="https://badge.fury.io/js/ember-can.svg"/>
-  </a>
+<a href="http://badge.fury.io/js/ember-can" title="Package version">
+  <img src="https://badge.fury.io/js/ember-can.svg"/>
+</a>
 
-  <a href="https://emberobserver.com/addons/ember-can" title="Ember Observer">
-    <img src="http://emberobserver.com/badges/ember-can.svg" alt="Ember Observer"/>
-  </a>
+<a href="https://emberobserver.com/addons/ember-can" title="Ember Observer">
+  <img src="http://emberobserver.com/badges/ember-can.svg" alt="Ember Observer"/>
+</a>
 
-  <a href="https://travis-ci.org/minutebase/ember-can" title="Travis CI status">
-    <img src="https://travis-ci.org/minutebase/ember-can.svg?branch=master" alt="Travis CI Status"/>
-  </a>
+[![CI](https://github.com/minutebase/ember-can/actions/workflows/ci.yml/badge.svg)](https://github.com/minutebase/ember-can/actions/workflows/ci.yml)
 
-  <a href="https://david-dm.org/minutebase/ember-can" title="dependencies status">
-    <img src="https://david-dm.org/minutebase/ember-can/status.svg"/>
-  </a>
-</p>
-
-___
+---
 
 Simple authorisation addon for Ember.
 
@@ -45,6 +37,7 @@ Resolver = extendResolver(Resolver);
 Without this update, the app will encounter an error where it cannot find your abilities.
 
 After these changes your app file should look something like:
+
 ```js
 import Application from '@ember/application';
 import Resolver from 'ember-resolver';
@@ -61,18 +54,17 @@ export default class App extends Application {
 loadInitializers(App, config.modulePrefix);
 ```
 
-
 ## Compatibility
 
-* Ember.js v4.12 or above
-* Embroider or ember-auto-import v2
+- Ember.js v4.12 or above
+- Embroider or ember-auto-import v2
 
 ## Quick Example
 
 You want to conditionally allow creating a new blog post:
 
 ```hbs
-{{#if (can "create post")}}
+{{#if (can 'create post')}}
   Type post content here...
 {{else}}
   You can't write a new post!
@@ -152,8 +144,9 @@ export default class CreatePostComponent extends Component {
 The `can` helper is meant to be used with `{{if}}` and `{{unless}}` to protect a block (but can be used anywhere in the template).
 
 ```hbs
-{{can "doSth in myModel" model extraProperties}}
+{{can 'doSth in myModel' model extraProperties}}
 ```
+
 - `"doSth in myModel" ` - The first parameter is a string which is used to find the ability class call the appropriate property (see [Looking up abilities](#looking-up-abilities)).
 
 - `model` - The second parameter is an optional model object which will be given to the ability to check permissions.
@@ -164,8 +157,9 @@ The `can` helper is meant to be used with `{{if}}` and `{{unless}}` to protect a
 automatically update accordingly.**
 
 #### Example
+
 ```hbs
-{{#if (can "edit post" post)}}
+{{#if (can 'edit post' post)}}
   ...
 {{else}}
   ...
@@ -176,7 +170,7 @@ As it's a sub-expression, you can use it anywhere a helper can be used.
 For example to give a div a class based on an ability you can use an inline if:
 
 ```hbs
-<div class={{if (can "edit post" post) "is-editable"}}>
+<div class={{if (can 'edit post' post) 'is-editable'}}>
 
 </div>
 ```
@@ -186,9 +180,8 @@ For example to give a div a class based on an ability you can use an inline if:
 Cannot helper is a negation of `can` helper with the same API.
 
 ```hbs
-{{cannot "doSth in myModel" model extraProperties}}
+{{cannot 'doSth in myModel' model extraProperties}}
 ```
-
 
 ## Abilities
 
@@ -229,7 +222,7 @@ You can do this in the helpers, for example this will set the `model` to `projec
 but also `member` as a bound property.
 
 ```hbs
-{{#if (can "remove member from project" project member=member)}}
+{{#if (can 'remove member from project' project member=member)}}
   ...
 {{/if}}
 ```
@@ -255,20 +248,20 @@ Then for the ability name we remove some basic stopwords (of, for in) at the end
 
 For example:
 
-| String                      | property           | resource                | pod                            |
-|-----------------------------|--------------------|-------------------------|--------------------------------|
-| write post                  | `canWrite`         | `/abilities/post.js`    | `app/pods/post/ability.js`     |
-| manage members in project  | `canManageMembers` | `/abilities/project.js`| `app/pods/project/ability.js` |
-| view profile for user       | `canViewProfile`   | `/abilities/user.js`    | `app/pods/user/ability.js`     |
+| String                    | property           | resource                | pod                           |
+| ------------------------- | ------------------ | ----------------------- | ----------------------------- |
+| write post                | `canWrite`         | `/abilities/post.js`    | `app/pods/post/ability.js`    |
+| manage members in project | `canManageMembers` | `/abilities/project.js` | `app/pods/project/ability.js` |
+| view profile for user     | `canViewProfile`   | `/abilities/user.js`    | `app/pods/user/ability.js`    |
 
 Current stopwords which are ignored are:
 
-* for
-* from
-* in
-* of
-* to
-* on
+- for
+- from
+- in
+- of
+- to
+- on
 
 ## Custom Ability Lookup
 
@@ -289,7 +282,7 @@ export default class AbilitiesService extends Service {
     let [abilityName, propertyName] = str.split('.');
     return { propertyName, abilityName };
   }
-};
+}
 ```
 
 You can also modify the property prefix by overriding `parseProperty` in our ability file:
@@ -326,7 +319,7 @@ The ability classes will now have access to `session` which can then be used to 
 
 ## Components & computed properties
 
-In a  component, you may want to expose abilities as computed properties
+In a component, you may want to expose abilities as computed properties
 so that you can bind to them in your templates.
 
 ```js
@@ -351,7 +344,7 @@ export default class MyComponent extends Component {
 
 ## Accessing abilities within an Ember engine
 
-If you're using [engines](http://ember-engines.com/) and you want to access an *ability* within it, you will need it to be present in your Engine’s namespace. This is accomplished by doing what is called a "re-export":
+If you're using [engines](http://ember-engines.com/) and you want to access an _ability_ within it, you will need it to be present in your Engine’s namespace. This is accomplished by doing what is called a "re-export":
 
 ```javascript
 //my-engine/addon/abilities/foo-bar.js
@@ -383,26 +376,26 @@ stub the service following [the official EmberJS guide](https://guides.emberjs.c
 
 ### Installation
 
-* `git clone https://github.com/minutebase/ember-can.git`
-* `cd ember-can`
-* `npm install`
+- `git clone https://github.com/minutebase/ember-can.git`
+- `cd ember-can`
+- `npm install`
 
 ### Linting
 
-* `npm run lint:hbs`
-* `npm run lint:js`
-* `npm run lint:js -- --fix`
+- `npm run lint:hbs`
+- `npm run lint:js`
+- `npm run lint:js -- --fix`
 
 ### Running tests
 
-* `ember test` – Runs the test suite on the current Ember version
-* `ember test --server` – Runs the test suite in "watch mode"
-* `ember try:each` – Runs the test suite against multiple Ember versions
+- `ember test` – Runs the test suite on the current Ember version
+- `ember test --server` – Runs the test suite in "watch mode"
+- `ember try:each` – Runs the test suite against multiple Ember versions
 
 ### Running the dummy application
 
-* `ember serve`
-* Visit the dummy application at [http://localhost:4200](http://localhost:4200).
+- `ember serve`
+- Visit the dummy application at [http://localhost:4200](http://localhost:4200).
 
 For more information on using ember-cli, visit [https://ember-cli.com/](https://ember-cli.com/).
 
