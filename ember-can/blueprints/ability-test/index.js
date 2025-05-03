@@ -19,12 +19,12 @@ module.exports = {
     var test =
       "module('Unit | Ability | " +
       name +
-      "', function(hooks) {" +
+      "', function (hooks) {" +
       EOL +
       '  setupTest(hooks);' +
       EOL +
       EOL +
-      "  test('it exists', function(assert) {" +
+      "  test('it exists', function (assert) {" +
       EOL +
       "    const ability = this.owner.lookup('ability:" +
       name +
